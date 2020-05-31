@@ -15,11 +15,10 @@ export default new Router({
       name: "analytics",
       component: () => import("../DemoPages/Dashboards/Analytics.vue"),
     },
-
     // Pages
 
     {
-      path: "/pages/login",
+      path: "/login",
       name: "login",
       meta: { layout: "userpages" },
       component: () => import("../DemoPages/UserPages/Login.vue"),
