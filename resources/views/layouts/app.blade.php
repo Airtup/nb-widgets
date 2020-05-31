@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
-    <title>ArchitectUI - Vuejs & Bootstrap 4 & Vuetify Admin UI Dashboard Template</title>
+    <title>Nation Builder</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900">
 
     <!-- CSRF Token -->
@@ -21,6 +21,10 @@
     <div id="app">
     </div>
 
-    <script src=js/main.js></script> 
-</body> 
+    <script src=js/main.js> </script> 
+    <script type="text/javascript">
+        var BASE_URL = "{{URL::to('/')}}";
+    </script>
+</body>
+
 </html>
