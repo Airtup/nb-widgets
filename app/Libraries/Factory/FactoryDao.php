@@ -2,6 +2,7 @@
 
 namespace App\Libraries\Factory;
 use App\Libraries\Dao\NationDao;
+use App\Libraries\Dao\NationDetailsDao;
 
 class FactoryDAO
 {
@@ -10,6 +11,10 @@ class FactoryDAO
 		if($dao=='NationDao')
 		{
 			return new NationDao();
+		}
+		if($dao=='NationDetailsDao')
+		{
+			return new NationDetailsDao();
 		}
 		else
 		{

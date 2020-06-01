@@ -15,10 +15,17 @@ class CreateNationDetailsTable extends Migration
     {
         Schema::create('nation_details', function (Blueprint $table) {
             $table->id();
-            $table->integer('theme')->default(1);
+            $table->integer('theme')->default(0);
             $table->string('tag',100);
             $table->integer('nation_id');
-            $table->string('pro_first_name');
+            $table->string('show_options')->default('{"first_name": 1,"last_name": 1,"city": 1,"country": 1,"address": 1,"email": 1,"phone": 1,"assist_name": 0,"assist_email": 0,"assist_phone": 0}');
+            $table->string('intro')->nullable();
+            $table->string('disclaimer')->nullable();
+            $table->string('report_color')->nullable();
+            $table->integer('hq')->default(0);
+            $table->string('membership_sync')->nullable();
+            $table->integer('sync_picture')->default(0);
+            $table->string('picture_sync')->nullable();
             $table->timestamps();
         });
     }

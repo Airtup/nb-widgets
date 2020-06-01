@@ -59,41 +59,11 @@ export default {
               href: "/nations/create",
               title: "Add New Nation"
             },
-            {
-              href: "/asfasd",
-              title: "Analytics"
-            }
           ]
         },
         {
           title: "Users",
           icon: "pe-7s-browser",
-          child: [
-            {
-              href: "/pages/login",
-              title: "Login"
-            },
-            {
-              href: "/pages/login-boxed",
-              title: "Login Boxed"
-            },
-            {
-              href: "/pages/register",
-              title: "Register"
-            },
-            {
-              href: "/pages/register-boxed",
-              title: "Register Boxed"
-            },
-            {
-              href: "/pages/forgot-password",
-              title: "Forgot Password"
-            },
-            {
-              href: "/pages/forgot-password-boxed",
-              title: "Forgot Password Boxed"
-            }
-          ]
         }
       ],
       collapsed: true,

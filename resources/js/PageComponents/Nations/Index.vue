@@ -58,14 +58,15 @@
         :sort-direction="sortDirection"
         @filtered="onFiltered"
       >
-        <template slot="name" slot-scope="row">{{row.value.first}} {{row.value.last}}</template>
-        <template slot="isActive" slot-scope="row">{{row.value?'Yes :)':'No :('}}</template>
-        <template slot="actions" slot-scope="row">
-          <!-- We use @click.stop here to prevent a 'row-clicked' event from also happening -->
+        <template v-slot:cell(actions)="row">
           <b-button
             size="sm"
-            @click.stop="row.toggleDetails"
-          >{{ row.detailsShowing ? 'Hide' : 'Show' }} Details</b-button>
+            @click="row.toggleDetails"
+            class="mr-2"
+          ><font-awesome-icon icon="eye" />{{ row.detailsShowing ? 'Hide' : 'Show'}} Details</b-button>
+          <a :href="'/#/nations/edit/' + row.item.id" class="mr-2 btn btn-success">
+            <font-awesome-icon icon="edit" />Edit
+          </a>
         </template>
         <template slot="row-details" slot-scope="row">
           <b-card class="no-shadow">
@@ -97,10 +98,18 @@
 <script>
 import axios from "axios";
 import PageTitle from "../PageTitle";
+import swal from "sweetalert";
+
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { faEdit, faEye } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+library.add(faEdit, faEye);
+
 const items = [];
 export default {
   components: {
-    PageTitle
+    PageTitle,
+    "font-awesome-icon": FontAwesomeIcon
   },
   data: () => ({
     heading: "Dynamic Tables",
@@ -141,7 +150,7 @@ export default {
         }
       })
       .catch(error => {
-        console.log(error);
+        swal("Error", error, "error");
       });
   },
   computed: {

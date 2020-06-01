@@ -32,6 +32,12 @@ const router = new Router({
       path: "/nations/create",
       name: "create-nation",
       component: () => import("../PageComponents/Nations/Create.vue")
+    },
+    {
+      path: "/nations/edit/:id",
+      props: true,
+      name: "edit-nation",
+      component: () => import("../PageComponents/Nations/Edit.vue")
     }
   ],
 });

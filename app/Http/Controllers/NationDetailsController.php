@@ -2,11 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\nation_details;
 use Illuminate\Http\Request;
+use App\Libraries\Factory\AbstractFactory;
 
 class NationDetailsController extends Controller
 {
+    private $factory;
+    private $dao;
+    public function __construct()
+    {
+        $this->factory = AbstractFactory::getFactory('DAO');
+        $this->dao = $this->factory->getDAO('NationDetailsDao');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +22,8 @@ class NationDetailsController extends Controller
      */
     public function index()
     {
-        //
+        $nations = $this->dao->select();
+        return response()->json(['status'=>'ok','data'=>$nations],200);
     }
 
     /**
@@ -44,9 +53,10 @@ class NationDetailsController extends Controller
      * @param  \App\nation_details  $nation_details
      * @return \Illuminate\Http\Response
      */
-    public function show(nation_details $nation_details)
+    public function show($id)
     {
-        //
+        $nations = $this->dao->get($id);
+        return response()->json(['status'=>'ok','data'=>$nations],200);
     }
 
     /**
