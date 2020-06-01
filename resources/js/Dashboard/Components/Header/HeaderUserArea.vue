@@ -4,13 +4,7 @@
       <div class="widget-content p-0">
         <div class="widget-content-wrapper">
           <div class="widget-content-left">
-            <b-dropdown
-              toggle-class="p-0 mr-2"
-              menu-class="dropdown-menu-lg"
-              variant="link"
-              no-caret
-              right
-            >
+            <b-dropdown toggle-class="p-0 mr-2" variant="link" menu-class="dropdown-menu-lg" no-caret right>
               <div slot="button-content">
                 <font-awesome-icon icon="user" size="2x" />
               </div>
@@ -46,10 +40,7 @@
                     </li>
                     <li class="nav-item-header nav-item">My Account</li>
                     <li class="nav-item">
-                      <a href="javascript:void(0);" class="nav-link">
-                        Settings
-                        <div class="ml-auto badge badge-success">New</div>
-                      </a>
+                      <a href="javascript:void(0);" class="nav-link">Settings</a>
                     </li>
                   </ul>
                 </VuePerfectScrollbar>

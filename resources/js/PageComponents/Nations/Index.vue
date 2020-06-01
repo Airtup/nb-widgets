@@ -42,7 +42,7 @@
       <!-- Main table element -->
       <b-table
         show-empty
-        stacked="md"
+        responsive
         :items="items"
         :fields="fields"
         :current-page="currentPage"
@@ -54,11 +54,10 @@
         @filtered="onFiltered"
       >
         <template v-slot:cell(actions)="row">
-          <b-button
-            size="sm"
-            @click="row.toggleDetails"
-            class="mr-2"
-          ><font-awesome-icon icon="eye" />{{ row.detailsShowing ? 'Hide' : 'Show'}} Details</b-button>
+          <b-button size="sm" @click="row.toggleDetails" class="mr-2">
+            <font-awesome-icon icon="eye" />
+            {{ row.detailsShowing ? 'Hide' : 'Show'}} Details
+          </b-button>
           <a :href="'/#/nations/edit/' + row.item.id" class="mr-2 btn btn-success">
             <font-awesome-icon icon="edit" />Edit
           </a>
