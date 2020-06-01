@@ -85,6 +85,50 @@
         </div>
       </transition>
     </div>
+    <div v-if="showModalLoading">
+      <transition name="modal">
+        <div class="modal-mask">
+          <div class="modal-wrapper">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Awaiting authorization</h5>
+                </div>
+                <div class="modal-body">
+                  <div class="spinner-grow text-primary" role="status">
+                    <span class="sr-only">Loading...</span>
+                  </div>
+                  <div class="spinner-grow text-secondary" role="status">
+                    <span class="sr-only">Loading...</span>
+                  </div>
+                  <div class="spinner-grow text-success" role="status">
+                    <span class="sr-only">Loading...</span>
+                  </div>
+                  <div class="spinner-grow text-danger" role="status">
+                    <span class="sr-only">Loading...</span>
+                  </div>
+                  <div class="spinner-grow text-warning" role="status">
+                    <span class="sr-only">Loading...</span>
+                  </div>
+                  <div class="spinner-grow text-info" role="status">
+                    <span class="sr-only">Loading...</span>
+                  </div>
+                  <div class="spinner-grow text-light" role="status">
+                    <span class="sr-only">Loading...</span>
+                  </div>
+                  <div class="spinner-grow text-dark" role="status">
+                    <span class="sr-only">Loading...</span>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" @click="reload">Cancel</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </transition>
+    </div>
   </div>
 </template>
 
@@ -105,8 +149,14 @@ export default {
         id: "",
         secret: ""
       },
-      showModal: false
+      showModal: false,
+      showModalLoading: false
     };
+  },
+  computed: {
+    currentUser() {
+      return this.$store.state.auth.user;
+    }
   },
   methods: {
     // createNation: function() {
@@ -133,11 +183,37 @@ export default {
     //       "warning"
     //     );
     // },
+    reload() {
+      window.location.reload();
+    },
     getAccessToken: function() {
       if (this.client.id) {
         if (this.client.secret) {
-          var url = `https://${this.nation.slug}.nationbuilder.com/oauth/authorize?response_type=code&client_id=${this.client.id}&redirect_uri=${BASE_URL}/nb_authcode_callback/${this.nation.slug}/${this.nation.name}/${this.client.id}/${this.client.secret}`;
-          let popup = window.open(url, 'Copy Url', "menubar=0,resizable=0,width=850,height=850");
+          this.showModal = false;
+          this.showModalLoading = true;
+          var url = `https://${this.nation.slug}.nationbuilder.com/oauth/authorize?response_type=code&client_id=${this.client.id}&redirect_uri=${BASE_URL}/nb_authcode_callback/${this.nation.slug}/${this.nation.name}/${this.client.id}/${this.client.secret}/${this.currentUser.user.id}`;
+          let popup = window.open(
+            url,
+            "Copy Url",
+            "menubar=0,resizable=0,width=850,height=850"
+          );
+          var me = this;
+          var timer = setInterval(function() {
+            var sucess;
+            axios
+              .get(BASE_URL + "/api/nation/exists/" + me.nation.slug)
+              .then(response => {
+                if (response.status == 200) {
+                  if (response.data.exists) {
+                    swal("Success","The nation was successfully added","success");
+                    me.showModalLoading = false;
+                    clearInterval(timer);
+                    popup.close();
+                    window.location = BASE_URL + "/#/nations";
+                  }
+                }
+              });
+          }, 2000);
         } else
           swal(
             "Incomplete fields",

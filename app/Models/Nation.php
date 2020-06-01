@@ -8,4 +8,10 @@ class Nation extends Model
 {
     protected $table = "nations";
     protected $fillable=['name','slug','access_token','logo','people_count','status'];
+
+    public function logs()
+    {
+        return $this
+            ->hasMany('App\Models\Log');
+    }
 }

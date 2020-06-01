@@ -32,3 +32,4 @@ Route::group([
 Route::resource('/nations', 'NationController');
 Route::resource('/nation/details', 'NationDetailsController');
 Route::post('/nation/generate/token', 'NationBuilderApiController@generate_token');
+Route::get('/nation/exists/{slug}','NationController@exists');

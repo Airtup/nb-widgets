@@ -22,7 +22,7 @@
     </div>
     <div class="app-sidebar-content">
       <VuePerfectScrollbar class="app-sidebar-scroll" v-once>
-        <sidebar-menu showOneChild :menu="menu" />
+        <sidebar-menu showOneChild :menu="currentUser.user.role=='admin'?menu_admin:menu_user" />
       </VuePerfectScrollbar>
     </div>
   </div>
@@ -41,8 +41,7 @@ export default {
     return {
       isOpen: false,
       sidebarActive: false,
-
-      menu: [
+      menu_user: [
         {
           header: true,
           title: "Main Navigation"
@@ -58,18 +57,43 @@ export default {
             {
               href: "/nations/create",
               title: "Add New Nation"
+            }
+          ]
+        }
+      ],
+      menu_admin: [
+        {
+          header: true,
+          title: "Main Navigation"
+        },
+        {
+          title: "Nations",
+          icon: "pe-7s-rocket",
+          child: [
+            {
+              href: "/nations",
+              title: "View all Nations"
             },
+            {
+              href: "/nations/create",
+              title: "Add New Nation"
+            }
           ]
         },
         {
           title: "Users",
-          icon: "pe-7s-browser",
+          icon: "pe-7s-browser"
         }
       ],
       collapsed: true,
 
       windowWidth: 0
     };
+  },
+  computed: {
+    currentUser() {
+      return this.$store.state.auth.user;
+    }
   },
   props: {
     sidebarbg: String

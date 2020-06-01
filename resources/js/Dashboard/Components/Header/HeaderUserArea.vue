@@ -13,7 +13,7 @@
             >
               <span slot="button-content">
                 <div class="icon-wrapper icon-wrapper-alt rounded-circle">
-                  <img width="42" class="rounded-circle" src="" alt />
+                  <img width="42" class="rounded-circle" src="/images/users/11.jpg" alt />
                 </div>
               </span>
               <div class="dropdown-menu-header">
@@ -26,7 +26,7 @@
                           <img
                             width="42"
                             class="rounded-circle"
-                            src=""
+                            src="/images/users/11.jpg"
                             alt
                           />
                         </div>
@@ -482,7 +482,7 @@
                       </div>
                       <div class="widget-content-left mr-3">
                         <div class="widget-content-left">
-                          <img width="42" class="rounded" src="" alt />
+                          <img width="42" class="rounded" src="/images/users/11.jpg" alt />
                         </div>
                       </div>
                       <div class="widget-content-left">
@@ -583,42 +583,42 @@
                         <div class="avatar-wrapper mt-2 avatar-wrapper-overlap">
                           <div class="avatar-icon-wrapper avatar-icon-sm">
                             <div class="avatar-icon">
-                              <img src="" alt />
+                              <img src="/images/users/11.jpg" alt />
                             </div>
                           </div>
                           <div class="avatar-icon-wrapper avatar-icon-sm">
                             <div class="avatar-icon">
-                              <img src="" alt />
+                              <img src="/images/users/11.jpg" alt />
                             </div>
                           </div>
                           <div class="avatar-icon-wrapper avatar-icon-sm">
                             <div class="avatar-icon">
-                              <img src="" alt />
+                              <img src="/images/users/11.jpg" alt />
                             </div>
                           </div>
                           <div class="avatar-icon-wrapper avatar-icon-sm">
                             <div class="avatar-icon">
-                              <img src="" alt />
+                              <img src="/images/users/11.jpg" alt />
                             </div>
                           </div>
                           <div class="avatar-icon-wrapper avatar-icon-sm">
                             <div class="avatar-icon">
-                              <img src="" alt />
+                              <img src="/images/users/11.jpg" alt />
                             </div>
                           </div>
                           <div class="avatar-icon-wrapper avatar-icon-sm">
                             <div class="avatar-icon">
-                              <img src="" alt />
+                              <img src="/images/users/11.jpg" alt />
                             </div>
                           </div>
                           <div class="avatar-icon-wrapper avatar-icon-sm">
                             <div class="avatar-icon">
-                              <img src="" alt />
+                              <img src="/images/users/11.jpg" alt />
                             </div>
                           </div>
                           <div class="avatar-icon-wrapper avatar-icon-sm">
                             <div class="avatar-icon">
-                              <img src="" alt />
+                              <img src="/images/users/11.jpg" alt />
                             </div>
                           </div>
                           <div class="avatar-icon-wrapper avatar-icon-sm avatar-icon-add">

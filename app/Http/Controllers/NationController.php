@@ -38,6 +38,18 @@ class NationController extends Controller
     }
 
     /**
+     * 
+     * Returns true if the nation with the received slug exists.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function exists($slug)
+    {
+        $exists = $this->dao->exists($slug);
+        return response()->json(['status'=>'ok','exists'=>$exists],200);
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request

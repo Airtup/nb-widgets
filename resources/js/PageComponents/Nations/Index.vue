@@ -37,11 +37,6 @@
             </b-input-group>
           </b-form-group>
         </b-col>
-        <b-col md="6" class="my-1">
-          <b-form-group horizontal label="Per page" class="mb-0">
-            <b-form-select :options="pageOptions" v-model="perPage" />
-          </b-form-group>
-        </b-col>
       </b-row>
 
       <!-- Main table element -->
@@ -120,6 +115,7 @@ export default {
     items: items,
     fields: [
       { key: "id", label: "ID" },
+      { key: "slug", label: "Nation Slug" },
       {
         key: "name",
         label: "Nation Name",
@@ -132,9 +128,8 @@ export default {
       { key: "actions", label: "Actions" }
     ],
     currentPage: 1,
-    perPage: 5,
+    perPage: 20,
     totalRows: items.length,
-    pageOptions: [5, 10, 15],
     sortBy: null,
     sortDesc: false,
     sortDirection: "asc",

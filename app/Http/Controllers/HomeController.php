@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Nation;
 use App\Models\NationDetails;
+use App\Models\Log;
 
 class HomeController extends Controller
 {
@@ -24,7 +25,7 @@ class HomeController extends Controller
         return view('layouts.app');
     }
 
-    public function authcode_callback(Request $request, $slug, $name, $id, $secret)
+    public function authcode_callback(Request $request, $slug, $name, $id, $secret,$user_id)
     {
         $params = array(
             'code' => $request->code,
@@ -33,7 +34,6 @@ class HomeController extends Controller
             'client_secret' => $secret,
             'grant_type' => 'authorization_code'
         );
-
 
 
         $url = 'https://' . $slug . '.nationbuilder.com/oauth/token?' . http_build_query($params);
@@ -53,9 +53,11 @@ class HomeController extends Controller
         // Send the request & save response to $resp
         $resp = curl_exec($curl);
 
-        $nation = Nation::updateOrCreate(["slug" => $slug], ['access_token' => 'asdfass', 'name' => $name]);
-
+        $nation = Nation::updateOrCreate(["slug" => $slug], ['access_token' => $resp->access_token, 'name' => $name]);
+        //$nation = Nation::updateOrCreate(["slug" => $slug], ['access_token' => "123", 'name' => $name]);
+        
         if ($nation->id) {
+            Log::create(["user_id"=>$user_id,"nation_id"=>$nation->id,'description'=>'Add new Nation "'.$nation->name.'"']);
             NationDetails::updateOrCreate(["nation_id" => $nation->id], ['tag' => $nation->name]);
         }
     }

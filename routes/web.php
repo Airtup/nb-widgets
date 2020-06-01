@@ -17,4 +17,4 @@ Route::get('/', 'HomeController@index')->name('home');
 
 Auth::routes();
 
-Route::get('/nb_authcode_callback/{slug}/{name}/{id}/{secret}', 'HomeController@authcode_callback');
+Route::get('/nb_authcode_callback/{slug}/{name}/{id}/{secret}/{user_id}', 'HomeController@authcode_callback');

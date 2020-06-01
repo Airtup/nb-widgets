@@ -37,4 +37,9 @@ class NationDao
 
         return $nation->update(['status' => 0]);
     }
+
+    public function exists($slug)
+    {
+        return Nation::where('slug', $slug)->exists();
+    }
 }
