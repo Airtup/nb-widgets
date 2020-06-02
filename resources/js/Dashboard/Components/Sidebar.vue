@@ -59,6 +59,16 @@ export default {
               title: "Add New Nation"
             }
           ]
+        },
+        {
+          title: "Logs",
+          icon: "pe-7s-rocket",
+          child: [
+            {
+              href: "/logs",
+              title: "View all Logs"
+            }
+          ]
         }
       ],
       menu_admin: [

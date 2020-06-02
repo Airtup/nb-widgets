@@ -232,7 +232,7 @@ export default {
             var url = new URL(popup.location.href);
             var code = url.searchParams.get("code");
             if (code != undefined && code != null && code != "") {
-              me.showModalLoading.false;
+              me.showModalLoading = false;
               me.nation.access_token = code;
               me.getAccessToken();
               clearInterval(timer);

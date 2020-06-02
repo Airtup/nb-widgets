@@ -10,6 +10,9 @@ class AbstractFactory
 		{
 			return new FactoryDao();
 		}
+		else if($factory=='Api'){
+			return new FactoryNationApi();
+		}
 		else
 		{
 			\abort(500,'Undefined Factory');

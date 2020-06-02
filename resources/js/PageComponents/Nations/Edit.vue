@@ -154,7 +154,15 @@ export default {
   },
   methods: {
     updateNation: function() {},
-    refreshCache: function() {},
+    refreshCache: function() {
+      axios.post(BASE_URL + "/api/nation/clear/cache",{
+        nation_id: this.id,
+      }).then(response => {
+        if(response.status == 200){
+          
+        }
+      })
+    },
     syncMembers: function() {},
     syncPictures: function() {}
   }

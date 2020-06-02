@@ -14,7 +14,7 @@ class NationDao
     }
     public function insert($request)
     {
-        $nation = Nation::updateOrCreate($request);
+        $nation = Nation::updateOrCreate(['slug'=>$request['slug']],$request);
 
         return $nation;
     }
