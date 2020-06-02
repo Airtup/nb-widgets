@@ -7,18 +7,18 @@
       <div class="container-fluid">
         <div class="bd-example">
           <div>
-            <div class="text-right">
-              <button class="btn btn-success" @click="updateNation">
-                <font-awesome-icon icon="sync" size="2x" />Update Nation
+            <div class="row">
+              <button class="col-md-2 mb-1 p-3 btn btn-success" @click="updateNation">
+                <font-awesome-icon icon="sync" size="2x" /><br>Update Nation
               </button>
-              <button class="btn btn-success" @click="refreshCache">
-                <font-awesome-icon icon="redo" size="2x" />Refresh Cache
+              <button class="col-md-2 mb-1 offset-md-1 p-3 btn btn-success" @click="refreshCache">
+                <font-awesome-icon icon="redo" size="2x" /><br>Refresh Cache
               </button>
-              <button class="btn btn-success" @click="syncMembers">
-                <font-awesome-icon icon="user-cog" size="2x" />Sync Members
+              <button class="col-md-2 mb-1 offset-md-1 p-3 btn btn-success" @click="syncMembers">
+                <font-awesome-icon icon="user-cog" size="2x" /><br>Sync Members
               </button>
-              <button class="btn btn-success" @click="syncPictures">
-                <font-awesome-icon icon="portrait" size="2x" />Sync Pictures
+              <button class="col-md-2 mb-1 offset-md-1 p-3 btn btn-success" @click="syncPictures">
+                <font-awesome-icon icon="portrait" size="2x" /><br>Sync Pictures
               </button>
               <!-- <button class="btn btn-primary text-right" @click="createNation()">Connect Nation</button> -->
             </div>

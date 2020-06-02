@@ -1,6 +1,6 @@
 <template>
   <div>
-    <page-title :heading="heading" :subheading="subheading" :icon="icon"></page-title>
+    <page-title :heading="heading" :subheading="subheading" icon="hashtag"></page-title>
     <b-card title="Nations List" class="main-card mb-4">
       <b-row>
         <b-col md="6" class="my-1">
@@ -54,14 +54,20 @@
         @filtered="onFiltered"
       >
         <template v-slot:cell(actions)="row">
-          <b-button size="sm" @click="row.toggleDetails" class="mr-2">
-            <font-awesome-icon icon="eye" />
-            {{ row.detailsShowing ? 'Hide' : 'Show'}} Details
-          </b-button>
-          <a :href="'/#/nations/edit/' + row.item.id" class="mr-2 btn btn-success">
-            <font-awesome-icon icon="edit" />Edit
-          </a>
+          <div class="row">
+            <div class="col-12 col-md-6">
+              <a :href="'/#/nations/edit/' + row.item.id" class="btn btn-success btn-block">
+                <font-awesome-icon icon="edit" />Edit
+              </a>
+            </div>
+            <div class="col-12 col-md-6">
+              <a class="btn btn-danger btn-block" @click="deleteNation(row.item.id)">
+                <font-awesome-icon icon="trash" />Delete
+              </a>
+            </div>
+          </div>
         </template>
+        <template v-slot:cell(updated_at)="row">{{new Date(row.item.updated_at).toUTCString()}}</template>
         <template slot="row-details" slot-scope="row">
           <b-card class="no-shadow">
             <ul class="list-group">
@@ -95,9 +101,9 @@ import PageTitle from "../PageTitle";
 import swal from "sweetalert";
 
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faEdit, faEye } from "@fortawesome/free-solid-svg-icons";
+import { faEdit, faEye, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-library.add(faEdit, faEye);
+library.add(faEdit, faEye, faTrash);
 
 const items = [];
 export default {
@@ -106,28 +112,28 @@ export default {
     "font-awesome-icon": FontAwesomeIcon
   },
   data: () => ({
-    heading: "Dynamic Tables",
+    heading: "Nations list",
     subheading:
-      "Basic example of a Vue table with sort, search and filter functionality.",
+      "All registered nations are shown here",
     icon: "fa fa-hashtag",
 
     items: items,
     fields: [
       { key: "id", label: "ID" },
-      { key: "slug", label: "Nation Slug" },
       {
         key: "name",
         label: "Nation Name",
         sortable: true,
         sortDirection: "desc"
       },
+      { key: "slug", label: "Nation Slug" },
       { key: "access_token", label: "Nation API Token" },
       { key: "people_count", label: "Listing Count" },
       { key: "updated_at", label: "Last Refresh" },
       { key: "actions", label: "Actions" }
     ],
     currentPage: 1,
-    perPage: 20,
+    perPage: 50,
     totalRows: items.length,
     sortBy: null,
     sortDesc: false,
@@ -171,6 +177,38 @@ export default {
       // Trigger pagination to update the number of buttons/pages due to filtering
       this.totalRows = filteredItems.length;
       this.currentPage = 1;
+    },
+    deleteNation(id) {
+      swal({
+        title: "Are you sure?",
+        text: "Once deleted, you will not be able to recover this nation!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true
+      }).then(willDelete => {
+        if (willDelete) {
+          axios
+            .delete(BASE_URL + "/api/nations/" + id)
+            .then(response => {
+              if (response.status == 200) {
+                swal("Success", "Nation deleted", "success");
+                axios
+                  .get(BASE_URL + "/api/nations")
+                  .then(response => {
+                    if (response.status == 200) {
+                      this.items = response.data.data;
+                    }
+                  })
+                  .catch(error => {
+                    swal("Error", error, "error");
+                  });
+              }
+            })
+            .catch(error => {
+              swal("Error", error, "error");
+            });
+        }
+      });
     }
   }
 };

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Libraries\Factory\AbstractFactory;
 use App\Http\Requests\NationRequest;
 use Illuminate\Http\Request;
+use App\Models\Log;
+use App\Models\NationDetails;
 
 class NationController extends Controller
 {
@@ -55,10 +57,14 @@ class NationController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(NationRequest $request)
+    public function store(Request $request)
     {
-        $nation = $this->dao->insert($request->all());
-
+        $nation = $this->dao->insert($request->nation);
+        
+        if ($nation->id) {
+            Log::create(["user_id"=>$request->user_id,"nation_id"=>$nation->id,'description'=>'Add new Nation "'.$nation->name.'"']);
+            NationDetails::updateOrCreate(["nation_id" => $nation->id], ['tag' => $nation->name]);
+        }
         return response()->json(['status'=>'ok','data'=>$nation],200);
     }
 

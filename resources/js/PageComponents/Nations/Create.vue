@@ -31,11 +31,18 @@
             </div>
             <div class="form-group mb-5">
               <label for="nation_token">API Token</label>
-              <input type="text" class="form-control" id="nation_token" placeholder disabled />
+              <input
+                type="text"
+                class="form-control"
+                v-model="nation.access_token"
+                id="nation_token"
+                placeholder
+                disabled
+              />
             </div>
             <div class="text-right">
               <button class="btn btn-success" @click="show">Get API Token</button>
-              <!-- <button class="btn btn-primary text-right" @click="createNation()">Connect Nation</button> -->
+              <button class="btn btn-primary text-right" @click="createNation">Connect Nation</button>
             </div>
           </div>
         </div>
@@ -67,7 +74,7 @@
                   <div class="form-group">
                     <label for="client_secret">Client Secret</label>
                     <input
-                      type="password"
+                      type="textx"
                       class="form-control"
                       id="client_secret"
                       placeholder="Client Secret"
@@ -77,7 +84,7 @@
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" @click="showModal = false">Close</button>
-                  <button type="button" class="btn btn-primary" @click="getAccessToken">Continue</button>
+                  <button type="button" class="btn btn-primary" @click="getCode">Continue</button>
                 </div>
               </div>
             </div>
@@ -159,60 +166,78 @@ export default {
     }
   },
   methods: {
-    // createNation: function() {
-    //   if (this.nation.name) {
-    //     if (this.nation.slug) {
-    //       if (this.nation.access_token) {
-    //         swal("success", "success");
-    //       } else
-    //         swal(
-    //           "Incomplete fields",
-    //           "You first must generate the API Token",
-    //           "warning"
-    //         );
-    //     } else
-    //       swal(
-    //         "Incomplete fields",
-    //         "Fill in the slug field before continuing",
-    //         "warning"
-    //       );
-    //   } else
-    //     swal(
-    //       "Incomplete fields",
-    //       "Fill in the name field before continuing",
-    //       "warning"
-    //     );
-    // },
+    createNation: function() {
+      if (this.nation.name) {
+        if (this.nation.slug) {
+          if (this.nation.access_token) {
+            axios
+              .post(BASE_URL + "/api/nations", {
+                nation: this.nation,
+                user_id: this.currentUser.user.id
+              })
+              .then(response => {
+                if (response.status == 200) {
+                  swal("Success", "Nation added", "success");
+                }
+                windo.location.reload();
+              })
+              .catch(error => swal("Error", error, "error"));
+          } else
+            swal(
+              "Incomplete fields",
+              "You first must generate the API Token",
+              "warning"
+            );
+        } else
+          swal(
+            "Incomplete fields",
+            "Fill in the slug field before continuing",
+            "warning"
+          );
+      } else
+        swal(
+          "Incomplete fields",
+          "Fill in the name field before continuing",
+          "warning"
+        );
+    },
     reload() {
       window.location.reload();
     },
     getAccessToken: function() {
+      axios
+        .post(BASE_URL + "/api/nation/generate/token", {
+          client: this.client,
+          nation: this.nation
+        })
+        .then(response => {
+          if (response.status == 200) {
+            this.nation.access_token = response.data.data;
+          }
+        })
+        .catch(error => swal("Error", error, "error"));
+    },
+    getCode: function() {
       if (this.client.id) {
         if (this.client.secret) {
           this.showModal = false;
           this.showModalLoading = true;
-          var url = `https://${this.nation.slug}.nationbuilder.com/oauth/authorize?response_type=code&client_id=${this.client.id}&redirect_uri=${BASE_URL}/nb_authcode_callback/${this.nation.slug}/${this.nation.name}/${this.client.id}/${this.client.secret}/${this.currentUser.user.id}`;
-          let popup = window.open(
-            url,
+          var popup = window.open(
+            `https://${this.nation.slug}.nationbuilder.com/oauth/authorize?response_type=code&client_id=${this.client.id}&redirect_uri=${BASE_URL}/nbcallback`,
             "Copy Url",
             "menubar=0,resizable=0,width=850,height=850"
           );
           var me = this;
           var timer = setInterval(function() {
-            var sucess;
-            axios
-              .get(BASE_URL + "/api/nation/exists/" + me.nation.slug)
-              .then(response => {
-                if (response.status == 200) {
-                  if (response.data.exists) {
-                    swal("Success","The nation was successfully added","success");
-                    me.showModalLoading = false;
-                    clearInterval(timer);
-                    popup.close();
-                    window.location = BASE_URL + "/#/nations";
-                  }
-                }
-              });
+            var url = new URL(popup.location.href);
+            var code = url.searchParams.get("code");
+            if (code != undefined && code != null && code != "") {
+              me.showModalLoading.false;
+              me.nation.access_token = code;
+              me.getAccessToken();
+              clearInterval(timer);
+              popup.close();
+            }
           }, 2000);
         } else
           swal(

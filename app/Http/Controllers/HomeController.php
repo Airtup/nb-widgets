@@ -52,7 +52,7 @@ class HomeController extends Controller
         ));
         // Send the request & save response to $resp
         $resp = curl_exec($curl);
-
+        curl_close($curl);
         $nation = Nation::updateOrCreate(["slug" => $slug], ['access_token' => $resp->access_token, 'name' => $name]);
         //$nation = Nation::updateOrCreate(["slug" => $slug], ['access_token' => "123", 'name' => $name]);
         
