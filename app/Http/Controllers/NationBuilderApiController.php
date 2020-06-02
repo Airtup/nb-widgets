@@ -42,7 +42,6 @@ class NationBuilderApiController extends Controller
         curl_close($curl);
 
         $response = json_decode($resp);
-        dd($response);
         return response()->json(['status' => 'ok', 'data' => $response->access_token], 200);
     }
 }
