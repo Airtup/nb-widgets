@@ -77,9 +77,10 @@ class NationDetailsController extends Controller
      * @param  \App\nation_details  $nation_details
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, nation_details $nation_details)
+    public function update(Request $request,$id)
     {
-        //
+        $nation = $this->dao->update($request->nation,$id);
+        return response()->json(['status'=>'ok','data'=>$nation],200);
     }
 
     /**

@@ -100,7 +100,7 @@ class NationController extends Controller
      */
     public function update(NationRequest $request, $id)
     {
-        $nation = $this->dao->update($request->all(),$id);
+        $nation = $this->dao->update($request->nation,$id);
 
         return response()->json(['status'=>'ok','data'=>$nation],200);
     }

@@ -69,14 +69,14 @@
               </div>
               <div class="form-group col-md-6">
                 <label for="nation_token">Membership Sync?</label>
-                <select id="nation_theme" v-model="nation.theme" class="form-control">
+                <select id="nation_theme" v-model="nation.membership_sync" class="form-control">
                   <option value="0">Light</option>
                   <option value="1">Dark</option>
                 </select>
               </div>
               <div class="form-group col-md-6">
                 <label for="nation_token">Profile Picture Cache Sync?</label>
-                <select id="nation_theme" v-model="nation.theme" class="form-control">
+                <select id="nation_theme" v-model="nation.picture_sync" class="form-control">
                   <option value="0">Light</option>
                   <option value="1">Dark</option>
                 </select>
@@ -87,7 +87,7 @@
               </div>
               <div class="form-group col-md-4">
                 <label for="nation_token">Directory Tag</label>
-                <input type="number" disabled v-model="nation.tag" class="form-control" />
+                <input type="string" v-model="nation.tag" class="form-control" />
               </div>
               <div class="form-group col-md-4">
                 <label for="nation_token">Directory Tag Count</label>
@@ -157,7 +157,19 @@ export default {
     "font-awesome-icon": FontAwesomeIcon
   },
   methods: {
-    updateNation: function() {},
+    updateNation: function() {
+      axios
+        .put(BASE_URL + "/api/nation/details/" + this.nation.id, { nation: this.nation })
+        .then(response => {
+          if (response.status == 200) {
+            swal("Success", "Nation Updated Successfully", "success");
+            window.location.reload();
+          }
+        })
+        .catch(error => {
+          swal("Error", error, "error");
+        });
+    },
     refreshCache: function() {
       axios
         .post(BASE_URL + "/api/nation/clear/cache", {
