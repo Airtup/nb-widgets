@@ -34,10 +34,6 @@ Route::group([
 Route::group([
     'middleware' => 'auth:api',
 ], function(){
-    Route::get('/users','UserController@index');
-    Route::post('/users','UserController@store');
-    Route::delete('/users/{user}','UserController@destroy');
-    Route::get('/roles','RoleController@index');
 });
 
 // Routes to nations resources
@@ -54,3 +50,9 @@ Route::delete('/logs/{log}', 'LogController@destroy');
 
 Route::post('/nation/generate/token', 'NationBuilderApiController@generate_token');
 Route::post('/nation/clear/cache', 'NationBuilderApiController@clear_cache');
+
+
+Route::get('/users','UserController@index');
+Route::post('/users','UserController@store');
+Route::delete('/users/{user}','UserController@destroy');
+Route::get('/roles','RoleController@index');

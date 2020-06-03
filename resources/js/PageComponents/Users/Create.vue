@@ -74,7 +74,7 @@ export default {
   },
   created() {
     axios
-      .get(BASE_URL + "/api/roles?token=" + this.currentUser.access_token)
+      .get(BASE_URL + "/api/roles")
       .then(response => {
         if (response.status == 200) {
           this.roles = response.data.data;
@@ -98,7 +98,7 @@ export default {
           ) {
             axios
               .post(
-                BASE_URL + "/api/users?token=" + this.currentUser.access_token,
+                BASE_URL + "/api/users",
                 {
                   user: this.user,
                   role: this.role

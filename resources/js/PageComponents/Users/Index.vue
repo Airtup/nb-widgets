@@ -124,7 +124,7 @@ export default {
   }),
   created() {
     axios
-      .get(BASE_URL + "/api/users?token=" + this.currentUser.access_token)
+      .get(BASE_URL + "/api/users")
       .then(response => {
         if (response.status == 200) {
           this.items = response.data.data;
@@ -172,21 +172,14 @@ export default {
       }).then(willDelete => {
         if (willDelete) {
           axios
-            .delete(
-              BASE_URL +
-                "/api/users/" +
-                id +
-                "?token=" +
-                this.currentUser.access_token
-            )
+            .delete(BASE_URL + "/api/users/" + id)
             .then(response => {
               if (response.status == 200) {
                 swal("Success", "User deleted", "success");
                 axios
                   .get(
                     BASE_URL +
-                      "/api/users?token=" +
-                      this.currentUser.access_token
+                      "/api/users"
                   )
                   .then(response => {
                     if (response.status == 200) {
