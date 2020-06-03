@@ -55,16 +55,12 @@
       >
         <template v-slot:cell(actions)="row">
           <div class="row">
-            <div class="col-12 col-md-6">
-              <a :href="'/#/nations/edit/' + row.item.id" class="btn btn-success btn-block">
-                <font-awesome-icon icon="edit" />Edit
-              </a>
-            </div>
-            <div class="col-12 col-md-6">
-              <a class="btn btn-danger btn-block" @click="deleteNation(row.item.id)">
-                <font-awesome-icon icon="trash" />Delete
-              </a>
-            </div>
+            <a :href="'/#/nations/edit/' + row.item.id">
+              <font-awesome-icon size="2x" icon="edit" style="color:green" />
+            </a>
+            <a @click="deleteNation(row.item.id)" class="ml-4" style="color:red">
+              <font-awesome-icon size="2x" icon="trash" @click="deleteNation(row.item.id)" />
+            </a>
           </div>
         </template>
         <template v-slot:cell(updated_at)="row">{{new Date(row.item.updated_at).toUTCString()}}</template>
@@ -113,8 +109,7 @@ export default {
   },
   data: () => ({
     heading: "Nations list",
-    subheading:
-      "All registered nations are shown here",
+    subheading: "All registered nations are shown here",
     icon: "fa fa-hashtag",
 
     items: items,
