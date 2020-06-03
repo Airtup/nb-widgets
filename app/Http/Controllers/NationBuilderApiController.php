@@ -7,8 +7,18 @@ use App\Libraries\Factory\AbstractFactory;
 
 class NationBuilderApiController extends Controller
 {
+    private $factory;
+    private $api;
+    private $dao;
+    public function __construct()
+    {
+        $this->factory = AbstractFactory::getFactory('Api');
+        $this->api = $this->factory->getDAO('NationApiConexion');
+        $this->dao = AbstractFactory::getFactory('DAO')->getDAO('NationDao');
+    }
+
     /**
-     * Generate Token to a NationBuilderp
+     * Generate Nation Token
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -24,31 +34,86 @@ class NationBuilderApiController extends Controller
         );
 
         $url = 'https://' .  $request->nation["slug"] . '.nationbuilder.com/oauth/token';
-        // $curl = curl_init();
-        // curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
-        // curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
-        // curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type:application/json', "Accept: application/json"));
-        // curl_setopt_array($curl, array(
-        //     CURLOPT_RETURNTRANSFER => 1,
-        //     CURLOPT_URL => $url,
-        //     CURLOPT_USERAGENT => 'From Front End',
-        //     CURLOPT_POST => 1,
-        //     CURLOPT_POSTFIELDS => json_encode($params)
-        // ));
-        // // Send the request & save response to $resp
-        // $resp = curl_exec($curl);
-        // curl_close($curl);
 
-        // $response = json_decode($resp);
-        $factory = AbstractFactory::getFactory('Api');
-        $api = $factory->getDAO('NationApiConexion');
-        $response = $api->post($url,$params);
-        
+        $response = $this->api->post($url,$params);
+
         return response()->json(['status' => 'ok', 'data' => $response->access_token], 200);
     }
 
-    public function clear_cache()
+    public function clear_cache(Request $request)
     {
+        $nation_id = $request->all()['nation_id'];
+        $nation = $this->dao->get($nation_id)[0]; 
+        $this->dao->deleteCache($nation_id);
+        $mytag = str_replace(' ', '%20', $nation->nation_details->tag);
+        $temp_url = 'https://'.$nation->slug.'.nationbuilder.com';
+        $next = '/api/v1/tags/'.$mytag.'/people?limit=50';
+        $page = 1;
+        $daoPage = AbstractFactory::getFactory('DAO')->getDAO('NationPagesDao');
+        $daoPeople = AbstractFactory::getFactory('DAO')->getDAO('PeopleDao');
+        while($next != null){
+            $daoPage->insert(['nation_id'=>$nation->id,'nation_tag'=>$nation->nation_details->tag,'number_page'=>$page,'page_url'=>$next]);
+            $url =  $temp_url.$next.'&access_token='.$nation->access_token;
+            $response = $this->api->get($url);
+            if(!empty($response)){
+                foreach($response->results as $person){
+                    $city = null;
+                    $country = '';
+                    $home_address = null;
+                    $address2 = null;
+                    $address3 = null;
+                    $zip = null;
+                    $state = '';
+                    $country_code = null;
+                    $industry = null;
+                    if ($person->primary_address != null){
+                        $city = $person->primary_address->city;
+                        $country = $person->primary_address->country_code;
+                        $home_address = $person->primary_address->address1;
+                        $state = $person->primary_address->state;
+                        $address2 = $person->primary_address->address2;
+                        $address3 = $person->primary_address->address3;
+                        $zip = $person->primary_address->zip;
+                        $country_code = $person->primary_address->country_code;
+                    }
+                    $insertData = array(
+                        'nation_id' => $nation->id,
+                        'nation_tag' => $nation->nation_details->tag,
+                        'number_page' => $page,
+                        'first_name' => $person->first_name,
+                        'last_name' => $person->last_name,
+                        'industry' => $industry,
+                        'city' => $city,
+                        'country' => $country,
+                        'state' => $state,
+                        'profile_image' => $person->profile_image_url_ssl,
+                        'occupation' => $person->occupation,
+                        'employer' => $person->employer,
+                        'email' => $person->email,
+                        'twitter' => $person->twitter_id,
+                        'linkedin' => $person->linkedin_id,
+                        'facebook' => $person->has_facebook,
+                        'person_id' => $person->id,
+                        'phone' => $person->phone,
+                        'work_phone' => $person->work_phone_number,
+                        'mobile' => $person->mobile,
+                        'primary_address' => $home_address,
+                        'secondary_address' => $address2,
+                        'tertiary_address' => $address3,
+                        'zip' => $zip,
+                        'country_code' => $country_code,
+                        'tags' => json_encode($person->tags)
+                    );
 
+                    $daoPeople->insert($insertData);
+                }
+                $next = $response->next;
+            }else{
+                $next = null;
+            }
+            $page ++;
+        }
+
+        return response()->json(['status' => 'ok'], 200);
     }
 }

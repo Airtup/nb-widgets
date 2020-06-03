@@ -9,16 +9,20 @@
           <div>
             <div class="row">
               <button class="col-md-2 mb-1 p-3 btn btn-success" @click="updateNation">
-                <font-awesome-icon icon="sync" size="2x" /><br>Update Nation
+                <font-awesome-icon icon="sync" size="2x" />
+                <br />Update Nation
               </button>
               <button class="col-md-2 mb-1 offset-md-1 p-3 btn btn-success" @click="refreshCache">
-                <font-awesome-icon icon="redo" size="2x" /><br>Refresh Cache
+                <font-awesome-icon icon="redo" size="2x" />
+                <br />Refresh Cache
               </button>
               <button class="col-md-2 mb-1 offset-md-1 p-3 btn btn-success" @click="syncMembers">
-                <font-awesome-icon icon="user-cog" size="2x" /><br>Sync Members
+                <font-awesome-icon icon="user-cog" size="2x" />
+                <br />Sync Members
               </button>
               <button class="col-md-2 mb-1 offset-md-1 p-3 btn btn-success" @click="syncPictures">
-                <font-awesome-icon icon="portrait" size="2x" /><br>Sync Pictures
+                <font-awesome-icon icon="portrait" size="2x" />
+                <br />Sync Pictures
               </button>
               <!-- <button class="btn btn-primary text-right" @click="createNation()">Connect Nation</button> -->
             </div>
@@ -155,13 +159,16 @@ export default {
   methods: {
     updateNation: function() {},
     refreshCache: function() {
-      axios.post(BASE_URL + "/api/nation/clear/cache",{
-        nation_id: this.id,
-      }).then(response => {
-        if(response.status == 200){
-          
-        }
-      })
+      axios
+        .post(BASE_URL + "/api/nation/clear/cache", {
+          nation_id: this.id
+        })
+        .then(response => {
+          if (response.status == 200) {
+            swal("Success", "Cache Refresed successfully", "success");
+          }
+        })
+        .catch(error => swal("Error", error, "error"));
     },
     syncMembers: function() {},
     syncPictures: function() {}

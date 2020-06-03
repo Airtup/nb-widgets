@@ -14,4 +14,10 @@ class Nation extends Model
         return $this
             ->hasMany('App\Models\Log');
     }
+
+    public function nation_details()
+    {
+        return $this
+            ->hasOne('App\Models\NationDetails');
+    }
 }

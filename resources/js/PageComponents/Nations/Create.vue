@@ -178,8 +178,8 @@ export default {
               .then(response => {
                 if (response.status == 200) {
                   swal("Success", "Nation added", "success");
+                  window.location.reload();
                 }
-                windo.location.reload();
               })
               .catch(error => swal("Error", error, "error"));
           } else

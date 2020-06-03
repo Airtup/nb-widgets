@@ -3,6 +3,8 @@
 namespace App\Libraries\Dao;
 
 use App\Models\Nation;
+use App\Models\People;
+use App\Models\NationPages;
 
 class NationDao
 {
@@ -41,5 +43,15 @@ class NationDao
     public function exists($slug)
     {
         return Nation::where('slug', $slug)->exists();
+    }
+
+    public function deleteCache($id){
+        $nation = Nation::find($id);
+        $tag = $nation->nation_details->tag;
+        $people = People::where([['nation_id',$nation->id],['nation_tag',$tag]]);
+        $nation->update(['people_count'=>0]);
+        $pages = NationPages::where([['nation_id',$nation->id],['nation_tag',$tag]]);
+        $people->delete();
+        $pages->delete();
     }
 }
