@@ -26,18 +26,39 @@ const router = new Router({
     {
       path: "/nations",
       name: "nations",
-      component: () => import("../PageComponents/Nations/Index.vue")
+      component: () => import("../PageComponents/Nations/Index.vue"),
     },
     {
       path: "/nations/create",
       name: "create-nation",
-      component: () => import("../PageComponents/Nations/Create.vue")
+      component: () => import("../PageComponents/Nations/Create.vue"),
     },
     {
       path: "/nations/edit/:id",
       props: true,
       name: "edit-nation",
-      component: () => import("../PageComponents/Nations/Edit.vue")
+      component: () => import("../PageComponents/Nations/Edit.vue"),
+    },
+    {
+      path: "/logs",
+      name: "logs",
+      component: () => import("../PageComponents/Logs/Index.vue"),
+    },
+    {
+      path: "/users",
+      name: "users",
+      component: () => import("../PageComponents/Users/Index.vue"),
+    },
+    {
+      path: "/users/edit/:id",
+      props: true,
+      name: "edit-user",
+      component: () => import("../PageComponents/Users/Index.vue"),
+    },
+    {
+      path: "/users/create",
+      name: "create-user",
+      component: () => import("../PageComponents/Users/Create.vue"),
     }
   ],
 });

@@ -23,7 +23,8 @@
         faStar,
         faPlus,
         faHashtag,
-        faChartBar
+        faChartBar,
+        faSearch
     } from '@fortawesome/free-solid-svg-icons'
     import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome'
 
@@ -31,7 +32,8 @@
         faStar,
         faPlus,
         faHashtag,
-        faChartBar
+        faChartBar,
+        faSearch
     );
 
     export default {

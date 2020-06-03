@@ -81,7 +81,6 @@
                     </b-form-group>
                   </b-col>
                 </b-row>
-                <b-form-checkbox name="check" id="exampleCheck">Keep me logged in</b-form-checkbox>
                 <div class="divider" />
                 <div class="d-flex align-items-center">
                   <div class="ml-auto">
@@ -158,18 +157,12 @@ export default {
     },
     handleLogin() {
       if (this.user.email && this.user.password) {
-        this.$store.dispatch("auth/login", this.user).then(
-          () => {
-            this.$router.push("/");
-          },
-          error => {
-            this.loading = false;
-            this.message =
-              (error.response && error.response.data) ||
-              error.message ||
-              error.toString();
-          }
-        );
+        this.$store.dispatch("auth/login", this.user).catch(error => {
+          this.loading = false;
+          this.message = error.response.statusText
+            ? error.response.statusText + ": check your credentials"
+            : "Error: check your credentials";
+        });
       }
     }
   },

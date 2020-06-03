@@ -111,9 +111,14 @@ class NationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
+        $temp_nation = $this->dao->get($id)[0];
+        $nation_id = $temp_nation->id;
+        $nation_name = $temp_nation->name;
         $nation = $this->dao->delete($id);
+
+        Log::create(["user_id" =>$request->all()['user_id'], "nation_id" => $nation_id, 'description' => 'Nation Deleted "' . $nation_name . '"']);
 
         return response()->json(['status'=>'ok','data'=>null],200);
     }

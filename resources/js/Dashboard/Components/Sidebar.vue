@@ -6,7 +6,7 @@
     @mouseleave="toggleSidebarHover('remove','closed-sidebar-open')"
   >
     <div class="app-header__logo">
-      <div class="logo-src" />
+      <div class="logo-src" @click="$router.push('/')" />
       <div class="header__pane ml-auto">
         <button
           type="button"
@@ -48,7 +48,7 @@ export default {
         },
         {
           title: "Nations",
-          icon: "pe-7s-rocket",
+          icon: "pe-7s-network",
           child: [
             {
               href: "/nations",
@@ -78,7 +78,7 @@ export default {
         },
         {
           title: "Nations",
-          icon: "pe-7s-rocket",
+          icon: "pe-7s-network",
           child: [
             {
               href: "/nations",
@@ -92,7 +92,27 @@ export default {
         },
         {
           title: "Users",
-          icon: "pe-7s-browser"
+          icon: "pe-7s-users",
+          child: [
+            {
+              href: "/users",
+              title: "View all Users"
+            },
+            {
+              href: "/users/create",
+              title: "Add new User"
+            }
+          ]
+        },
+        {
+          title: "Logs",
+          icon: "pe-7s-search",
+          child: [
+            {
+              href: "/logs",
+              title: "View all Logs"
+            }
+          ]
         }
       ],
       collapsed: true,
@@ -159,3 +179,8 @@ export default {
   }
 };
 </script>
+<style scoped>
+.logo-src:hover {
+  cursor: pointer;
+}
+</style>

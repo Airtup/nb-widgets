@@ -156,10 +156,18 @@ export default {
   components: {
     "font-awesome-icon": FontAwesomeIcon
   },
+  computed: {
+    currentUser() {
+      return this.$store.state.auth.user;
+    }
+  },
   methods: {
     updateNation: function() {
       axios
-        .put(BASE_URL + "/api/nation/details/" + this.nation.id, { nation: this.nation })
+        .put(BASE_URL + "/api/nation/details/" + this.nation.id, {
+          nation: this.nation,
+          user_id: this.currentUser.user.id
+        })
         .then(response => {
           if (response.status == 200) {
             swal("Success", "Nation Updated Successfully", "success");
@@ -173,7 +181,8 @@ export default {
     refreshCache: function() {
       axios
         .post(BASE_URL + "/api/nation/clear/cache", {
-          nation_id: this.id
+          nation_id: this.id,
+          user_id: this.currentUser.user.id
         })
         .then(response => {
           if (response.status == 200) {

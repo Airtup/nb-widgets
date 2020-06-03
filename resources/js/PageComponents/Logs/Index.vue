@@ -1,7 +1,7 @@
 <template>
   <div>
-    <page-title :heading="heading" :subheading="subheading" icon="hashtag"></page-title>
-    <b-card title="Nations List" class="main-card mb-4">
+    <page-title :heading="heading" :subheading="subheading" icon="search"></page-title>
+    <b-card title="Logs List" class="main-card mb-4">
       <b-row>
         <b-col md="6" class="my-1">
           <b-form-group horizontal label="Filter" class="mb-0">
@@ -55,26 +55,17 @@
       >
         <template v-slot:cell(actions)="row">
           <div class="row">
-            <a :href="'/#/nations/edit/' + row.item.id">
-              <font-awesome-icon size="2x" icon="edit" style="color:green" />
-            </a>
-            <a @click="deleteNation(row.item.id)" class="ml-4" style="color:red">
+            <a
+              @click="deleteLog(row.item.id)"
+              class="ml-4 link"
+              style="color:red"
+              v-if="currentUser.user.role == 'admin'"
+            >
               <font-awesome-icon size="2x" icon="trash" />
             </a>
           </div>
         </template>
-        <template v-slot:cell(updated_at)="row">{{new Date(row.item.updated_at).toUTCString()}}</template>
-        <template slot="row-details" slot-scope="row">
-          <b-card class="no-shadow">
-            <ul class="list-group">
-              <li
-                class="list-group-item"
-                v-for="(value, key) in row.item"
-                :key="key"
-              >{{ key }}: {{ value}}</li>
-            </ul>
-          </b-card>
-        </template>
+        <template v-slot:cell(created_at)="row">{{new Date(row.item.created_at).toUTCString()}}</template>
       </b-table>
 
       <b-row>
@@ -108,27 +99,26 @@ export default {
     "font-awesome-icon": FontAwesomeIcon
   },
   data: () => ({
-    heading: "Nations list",
-    subheading: "All registered nations are shown here",
-    icon: "fa fa-hashtag",
+    heading: "Logs list",
+    subheading: "All logs are shown here",
+    icon: "fa fa-search",
 
     items: items,
     fields: [
       { key: "id", label: "ID" },
       {
-        key: "name",
+        key: "nation_name",
         label: "Nation Name",
         sortable: true,
         sortDirection: "desc"
       },
-      { key: "slug", label: "Nation Slug" },
-      { key: "access_token", label: "Nation API Token" },
-      { key: "people_count", label: "Listing Count" },
-      { key: "updated_at", label: "Last Refresh" },
+      { key: "description", label: "Content" },
+      { key: "created_at", label: "Create Time" },
+      { key: "user_name", label: "User" },
       { key: "actions", label: "Actions" }
     ],
     currentPage: 1,
-    perPage: 1000,
+    perPage: 100,
     totalRows: items.length,
     sortBy: null,
     sortDesc: false,
@@ -138,7 +128,7 @@ export default {
   }),
   created() {
     axios
-      .get(BASE_URL + "/api/nations")
+      .get(BASE_URL + "/api/logs")
       .then(response => {
         if (response.status == 200) {
           this.items = response.data.data;
@@ -176,28 +166,22 @@ export default {
       this.totalRows = filteredItems.length;
       this.currentPage = 1;
     },
-    deleteNation(id) {
+    deleteLog(id) {
       swal({
         title: "Are you sure?",
-        text: "Once deleted, you will not be able to recover this nation!",
+        text: "Once deleted, you will not be able to recover this log!",
         icon: "warning",
         buttons: true,
         dangerMode: true
       }).then(willDelete => {
         if (willDelete) {
           axios
-            .delete(
-              BASE_URL +
-                "/api/nations/" +
-                id +
-                "?user_id=" +
-                this.currentUser.user.id
-            )
+            .delete(BASE_URL + "/api/logs/" + id)
             .then(response => {
               if (response.status == 200) {
-                swal("Success", "Nation deleted", "success");
+                swal("Success", "Log deleted", "success");
                 axios
-                  .get(BASE_URL + "/api/nations")
+                  .get(BASE_URL + "/api/logs")
                   .then(response => {
                     if (response.status == 200) {
                       this.items = response.data.data;
@@ -217,3 +201,8 @@ export default {
   }
 };
 </script>
+<style scoped>
+.link:hover {
+  cursor: pointer;
+}
+</style>

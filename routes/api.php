@@ -20,6 +20,8 @@ use Illuminate\Support\Facades\Route;
 
 // API Routes 
 
+// Routes for Authentication trough API and JWT
+
 Route::group([
     'prefix' => 'auth',
 ], function () {
@@ -29,8 +31,26 @@ Route::group([
     Route::post('me', 'AuthController@me');
 });
 
+Route::group([
+    'middleware' => 'auth:api',
+], function(){
+    Route::get('/users','UserController@index');
+    Route::post('/users','UserController@store');
+    Route::delete('/users/{user}','UserController@destroy');
+    Route::get('/roles','RoleController@index');
+});
+
+// Routes to nations resources
+
 Route::resource('/nations', 'NationController');
 Route::resource('/nation/details', 'NationDetailsController');
+
+// Routes to list and delete log entries
+
+Route::get('/logs', 'LogController@index');
+Route::delete('/logs/{log}', 'LogController@destroy');
+
+// Routes that connect with NationBuilderAPI
+
 Route::post('/nation/generate/token', 'NationBuilderApiController@generate_token');
-Route::get('/nation/exists/{slug}','NationController@exists');
 Route::post('/nation/clear/cache', 'NationBuilderApiController@clear_cache');

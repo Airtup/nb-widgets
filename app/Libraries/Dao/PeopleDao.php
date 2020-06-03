@@ -8,7 +8,7 @@ class PeopleDao
 {
     public function select()
     {
-        $people = People::where('status', '1')->get();
+        $people = People::all();
 
         return $people;
     }
@@ -35,6 +35,6 @@ class PeopleDao
     {
        $person = People::find($id);
 
-        return$person->update(['status' => 0]);
+        return $person->update(['status' => 0]);
     }
 }

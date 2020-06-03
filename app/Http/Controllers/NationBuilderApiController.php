@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Libraries\Factory\AbstractFactory;
+use App\Models\Log;
 
 class NationBuilderApiController extends Controller
 {
@@ -43,8 +44,13 @@ class NationBuilderApiController extends Controller
     public function clear_cache(Request $request)
     {
         $nation_id = $request->all()['nation_id'];
+        $user_id = $request->all()['user_id'];
         $nation = $this->dao->get($nation_id)[0]; 
+
+
         $this->dao->deleteCache($nation_id);
+
+
         $mytag = str_replace(' ', '%20', $nation->nation_details->tag);
         $temp_url = 'https://'.$nation->slug.'.nationbuilder.com';
         $next = '/api/v1/tags/'.$mytag.'/people?limit=50';
@@ -108,12 +114,13 @@ class NationBuilderApiController extends Controller
                     $daoPeople->insert($insertData);
                 }
                 $next = $response->next;
-            }else{
+            }else{$request->all()['nation_id'];
                 $next = null;
             }
             $page ++;
         }
 
+        Log::create(["user_id" => $user_id, "nation_id" => $nation->id, 'description' => 'Cache Refreshed Nation "' . $nation->name . '"']);
         return response()->json(['status' => 'ok'], 200);
     }
 }

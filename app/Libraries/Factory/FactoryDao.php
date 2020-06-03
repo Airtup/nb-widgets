@@ -5,6 +5,9 @@ use App\Libraries\Dao\NationDao;
 use App\Libraries\Dao\NationDetailsDao;
 use App\Libraries\Dao\NationPagesDao;
 use App\Libraries\Dao\PeopleDao;
+use App\Libraries\Dao\LogDao;
+use App\Libraries\Dao\UserDao;
+use App\Libraries\Dao\RoleDao;
 
 class FactoryDAO
 {
@@ -14,17 +17,29 @@ class FactoryDAO
 		{
 			return new NationDao();
 		}
-		if($dao=='NationDetailsDao')
+		else if($dao=='NationDetailsDao')
 		{
 			return new NationDetailsDao();
 		}
-		if($dao=='NationPagesDao')
+		else if($dao=='NationPagesDao')
 		{
 			return new NationPagesDao();
 		}
-		if($dao=='PeopleDao')
+		else if($dao=='PeopleDao')
 		{
 			return new PeopleDao();
+		}
+		else if($dao=='LogDao')
+		{
+			return new LogDao();
+		}
+		else if($dao=='UserDao')
+		{
+			return new UserDao();
+		}
+		else if($dao=='RoleDao')
+		{
+			return new RoleDao();
 		}
 		else
 		{
