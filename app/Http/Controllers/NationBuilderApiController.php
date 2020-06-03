@@ -114,7 +114,7 @@ class NationBuilderApiController extends Controller
                     $daoPeople->insert($insertData);
                 }
                 $next = $response->next;
-            }else{$request->all()['nation_id'];
+            }else{
                 $next = null;
             }
             $page ++;
