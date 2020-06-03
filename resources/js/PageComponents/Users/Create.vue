@@ -19,8 +19,8 @@
               <small id="email_help" class="form-text text-muted">Will be used for login</small>
             </div>
             <div class="form-group col-md-6">
-              <label>User Name</label>
-              <input type="text" class="form-control" placeholder="User name" v-model="user.name" />
+              <label>Name</label>
+              <input type="text" class="form-control" placeholder="Name" v-model="user.name" />
             </div>
             <div class="form-group col-md-6">
               <label>Password</label>

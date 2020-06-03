@@ -105,7 +105,7 @@ export default {
       { key: "id", label: "ID" },
       {
         key: "user_name",
-        label: "User Name",
+        label: "Name",
         sortable: true,
         sortDirection: "desc"
       },
