@@ -792,8 +792,7 @@ class NationBuilderApiController extends Controller
         } else {
             $path = '';
         }
-
-        $nation = Nation::find($request->nation_id)->update(['logo' => $path]);
+        $nation = Nation::where('slug',$request->nation_slug)->get()->first()->update(['logo' => $path]);
     }
 
     public function getPDFLogo(Request $request){
