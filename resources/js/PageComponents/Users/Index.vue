@@ -1,7 +1,7 @@
 <template>
   <div>
     <page-title :heading="heading" :subheading="subheading" icon="search"></page-title>
-    <b-card title="Logs List" class="main-card mb-4">
+    <b-card title="Users List" class="main-card mb-4">
       <b-row>
         <b-col md="6" class="my-1">
           <b-form-group horizontal label="Filter" class="mb-0">
