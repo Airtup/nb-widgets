@@ -688,7 +688,7 @@ class NationBuilderApiController extends Controller
         $result = $this->dao->getNationBySlug($nation_slug);
         if ($result != null) {
             $result =  $this->dao->getAllNationCache($result->id, $result->tag, $forum);
-            echo json_encode($result);
+            return response()->json(['status' => 'ok', 'data' => $result], 200);
         } else
             echo '';
     }
@@ -700,7 +700,7 @@ class NationBuilderApiController extends Controller
         $result = $this->dao->getNationBySlug($nation_slug);
         if ($result != null){
             $result =  $this->dao->getAllNationCacheByPage($result->id, $result->tag, $page);
-            echo json_encode($result);
+            return response()->json(['status' => 'ok', 'data' => $result], 200);
         }
         else
             echo '';
@@ -772,8 +772,7 @@ class NationBuilderApiController extends Controller
                 
                 if ($result['nation_pro_assist_phone'] == 0)
                     $data->person->assistant_phone_number = null;
-
-                echo json_encode($data);
+                    return response()->json(['status' => 'ok', 'data' => $data], 200);
             }
             curl_close($curl);
         }
@@ -782,8 +781,8 @@ class NationBuilderApiController extends Controller
     }
 
     public function getPDFDetail(Request $request){
-        $nation_slug = $request->nation_slug;
+        $nation_slug = $request->all()['nation_slug'];
         $result = $this->dao->getNationBySlug($nation_slug);
-        echo json_encode($result);
+        return response()->json(['status' => 'ok', 'data' => $result], 200);
     }
 }
