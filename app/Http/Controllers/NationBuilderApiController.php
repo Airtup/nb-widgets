@@ -460,7 +460,6 @@ class NationBuilderApiController extends Controller
             echo 'no membership';
             return;
         }
-
         $nation_hq_id_array = json_decode($nation_hq_id);
         foreach ($nation_hq_id_array as $hq_id) {
             $hq_nation = $this->dao->get($hq_id)->first();

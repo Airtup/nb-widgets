@@ -307,12 +307,14 @@ export default {
         .catch(error => swal("Error", error, "error"));
     },
     syncMembers: function() {
-      if (this.syncStatus == 1) {
-        return;
-      }
-      this.syncStatus = 1;
-      this.syncCount = 0;
-      this.updateSyncMembers("/api/v1/people?limit=50");
+      if (this.nation.membership_sync) {
+        if (this.syncStatus == 1) {
+          return;
+        }
+        this.syncStatus = 1;
+        this.syncCount = 0;
+        this.updateSyncMembers("/api/v1/people?limit=50");
+      } else swal("Error", "Select a hq to sync", "warning");
     },
     updateSyncMembers: function(url) {
       axios
