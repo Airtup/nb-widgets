@@ -685,7 +685,7 @@ class NationBuilderApiController extends Controller
     public function getAllPeopleList(Request $request)
     {
         $nation_slug =  $request->nation_slug;
-        $forum =  $request->nation_slug;
+        $forum =  $request->forum;
         $result = $this->dao->getNationBySlug($nation_slug);
         if ($result != null) {
             $result =  $this->dao->getAllNationCache($result->id, $result->tag, $forum);
