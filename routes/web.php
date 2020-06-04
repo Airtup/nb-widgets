@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', 'HomeController@index')->name('home');
+Route::post('/getAllPeopleList','NationBuilderApiController@getAllPeopleList');
+Route::post('/getPersonDetail','NationBuilderApiController@getPersonDetail')
 
 Auth::routes();
 
