@@ -261,7 +261,7 @@ export default {
         name: "",
         slug: "",
         access_token: "",
-        logo: null,
+        logo: "",
         people_count: 3,
         status: 1
       },

@@ -788,16 +788,22 @@ class NationBuilderApiController extends Controller
     public function update_image(Request $request)
     {
         if ($request->hasFile('logo')) {
-            $path = $request->logo->storeAs('/nations/images', $request->nation_slug.'.'.$request->file('logo')->getClientOriginalExtension());
+            $path = $request->logo->storeAs('/nations/images', $request->nation_slug . '.' . $request->file('logo')->getClientOriginalExtension());
         } else {
             $path = '';
         }
-        $nation = Nation::where('slug',$request->nation_slug)->get()->first()->update(['logo' => $path]);
+        $nation = Nation::where('slug', $request->nation_slug)->get()->first()->update(['logo' => $path]);
     }
 
-    public function getPDFLogo(Request $request){
+    public function getPDFLogo(Request $request)
+    {
         $nation_slug = $request->all()['nation_slug'];
         $result = $this->dao->getNationBySlug($nation_slug);
         return response()->json(['status' => 'ok', 'data' => $result->logo], 200);
+    }
+
+    public function activate($id)
+    {
+        Nation::find($id)->update(["status" => 1]);
     }
 }
