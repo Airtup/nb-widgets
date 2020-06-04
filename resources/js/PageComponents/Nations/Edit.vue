@@ -128,8 +128,7 @@
                     <VuePerfectScrollbar class="scrollbar-container text-left" v-once>
                       <p>
                         Tag the people in the NationBuilder database with the tag "{{nation.tag}}" in order for the app to display them in the listings.
-                        Then Add the HTML code below where you want the listing to display. Add the Script Snippet in the HEADER(?)
-                        **** But must add bootstrap, jquery to site (Basic) ****
+                        Then Add the HTML code below where you want the listing to display. Add the Script Snippet before the &lt;/body> tag.
                       </p>
                     </VuePerfectScrollbar>
                   </div>
