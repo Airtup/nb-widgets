@@ -9,8 +9,7 @@
                 <font-awesome-icon icon="user" size="2x" />
               </div>
               <div class="dropdown-menu-header">
-                <div class="dropdown-menu-header-inner bg-info">
-                  <div class="menu-header-image opacity-2 dd-header-bg-6"></div>
+                <div class="dropdown-menu-header-inner bg-midnight-bloom text-lighter">
                   <div class="menu-header-content text-left">
                     <div class="widget-content p-0">
                       <div class="widget-content-wrapper">
@@ -31,7 +30,7 @@
                   </div>
                 </div>
               </div>
-              <div class="scroll-area-xs" style="height: 150px;">
+              <!-- <div class="scroll-area-xs" style="height: 150px;">
                 <VuePerfectScrollbar class="scrollbar-container" v-once>
                   <ul class="nav flex-column">
                     <li class="nav-item-header nav-item">Activity</li>
@@ -44,7 +43,7 @@
                     </li>
                   </ul>
                 </VuePerfectScrollbar>
-              </div>
+              </div> -->
             </b-dropdown>
           </div>
           <div class="widget-content-left ml-3 header-user-info">
