@@ -136,15 +136,13 @@
                   <h5 class="card-title">Add Boostrap (Header)</h5>
                   <div class="scroll-area-md">
                     <VuePerfectScrollbar class="scrollbar-container text-left" v-once>
-                      <div>
-                        <pre>
+                      <pre>
                           <code class="js">      
                         &lt;script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js">&lt;/script>
                         <br />&lt;script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js">&lt;/script>
                         <br />&lt;link href="https://fonts.googleapis.com/css?family=PT+Serif:400,700|Roboto+Slab:300,400,700" rel="stylesheet">
                         </code>
                       </pre>
-                      </div>
                     </VuePerfectScrollbar>
                   </div>
                 </div>
@@ -154,13 +152,11 @@
                   <h5 class="card-title">Add HTML</h5>
                   <div class="scroll-area-md">
                     <VuePerfectScrollbar class="scrollbar-container text-left" v-once>
-                      <div>
-                        <pre>
+                      <pre>
                           <code class="language-html">     
                           &lt;div class="directory-listing">&lt;/div>
                         </code>
-                        </pre>
-                      </div>
+                      </pre>
                     </VuePerfectScrollbar>
                   </div>
                 </div>
@@ -170,8 +166,7 @@
                   <h5 class="card-title">Add Script Snippet</h5>
                   <div class="scroll-area-md">
                     <VuePerfectScrollbar>
-                      <div>
-                        <pre>
+                      <pre>
                           <code class="js">     
                             &lt;script type="text/javascript">
                             <br />var dominolink
@@ -186,7 +181,6 @@
                             <br />&lt;link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
                             </code>
                         </pre>
-                      </div>
                     </VuePerfectScrollbar>
                   </div>
                 </div>
