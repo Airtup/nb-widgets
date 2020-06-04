@@ -11,8 +11,258 @@ class NationBuilderApiController extends Controller
     private $factory;
     private $api;
     private $dao;
+
+    public $isoCountries = array(
+        'AF' => 'Afghanistan',
+        'AX' => 'Aland Islands',
+        'AL' => 'Albania',
+        'DZ' => 'Algeria',
+        'AS' => 'American Samoa',
+        'AD' => 'Andorra',
+        'AO' => 'Angola',
+        'AI' => 'Anguilla',
+        'AQ' => 'Antarctica',
+        'AG' => 'Antigua And Barbuda',
+        'AR' => 'Argentina',
+        'AM' => 'Armenia',
+        'AW' => 'Aruba',
+        'AU' => 'Australia',
+        'AT' => 'Austria',
+        'AZ' => 'Azerbaijan',
+        'BS' => 'Bahamas',
+        'BH' => 'Bahrain',
+        'BD' => 'Bangladesh',
+        'BB' => 'Barbados',
+        'BY' => 'Belarus',
+        'BE' => 'Belgium',
+        'BZ' => 'Belize',
+        'BJ' => 'Benin',
+        'BM' => 'Bermuda',
+        'BT' => 'Bhutan',
+        'BO' => 'Bolivia',
+        'BA' => 'Bosnia And Herzegovina',
+        'BW' => 'Botswana',
+        'BV' => 'Bouvet Island',
+        'BR' => 'Brazil',
+        'IO' => 'British Indian Ocean Territory',
+        'BN' => 'Brunei Darussalam',
+        'BG' => 'Bulgaria',
+        'BF' => 'Burkina Faso',
+        'BI' => 'Burundi',
+        'KH' => 'Cambodia',
+        'CM' => 'Cameroon',
+        'CA' => 'Canada',
+        'CV' => 'Cape Verde',
+        'KY' => 'Cayman Islands',
+        'CF' => 'Central African Republic',
+        'TD' => 'Chad',
+        'CL' => 'Chile',
+        'CN' => 'China',
+        'CX' => 'Christmas Island',
+        'CC' => 'Cocos (Keeling) Islands',
+        'CO' => 'Colombia',
+        'KM' => 'Comoros',
+        'CG' => 'Congo',
+        'CD' => 'Congo, Democratic Republic',
+        'CK' => 'Cook Islands',
+        'CR' => 'Costa Rica',
+        'CI' => 'Cote D\'Ivoire',
+        'HR' => 'Croatia',
+        'CU' => 'Cuba',
+        'CY' => 'Cyprus',
+        'CZ' => 'Czech Republic',
+        'DK' => 'Denmark',
+        'DJ' => 'Djibouti',
+        'DM' => 'Dominica',
+        'DO' => 'Dominican Republic',
+        'EC' => 'Ecuador',
+        'EG' => 'Egypt',
+        'SV' => 'El Salvador',
+        'GQ' => 'Equatorial Guinea',
+        'ER' => 'Eritrea',
+        'EE' => 'Estonia',
+        'ET' => 'Ethiopia',
+        'FK' => 'Falkland Islands (Malvinas)',
+        'FO' => 'Faroe Islands',
+        'FJ' => 'Fiji',
+        'FI' => 'Finland',
+        'FR' => 'France',
+        'GF' => 'French Guiana',
+        'PF' => 'French Polynesia',
+        'TF' => 'French Southern Territories',
+        'GA' => 'Gabon',
+        'GM' => 'Gambia',
+        'GE' => 'Georgia',
+        'DE' => 'Germany',
+        'GH' => 'Ghana',
+        'GI' => 'Gibraltar',
+        'GR' => 'Greece',
+        'GL' => 'Greenland',
+        'GD' => 'Grenada',
+        'GP' => 'Guadeloupe',
+        'GU' => 'Guam',
+        'GT' => 'Guatemala',
+        'GG' => 'Guernsey',
+        'GN' => 'Guinea',
+        'GW' => 'Guinea-Bissau',
+        'GY' => 'Guyana',
+        'HT' => 'Haiti',
+        'HM' => 'Heard Island & Mcdonald Islands',
+        'VA' => 'Holy See (Vatican City State)',
+        'HN' => 'Honduras',
+        'HK' => 'Hong Kong',
+        'HU' => 'Hungary',
+        'IS' => 'Iceland',
+        'IN' => 'India',
+        'ID' => 'Indonesia',
+        'IR' => 'Iran, Islamic Republic Of',
+        'IQ' => 'Iraq',
+        'IE' => 'Ireland',
+        'IM' => 'Isle Of Man',
+        'IL' => 'Israel',
+        'IT' => 'Italy',
+        'JM' => 'Jamaica',
+        'JP' => 'Japan',
+        'JE' => 'Jersey',
+        'JO' => 'Jordan',
+        'KZ' => 'Kazakhstan',
+        'KE' => 'Kenya',
+        'KI' => 'Kiribati',
+        'KR' => 'Korea',
+        'KW' => 'Kuwait',
+        'KG' => 'Kyrgyzstan',
+        'LA' => 'Lao People\'s Democratic Republic',
+        'LV' => 'Latvia',
+        'LB' => 'Lebanon',
+        'LS' => 'Lesotho',
+        'LR' => 'Liberia',
+        'LY' => 'Libyan Arab Jamahiriya',
+        'LI' => 'Liechtenstein',
+        'LT' => 'Lithuania',
+        'LU' => 'Luxembourg',
+        'MO' => 'Macao',
+        'MK' => 'Macedonia',
+        'MG' => 'Madagascar',
+        'MW' => 'Malawi',
+        'MY' => 'Malaysia',
+        'MV' => 'Maldives',
+        'ML' => 'Mali',
+        'MT' => 'Malta',
+        'MH' => 'Marshall Islands',
+        'MQ' => 'Martinique',
+        'MR' => 'Mauritania',
+        'MU' => 'Mauritius',
+        'YT' => 'Mayotte',
+        'MX' => 'Mexico',
+        'FM' => 'Micronesia, Federated States Of',
+        'MD' => 'Moldova',
+        'MC' => 'Monaco',
+        'MN' => 'Mongolia',
+        'ME' => 'Montenegro',
+        'MS' => 'Montserrat',
+        'MA' => 'Morocco',
+        'MZ' => 'Mozambique',
+        'MM' => 'Myanmar',
+        'NA' => 'Namibia',
+        'NR' => 'Nauru',
+        'NP' => 'Nepal',
+        'NL' => 'Netherlands',
+        'AN' => 'Netherlands Antilles',
+        'NC' => 'New Caledonia',
+        'NZ' => 'New Zealand',
+        'NI' => 'Nicaragua',
+        'NE' => 'Niger',
+        'NG' => 'Nigeria',
+        'NU' => 'Niue',
+        'NF' => 'Norfolk Island',
+        'MP' => 'Northern Mariana Islands',
+        'NO' => 'Norway',
+        'OM' => 'Oman',
+        'PK' => 'Pakistan',
+        'PW' => 'Palau',
+        'PS' => 'Palestinian Territory, Occupied',
+        'PA' => 'Panama',
+        'PG' => 'Papua New Guinea',
+        'PY' => 'Paraguay',
+        'PE' => 'Peru',
+        'PH' => 'Philippines',
+        'PN' => 'Pitcairn',
+        'PL' => 'Poland',
+        'PT' => 'Portugal',
+        'PR' => 'Puerto Rico',
+        'QA' => 'Qatar',
+        'RE' => 'Reunion',
+        'RO' => 'Romania',
+        'RU' => 'Russian Federation',
+        'RW' => 'Rwanda',
+        'BL' => 'Saint Barthelemy',
+        'SH' => 'Saint Helena',
+        'KN' => 'Saint Kitts And Nevis',
+        'LC' => 'Saint Lucia',
+        'MF' => 'Saint Martin',
+        'PM' => 'Saint Pierre And Miquelon',
+        'VC' => 'Saint Vincent And Grenadines',
+        'WS' => 'Samoa',
+        'SM' => 'San Marino',
+        'ST' => 'Sao Tome And Principe',
+        'SA' => 'Saudi Arabia',
+        'SN' => 'Senegal',
+        'RS' => 'Serbia',
+        'SC' => 'Seychelles',
+        'SL' => 'Sierra Leone',
+        'SG' => 'Singapore',
+        'SK' => 'Slovakia',
+        'SI' => 'Slovenia',
+        'SB' => 'Solomon Islands',
+        'SO' => 'Somalia',
+        'ZA' => 'South Africa',
+        'GS' => 'South Georgia And Sandwich Isl.',
+        'ES' => 'Spain',
+        'LK' => 'Sri Lanka',
+        'SD' => 'Sudan',
+        'SR' => 'Suriname',
+        'SJ' => 'Svalbard And Jan Mayen',
+        'SZ' => 'Swaziland',
+        'SE' => 'Sweden',
+        'CH' => 'Switzerland',
+        'SY' => 'Syrian Arab Republic',
+        'TW' => 'Taiwan',
+        'TJ' => 'Tajikistan',
+        'TZ' => 'Tanzania',
+        'TH' => 'Thailand',
+        'TL' => 'Timor-Leste',
+        'TG' => 'Togo',
+        'TK' => 'Tokelau',
+        'TO' => 'Tonga',
+        'TT' => 'Trinidad And Tobago',
+        'TN' => 'Tunisia',
+        'TR' => 'Turkey',
+        'TM' => 'Turkmenistan',
+        'TC' => 'Turks And Caicos Islands',
+        'TV' => 'Tuvalu',
+        'UG' => 'Uganda',
+        'UA' => 'Ukraine',
+        'AE' => 'United Arab Emirates',
+        'GB' => 'United Kingdom',
+        'US' => 'United States',
+        'UM' => 'United States Outlying Islands',
+        'UY' => 'Uruguay',
+        'UZ' => 'Uzbekistan',
+        'VU' => 'Vanuatu',
+        'VE' => 'Venezuela',
+        'VN' => 'Viet Nam',
+        'VG' => 'Virgin Islands, British',
+        'VI' => 'Virgin Islands, U.S.',
+        'WF' => 'Wallis And Futuna',
+        'EH' => 'Western Sahara',
+        'YE' => 'Yemen',
+        'ZM' => 'Zambia',
+        'ZW' => 'Zimbabwe'
+    );
+
     public function __construct()
     {
+        ini_set('max_execution_time', 1000);
         $this->factory = AbstractFactory::getFactory('Api');
         $this->api = $this->factory->getDAO('NationApiConexion');
         $this->dao = AbstractFactory::getFactory('DAO')->getDAO('NationDao');
@@ -36,7 +286,7 @@ class NationBuilderApiController extends Controller
 
         $url = 'https://' .  $request->nation["slug"] . '.nationbuilder.com/oauth/token';
 
-        $response = $this->api->post($url,$params);
+        $response = $this->api->post($url, $params);
 
         return response()->json(['status' => 'ok', 'data' => $response->access_token], 200);
     }
@@ -45,24 +295,24 @@ class NationBuilderApiController extends Controller
     {
         $nation_id = $request->all()['nation_id'];
         $user_id = $request->all()['user_id'];
-        $nation = $this->dao->get($nation_id)[0]; 
+        $nation = $this->dao->get($nation_id)[0];
 
 
         $this->dao->deleteCache($nation_id);
 
 
         $mytag = str_replace(' ', '%20', $nation->nation_details->tag);
-        $temp_url = 'https://'.$nation->slug.'.nationbuilder.com';
-        $next = '/api/v1/tags/'.$mytag.'/people?limit=50';
+        $temp_url = 'https://' . $nation->slug . '.nationbuilder.com';
+        $next = '/api/v1/tags/' . $mytag . '/people?limit=50';
         $page = 1;
         $daoPage = AbstractFactory::getFactory('DAO')->getDAO('NationPagesDao');
         $daoPeople = AbstractFactory::getFactory('DAO')->getDAO('PeopleDao');
-        while($next != null){
-            $daoPage->insert(['nation_id'=>$nation->id,'nation_tag'=>$nation->nation_details->tag,'number_page'=>$page,'page_url'=>$next]);
-            $url =  $temp_url.$next.'&access_token='.$nation->access_token;
+        while ($next != null) {
+            $daoPage->insert(['nation_id' => $nation->id, 'nation_tag' => $nation->nation_details->tag, 'number_page' => $page, 'page_url' => $next]);
+            $url =  $temp_url . $next . '&access_token=' . $nation->access_token;
             $response = $this->api->get($url);
-            if(!empty($response)){
-                foreach($response->results as $person){
+            if (!empty($response)) {
+                foreach ($response->results as $person) {
                     $city = null;
                     $country = '';
                     $home_address = null;
@@ -72,7 +322,7 @@ class NationBuilderApiController extends Controller
                     $state = '';
                     $country_code = null;
                     $industry = null;
-                    if ($person->primary_address != null){
+                    if ($person->primary_address != null) {
                         $city = $person->primary_address->city;
                         $country = $person->primary_address->country_code;
                         $home_address = $person->primary_address->address1;
@@ -82,6 +332,8 @@ class NationBuilderApiController extends Controller
                         $zip = $person->primary_address->zip;
                         $country_code = $person->primary_address->country_code;
                     }
+                    if (isset($this->isoCountries[$country]))
+                        $country = $this->isoCountries[$country];
                     $insertData = array(
                         'nation_id' => $nation->id,
                         'nation_tag' => $nation->nation_details->tag,
@@ -114,37 +366,219 @@ class NationBuilderApiController extends Controller
                     $daoPeople->insert($insertData);
                 }
                 $next = $response->next;
-            }else{
+            } else {
                 $next = null;
             }
-            $page ++;
+            $page++;
         }
+        $temp_url = 'https://' . $nation->slug . '.nationbuilder.com/api/v1/people/count?access_token=' . $nation->access_token;;
+        $response = $this->api->get($temp_url);
 
+        $this->dao->update(['people_count' => $response->people_count], $nation_id);
         Log::create(["user_id" => $user_id, "nation_id" => $nation->id, 'description' => 'Cache Refreshed Nation "' . $nation->name . '"']);
         return response()->json(['status' => 'ok'], 200);
     }
-    public function sync_image(Request $request){
+
+    public function update_sync_members(Request $request)
+    {
+        $next_url = $request['next_url'];
+        $nation_id = $request['nation_id'];
+        $result = $this->dao->get($nation_id)->first();
+
+        $url = 'https://' . $result->slug . '.nationbuilder.com' . $next_url . '&access_token=' . $result->access_token;
+
+        $cookiesIn = '';
+        $curl = curl_init();
+        $options = array(
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,     // return web page
+            // CURLOPT_HEADER         => true,     //return headers in  addition to content
+            CURLOPT_FOLLOWLOCATION => true,     // follow redirects
+            CURLOPT_ENCODING       => "",       // handle all encodings
+            CURLOPT_AUTOREFERER    => true,     // set referer on redirect
+            CURLOPT_CONNECTTIMEOUT => 120,      // timeout on connect
+            CURLOPT_TIMEOUT        => 120,      // timeout on response
+            // CURLOPT_MAXREDIRS      => 10,       // stop after 10 redirects
+            CURLINFO_HEADER_OUT    => true,
+            CURLOPT_SSL_VERIFYPEER => true,     // Validate SSL Certificates
+            CURLOPT_HTTP_VERSION   => CURL_HTTP_VERSION_1_1,
+            CURLOPT_COOKIE         => $cookiesIn
+        );
+        curl_setopt_array($curl, $options);
+        $curlResponse = curl_exec($curl);
+        if (curl_error($curl)) {
+            return response()->json(['status' => 'error', 'data' => $curlResponse], 500);
+        } else {
+            return response()->json(['status' => 'ok', 'data' => $curlResponse], 200);
+        }
+    }
+
+    public function update_match_person(Request $request)
+    {
+        $nation_id = $request->all()['nation_id'];
+        $person_info = $request->all()['person_info'];
+        $nation_hq_id = $request->all()['nation_hq_id'];
+
+        $org_person_id = $person_info['id'];
+
+        $sub_nation = $this->dao->get($nation_id)->first();
+
+
+        $org_membership_url = 'https://' . $sub_nation->slug . '.nationbuilder.com/api/v1/people/' . $org_person_id . '/memberships?limit=50&access_token=' . $sub_nation->access_token;
+
+        $cookiesIn = '';
+        $curl = curl_init();
+        $options = array(
+            CURLOPT_URL => $org_membership_url,
+            CURLOPT_RETURNTRANSFER => true,     // return web page
+            // CURLOPT_HEADER         => true,     //return headers in  addition to content
+            CURLOPT_FOLLOWLOCATION => true,     // follow redirects
+            CURLOPT_ENCODING       => "",       // handle all encodings
+            CURLOPT_AUTOREFERER    => true,     // set referer on redirect
+            CURLOPT_CONNECTTIMEOUT => 120,      // timeout on connect
+            CURLOPT_TIMEOUT        => 120,      // timeout on response
+            // CURLOPT_MAXREDIRS      => 10,       // stop after 10 redirects
+            CURLINFO_HEADER_OUT    => true,
+            CURLOPT_SSL_VERIFYPEER => true,     // Validate SSL Certificates
+            CURLOPT_HTTP_VERSION   => CURL_HTTP_VERSION_1_1,
+            CURLOPT_COOKIE         => $cookiesIn
+        );
+        curl_setopt_array($curl, $options);
+        $curlResponse = curl_exec($curl);
+        if (curl_error($curl)) {
+            echo 'fail';
+            return;
+        }
+        $membership_results = json_decode($curlResponse);
+        $memberships = $membership_results->results;
+        if (count($memberships) == 0) {
+            echo 'no membership';
+            return;
+        }
+
+        $nation_hq_id_array = json_decode($nation_hq_id);
+        foreach ($nation_hq_id_array as $hq_id) {
+            $hq_nation = $this->dao->get($hq_id)->first();
+
+            $url = 'https://' . $hq_nation->slug . '.nationbuilder.com/api/v1/people/search?access_token=' . $hq_nation->access_token;
+            if ($person_info['first_name'] != null && $person_info['first_name'] != '') {
+                $url .= '&first_name=' . $person_info['first_name'];
+            }
+            if ($person_info['last_name'] != null && $person_info['last_name'] != '') {
+                $url .= '&last_name=' . $person_info['last_name'];
+            }
+            if ($person_info['email'] != null && $person_info['email'] != '') {
+                $url .= '&email=' . $person_info['email'];
+            }
+
+            $url = $this->encodeURI($url);
+            $curl = curl_init();
+            $options = array(
+                CURLOPT_URL => $url,
+                CURLOPT_RETURNTRANSFER => true,     // return web page
+                // CURLOPT_HEADER         => true,     //return headers in  addition to content
+                CURLOPT_FOLLOWLOCATION => true,     // follow redirects
+                CURLOPT_ENCODING       => "",       // handle all encodings
+                CURLOPT_AUTOREFERER    => true,     // set referer on redirect
+                CURLOPT_CONNECTTIMEOUT => 120,      // timeout on connect
+                CURLOPT_TIMEOUT        => 120,      // timeout on response
+                // CURLOPT_MAXREDIRS      => 10,       // stop after 10 redirects
+                CURLINFO_HEADER_OUT    => true,
+                CURLOPT_SSL_VERIFYPEER => true,     // Validate SSL Certificates
+                CURLOPT_HTTP_VERSION   => CURL_HTTP_VERSION_1_1,
+                CURLOPT_COOKIE         => $cookiesIn
+            );
+            curl_setopt_array($curl, $options);
+            $curlResponse = curl_exec($curl);
+            if (curl_error($curl)) {
+                echo 'fail';
+                return;
+            }
+            $people = json_decode($curlResponse);
+            $person_hq_id = 0;
+            if (count($people->results) == 1) {
+                $person_hq_id = $people->results[0]->id;
+            } else {
+                foreach ($people->results as $person) {
+                    if ($person->phone == $person_info['phone'] && $person->mobile == $person_info['mobile']) {
+                        $person_hq_id = $person->id;
+                        break;
+                    }
+                }
+            }
+
+            if ($person_hq_id == 0) {
+                echo 'no match person';
+                continue;
+            }
+
+            foreach ($memberships as $org_membership) {
+
+                $params['membership']['name'] = $org_membership->name;
+                $params['membership']['status'] = $org_membership->status;
+                $params['membership']['status_reason'] = $org_membership->status_reason;
+                $params['membership']['started_at'] = $org_membership->started_at;
+                $params['membership']['expires_on'] = $org_membership->expires_on;
+
+                $url = 'https://' . $hq_nation['nation_slug'] . '.nationbuilder.com/api/v1/people/' . $person_hq_id . '/memberships?access_token=' . $hq_nation['nation_auth'];;
+                $curl = curl_init();
+                curl_setopt_array($curl, array(
+                    CURLOPT_URL => $url,
+                    CURLOPT_RETURNTRANSFER => true,
+                    CURLOPT_ENCODING => "",
+                    CURLOPT_MAXREDIRS => 10,
+                    CURLOPT_TIMEOUT => 0,
+                    CURLOPT_FOLLOWLOCATION => true,
+                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                    CURLOPT_CUSTOMREQUEST => "PUT",
+                    CURLOPT_POSTFIELDS => json_encode($params),
+                    CURLOPT_HTTPHEADER => array(
+                        "x-rapidapi-host: google-translate1.p.rapidapi.com",
+                        "x-rapidapi-key: d1ec636ac5msh35885a399298175p14f2e4jsn92997c76c589",
+                        "Content-Type: application/json"
+                    ),
+                ));
+                $curlResponse = curl_exec($curl);
+                if (curl_error($curl)) {
+                    echo 'fail';
+                    return;
+                }
+                echo $curlResponse;
+            }
+        }
+    }
+
+    public function create_sync_member_log(Request $request)
+    {
+        $nation_id = $request->all()['nation_id'];
+        $user_id = $request->all()['user_id'];
+
+        $nation = $this->dao->get($nation_id)->first();
+        Log::create(["user_id" => $user_id, "nation_id" => $nation->id, 'description' => 'Sync Members in Nation "' . $nation->name . '"']);
+    }
+
+    public function sync_image(Request $request)
+    {
         $nation_id = $request->all()['nation_id'];
         $user_id = $request->all()['user_id'];
         $nation = $this->dao->get($nation_id)[0];
         $next = '/api/v1/people?limit=50';
-        $url = 'https://'.$nation->slug.'.nationbuilder.com'.$next.'&access_token='.$nation->access_token;
+        $url = 'https://' . $nation->slug . '.nationbuilder.com' . $next . '&access_token=' . $nation->access_token;
         $daoPeople = AbstractFactory::getFactory('DAO')->getDAO('PeopleDao');
-        while($next != null){
+        while ($next != null) {
             $url = $url;
             $response = $this->api->get($url);
-            if(!empty($response)){
-                foreach($response->results as $person){
-    
+            if (!empty($response)) {
+                foreach ($response->results as $person) {
                     $updateData = array(
                         'nation_id' => $nation->id,
                         'profile_image' => $person->profile_image_url_ssl,
-                        'email' => $person->email,
+                        'person_id' => $person->id,
                     );
                     $daoPeople->update_image($updateData);
                 }
                 $next = $response->next;
-            }else{
+            } else {
                 $next = null;
             }
         }

@@ -44,9 +44,9 @@
       >
         <template v-slot:cell(actions)="row">
           <div class="row">
-            <a :href="'/#/users/edit/' + row.item.id">
+            <!-- <a :href="'/#/users/edit/' + row.item.id">
               <font-awesome-icon size="1x" icon="edit" style="color:green" />
-            </a>
+            </a> -->
             <a @click="deleteUser(row.item.id)" class="ml-4 link" style="color:red">
               <font-awesome-icon size="1x" icon="trash" />
             </a>
@@ -85,8 +85,8 @@ export default {
     "font-awesome-icon": FontAwesomeIcon
   },
   data: () => ({
-    heading: "Logs list",
-    subheading: "All logs are shown here",
+    heading: "Users list",
+    subheading: "All users are shown here",
     icon: "fa fa-search",
 
     items: items,

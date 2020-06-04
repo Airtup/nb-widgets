@@ -76,8 +76,12 @@ class NationController extends Controller
      */
     public function show($id)
     {
+        
+		$hq_nations = $this->dao->get_hq_nations();
+        $data['hq_pic_nation'] = $this->MNation->getAllSyncPicNations();
+        
         $nation = $this->dao->get($id);
-        return response()->json(['status'=>'ok','data'=>$nation],200);
+        return response()->json(['status'=>'ok','data'=>['nation' => $nation,'hq_nations' => $hq_nations]],200);
     }
 
     /**
