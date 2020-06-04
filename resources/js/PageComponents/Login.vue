@@ -1,104 +1,66 @@
 <template>
-  <div>
-    <div class="vh-100">
-      <b-row class="vh-100 no-gutters">
-        <b-col lg="4" class="d-none d-lg-block">
-          <div class="slider-light">
-            <slick ref="slick" :options="slickOptions6">
-              <div
-                class="position-relative vh-100 d-flex justify-content-center align-items-center bg-plum-plate"
-              >
-                <div class="slide-img-bg" />
-                <div class="slider-content text-light">
-                  <h3>Perfect Balance</h3>
-                  <p>ArchitectUI is like a dream. Some think it's too good to be true! Extensive collection of unified Vue Bootstrap Components and Elements.</p>
+  <div class="app-container app-theme-white">
+    <div class="h-100 bg-plum-plate bg-animation">
+        <div class="d-flex vh-100 justify-content-center align-items-center">
+            <b-col md="8" class="mx-auto app-login-box">
+                <div class="logo-src mx-auto mb-3"/>
+
+                <div class="modal-dialog w-100 mx-auto">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="h5 modal-title text-center">
+                                <h4 class="mt-2">
+                                  <div>Welcome back,</div>
+                                  <span>Please sign in to your account below.</span>
+                                </h4>
+                            </div>
+                            <b-form-group id="exampleInputGroup1"
+                                          label-for="exampleEmail"
+                                          >
+                                <b-form-input type="email"
+                                            name="email"
+                                            v-model="user.email"
+                                            id="exampleEmail"
+                                            placeholder="Email here...">
+                                </b-form-input>
+                            </b-form-group>
+                            <b-form-group id="exampleInputGroup2"
+                                          label-for="examplePassword">
+                                <b-form-input v-model="user.password"
+                                                type="password"
+                                                name="password"
+                                                id="examplePassword"
+                                                placeholder="Password here...">
+                                </b-form-input>
+                            </b-form-group>
+                            <!-- <b-form-checkbox name="check" id="exampleCheck">
+                                Keep me logged in
+                            </b-form-checkbox>
+                            <div class="divider"/>
+                            <h6 class="mb-0">
+                                No account?
+                                <a href="javascript:void(0);" class="text-primary">Sign up now</a>
+                            </h6>-->
+                        </div>
+                        <div class="modal-footer clearfix">
+                            <!-- <div class="float-left">
+                                <a href="javascript:void(0);" class="btn-lg btn btn-link">Recover
+                                    Password</a>
+                            </div> -->
+                            <div class="float-right">
+                                <b-button @click="handleLogin()" variant="primary" size="lg">Login to Dashboard</b-button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                          <div v-if="message" class="alert alert-danger" role="alert">{{message}}</div>
+                        </div>
+                    </div>
                 </div>
-              </div>
-              <div
-                class="position-relative vh-100 d-flex justify-content-center align-items-center bg-premium-dark"
-              >
-                <div class="slide-img-bg" />
-                <div class="slider-content text-light">
-                  <h3>Scalable, Modular, Consistent</h3>
-                  <p>
-                    Easily exclude the components you don't require. Lightweight, consistent
-                    Bootstrap based styles across all elements and components
-                  </p>
-                </div>
-              </div>
-              <div
-                class="position-relative vh-100 d-flex justify-content-center align-items-center bg-sunny-morning"
-              >
-                <div class="slide-img-bg opacity-6" />
-                <div class="slider-content text-light">
-                  <h3>Complex, but lightweight</h3>
-                  <p>
-                    We've included a lot of components that cover almost all use cases for
-                    any type of application.
-                  </p>
-                </div>
-              </div>
-            </slick>
-          </div>
-        </b-col>
-        <b-col
-          lg="8"
-          md="12"
-          class="h-100 d-flex bg-white justify-content-center align-items-center"
-        >
-          <b-col lg="9" md="10" sm="12" class="mx-auto app-login-box">
-            <div class="app-logo" />
-            <h4 class="mb-0">
-              <div>Welcome back,</div>
-              <span>Please sign in to your account.</span>
-            </h4>
-            <div class="divider" />
-            <div>
-              <Form>
-                <b-row form>
-                  <b-col md="6">
-                    <b-form-group>
-                      <Label for="exampleEmail">Email</Label>
-                      <b-form-input
-                        type="email"
-                        name="email"
-                        v-model="user.email"
-                        id="exampleEmail"
-                        placeholder="Email here..."
-                      />
-                    </b-form-group>
-                  </b-col>
-                  <b-col md="6">
-                    <b-form-group>
-                      <Label for="examplePassword">Password</Label>
-                      <b-form-input
-                        v-model="user.password"
-                        type="password"
-                        name="password"
-                        id="examplePassword"
-                        placeholder="Password here..."
-                      />
-                    </b-form-group>
-                  </b-col>
-                </b-row>
-                <div class="divider" />
-                <div class="d-flex align-items-center">
-                  <div class="ml-auto">
-                    <a href="javascript:void(0);" class="btn-lg btn btn-link">
-                      Recover
-                      Password
-                    </a>
-                    <b-button @click="handleLogin()" variant="primary" size="lg">Login to Dashboard</b-button>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <div v-if="message" class="alert alert-danger" role="alert">{{message}}</div>
-                </div>
-              </Form>
-            </div>
-          </b-col>
-        </b-col>
-      </b-row>
+                <!-- <div class="text-center text-white opacity-8 mt-3">
+                    Copyright &copy; ArchitectUI 2019
+                </div> -->
+            </b-col>
+        </div>
     </div>
   </div>
 </template>
@@ -173,7 +135,7 @@ export default {
   },
   mounted() {
     if (this.currentUser) {
-      this.$router.push("/");
+      this.$router.push("/nations");
     }
   }
 };

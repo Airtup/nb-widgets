@@ -34,8 +34,8 @@
                   class="form-control"
                   id="nation_name"
                   aria-describedby="nation_help"
-                  placeholder="Enter name"
-                  v-model="nation.name"
+                  :value="nation.name"
+                  disabled
                 />
                 <small id="nation_help" class="form-text text-muted">Choose a name for the nation</small>
               </div>
@@ -46,7 +46,8 @@
                   class="form-control"
                   id="nation_slug"
                   placeholder="Slug"
-                  v-model="nation.slug"
+                  :value="nation.slug"
+                  disabled
                 />
               </div>
               <div class="form-group col-md-6">
@@ -69,16 +70,18 @@
               </div>
               <div class="form-group col-md-6">
                 <label for="nation_token">Membership Sync?</label>
-                <select id="nation_theme" v-model="nation.membership_sync" class="form-control">
-                  <option value="0">Light</option>
-                  <option value="1">Dark</option>
+                <select v-model="nation.membership_sync" class="form-control">
+                  <option :value="hq.id" v-for="hq in hq_nations" :key="hq.id">{{hq.name}}</option>
                 </select>
               </div>
               <div class="form-group col-md-6">
                 <label for="nation_token">Profile Picture Cache Sync?</label>
-                <select id="nation_theme" v-model="nation.picture_sync" class="form-control">
-                  <option value="0">Light</option>
-                  <option value="1">Dark</option>
+                <select v-model="nation.picture_sync" class="form-control">
+                  <option
+                    :value="picture_sync.id"
+                    v-for="picture_sync in hq_pictures"
+                    :key="picture_sync.id"
+                  >{{picture_sync.name}}</option>
                 </select>
               </div>
               <div class="form-group col-md-4">
@@ -94,11 +97,11 @@
                 <input type="number" disabled v-model="nation.people_count" class="form-control" />
               </div>
               <div class="form-group col-md-4">
-                <label for="nation_token">HQ Nation</label>
-                <input type="radio" v-model="nation.hq" class="form-control" />
+                <label for="nation_hq">HQ Nation</label>
+                <input type="checkbox" v-model="nation.hq" class="form-control" />
               </div>
               <div class="form-group col-md-4">
-                <label for="nation_token">Last Refresh</label>
+                <label for="nation_last_refresh">Last Refresh</label>
                 <input type="text" disabled v-model="nation.updated_at" class="form-control" />
               </div>
               <div class="form-group col-md-4">
@@ -113,10 +116,95 @@
                 <label for="nation_token">Disclaimer</label>
                 <textarea v-model="nation.disclaimer" class="form-control"></textarea>
               </div>
+              <div class="mt-5" style="border: 1px solid black">
+                <h5>INSTALLATION INSTRUCTIONS</h5>
+                <p v-text="html[0]"></p>
+              </div>
+              <div class="mt-5 col-md-12" style="border: 1px solid black">
+                <h5>Add Bootstrap (Header)</h5>
+                <p>
+                  <b>
+                    &lt;script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js">
+                    <br />&lt;/script>&lt;script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js">&lt;/script>
+                    <br />&lt;link href="https://fonts.googleapis.com/css?family=PT+Serif:400,700|Roboto+Slab:300,400,700" rel="stylesheet">
+                  </b>
+                </p>
+              </div>
+              <div class="mt-5 col-md-12" style="border: 1px solid black">
+                <h5>Add HTML</h5>
+                <p>
+                  <b>&lt;div class="directory-listing">&lt;/div></b>
+                </p>
+              </div>
+              <div class="mt-5 col-md-12" style="border: 1px solid black">
+                <h5>Add Script Snippet</h5>
+                <p>
+                  <b>
+                    &lt;script type="text/javascript">
+                    <br />var dominolink_config = {
+                    <br />container: '.directory-listing',
+                    <br />nationSlug : 'iwfaustria',
+                    <br />showSearchForm: 'true',
+                    <br />theme: 'light'
+                    <br />};
+                    <br />&lt;/script>
+                    &lt;script type="text/javascript" src="/dominolink.min.js" charset="utf-8">&lt;/script>
+                    &lt;link rel="stylesheet" href="/dominolink.min.css">
+                    <br />&lt;link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+                  </b>
+                </p>
+              </div>
             </div>
           </div>
         </div>
       </div>
+    </div>
+    <div v-if="syncStatus == 1">
+      <transition name="modal">
+        <div class="modal-mask">
+          <div class="modal-wrapper">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Synchronizing</h5>
+                </div>
+                <div class="modal-body">
+                  <div>
+                    <div class="spinner-grow text-primary" role="status">
+                      <span class="sr-only">Loading...</span>
+                    </div>
+                    <div class="spinner-grow text-secondary" role="status">
+                      <span class="sr-only">Loading...</span>
+                    </div>
+                    <div class="spinner-grow text-success" role="status">
+                      <span class="sr-only">Loading...</span>
+                    </div>
+                    <div class="spinner-grow text-danger" role="status">
+                      <span class="sr-only">Loading...</span>
+                    </div>
+                    <div class="spinner-grow text-warning" role="status">
+                      <span class="sr-only">Loading...</span>
+                    </div>
+                    <div class="spinner-grow text-info" role="status">
+                      <span class="sr-only">Loading...</span>
+                    </div>
+                    <div class="spinner-grow text-light" role="status">
+                      <span class="sr-only">Loading...</span>
+                    </div>
+                    <div class="spinner-grow text-dark" role="status">
+                      <span class="sr-only">Loading...</span>
+                    </div>
+                  </div>
+                  <div v-if="syncPicture!=1">Members synchronized: {{syncCount}}</div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" @click="reload">Cancel</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </transition>
     </div>
   </div>
 </template>
@@ -140,7 +228,17 @@ export default {
     return {
       id: this.$attrs.id,
       nation: {},
-      menu: 0
+      menu: 0,
+      syncStatus: 0,
+      syncCount: 0,
+      syncPicture: 0,
+      hq_nations: [],
+      hq_pictures: [],
+      html: [
+        `Tag the people in the NationBuilder database with the tag "Forum:Austria" in order for the app to display them in the listings. Then Add the HTML code below where you want the listing to display. Add the Script Snippet in the < HEADER >'(?)
+              **** But must add bootstrap, jquery to site (Basic) ****`,
+        '&lt;script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js">&lt;/script>&lt;script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js">&lt;/script>&lt;link href="https://fonts.googleapis.com/css?family=PT+Serif:400,700|Roboto+Slab:300,400,700" rel="stylesheet">'
+      ]
     };
   },
   created() {
@@ -148,7 +246,9 @@ export default {
       .get(BASE_URL + `/api/nation/details/${this.id}`)
       .then(response => {
         if ((response.status = 200)) {
-          this.nation = response.data.data[0];
+          this.nation = response.data.data[0][0];
+          (this.hq_nations = response.data.data[1]),
+            (this.hq_pictures = response.data.data[2]);
         }
       })
       .catch(error => swal("Error!", error, "error"));
@@ -178,7 +278,12 @@ export default {
           swal("Error", error, "error");
         });
     },
+    reload() {
+      window.location.reload();
+    },
     refreshCache: function() {
+      this.syncStatus = 1;
+      this.syncPicture = 1;
       axios
         .post(BASE_URL + "/api/nation/clear/cache", {
           nation_id: this.id,
@@ -186,15 +291,120 @@ export default {
         })
         .then(response => {
           if (response.status == 200) {
+            this.syncStatus = 0;
+            this.syncPicture = 0;
             swal("Success", "Cache Refresed successfully", "success");
+            axios
+              .get(BASE_URL + `/api/nation/details/${this.id}`)
+              .then(response => {
+                if ((response.status = 200)) {
+                  this.nation = response.data.data[0][0];
+                }
+              })
+              .catch(error => swal("Error!", error, "error"));
           }
         })
         .catch(error => swal("Error", error, "error"));
     },
-    syncMembers: function() {},
-    syncPictures: function() {}
+    syncMembers: function() {
+      if (this.nation.membership_sync) {
+        if (this.syncStatus == 1) {
+          return;
+        }
+        this.syncStatus = 1;
+        this.syncCount = 0;
+        this.updateSyncMembers("/api/v1/people?limit=50");
+      } else swal("Error", "Select a hq to sync", "warning");
+    },
+    updateSyncMembers: function(url) {
+      axios
+        .post(BASE_URL + "/api/nation/update/members", {
+          nation_id: this.nation.id,
+          next_url: url
+        })
+        .then(response => {
+          if (response.status == 200) {
+            var jsonData = JSON.parse(response.data.data);
+            this.findMatchPersonAndUpdate(
+              jsonData["results"],
+              0,
+              jsonData["next"]
+            );
+          } else {
+            this.updateSyncMembers(url);
+            return;
+          }
+        })
+        .catch(error => {
+          this.updateSyncMembers(url);
+        });
+    },
+    findMatchPersonAndUpdate: function(results, index, next_url) {
+      axios
+        .post(BASE_URL + "/api/nation/update/match/person", {
+          nation_id: this.nation.id,
+          nation_hq_id: this.nation.membership_sync,
+          person_info: results[index]
+        })
+        .then(response => {
+          if (response == "fail") {
+            this.findMatchPersonAndUpdate(results, index, next_url);
+            return;
+          }
+          this.syncCount = this.syncCount + 1;
+          if (results.length - 1 == index) {
+            if (next_url == null) {
+              syncStatus = 0;
+              axios.post(BASE_URL + "/api/nation/sync/member/log", {
+                nation_id: this.nation.id,
+                user_id: this.currentUser.user.id
+              });
+            } else {
+              this.updateSyncMembers(next_url);
+            }
+          } else {
+            this.findMatchPersonAndUpdate(results, index + 1, next_url);
+          }
+        })
+        .catch(error =>
+          this.findMatchPersonAndUpdate(results, index, next_url)
+        );
+    },
+    syncPictures: function() {
+      this.syncStatus = 1;
+      this.syncPicture = 1;
+      axios
+        .post(BASE_URL + "/api/nation/sync/imagen", {
+          nation_id: this.id,
+          user_id: this.currentUser.user.id
+        })
+        .then(response => {
+          if (response.status == 200) {
+            this.syncStatus = 0;
+            this.syncPicture = 0;
+            swal("Success", "Image Sync successfully", "success");
+          }
+        })
+        .catch(error => swal("Error", error, "error"));
+    }
   }
 };
 </script>
 <style scoped>
+.modal-mask {
+  position: fixed;
+  z-index: 10000;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: table;
+  transition: opacity 0.3s ease;
+}
+
+.modal-wrapper {
+  display: table-cell;
+  vertical-align: middle;
+}
 </style>

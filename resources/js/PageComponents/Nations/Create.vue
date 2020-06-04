@@ -156,6 +156,7 @@ export default {
         id: "",
         secret: ""
       },
+      code: "",
       showModal: false,
       showModalLoading: false
     };
@@ -208,7 +209,8 @@ export default {
       axios
         .post(BASE_URL + "/api/nation/generate/token", {
           client: this.client,
-          nation: this.nation
+          nation: this.nation,
+          code: this.code
         })
         .then(response => {
           if (response.status == 200) {
@@ -233,7 +235,7 @@ export default {
             var code = url.searchParams.get("code");
             if (code != undefined && code != null && code != "") {
               me.showModalLoading = false;
-              me.nation.access_token = code;
+              me.code = code;
               me.getAccessToken();
               clearInterval(timer);
               popup.close();

@@ -33,4 +33,22 @@ class NationDetailsDao
 
         return $nation->update($request);
     }
+    public function get_hq_nations()
+    {
+        $nations = Nation::where('status', '1')
+            ->join('nation_details', 'nation_details.nation_id', '=', 'nations.id')
+            ->where('hq','=', 1)
+            ->get();
+
+        return $nations;    
+    }
+    public function get_hq_pictures()
+    {
+        $nations = Nation::where('status', '1')
+            ->join('nation_details', 'nation_details.nation_id', '=', 'nations.id')
+            ->where('sync_picture','=', 1)
+            ->get();
+
+        return $nations;    
+    }
 }

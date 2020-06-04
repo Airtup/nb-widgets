@@ -1,7 +1,7 @@
 <template>
   <div>
     <page-title :heading="heading" :subheading="subheading" icon="search"></page-title>
-    <b-card title="Logs List" class="main-card mb-4">
+    <b-card title="Users List" class="main-card mb-4">
       <b-row>
         <b-col md="6" class="my-1">
           <b-form-group horizontal label="Filter" class="mb-0">
@@ -26,17 +26,6 @@
             </b-input-group>
           </b-form-group>
         </b-col>
-        <b-col md="6" class="my-1">
-          <b-form-group horizontal label="Sort direction" class="mb-0">
-            <b-input-group>
-              <b-form-select v-model="sortDirection" slot="append">
-                <option value="asc">Asc</option>
-                <option value="desc">Desc</option>
-                <option value="last">Last</option>
-              </b-form-select>
-            </b-input-group>
-          </b-form-group>
-        </b-col>
       </b-row>
 
       <!-- Main table element -->
@@ -55,11 +44,11 @@
       >
         <template v-slot:cell(actions)="row">
           <div class="row">
-            <a :href="'/#/users/edit/' + row.item.id">
-              <font-awesome-icon size="2x" icon="edit" style="color:green" />
-            </a>
+            <!-- <a :href="'/#/users/edit/' + row.item.id">
+              <font-awesome-icon size="1x" icon="edit" style="color:green" />
+            </a> -->
             <a @click="deleteUser(row.item.id)" class="ml-4 link" style="color:red">
-              <font-awesome-icon size="2x" icon="trash" />
+              <font-awesome-icon size="1x" icon="trash" />
             </a>
           </div>
         </template>
@@ -96,8 +85,8 @@ export default {
     "font-awesome-icon": FontAwesomeIcon
   },
   data: () => ({
-    heading: "Logs list",
-    subheading: "All logs are shown here",
+    heading: "Users list",
+    subheading: "All users are shown here",
     icon: "fa fa-search",
 
     items: items,

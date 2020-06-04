@@ -63,7 +63,7 @@ class NationController extends Controller
         
         if ($nation->id) {
             Log::create(["user_id"=>$request->user_id,"nation_id"=>$nation->id,'description'=>'Add new Nation "'.$nation->name.'"']);
-            NationDetails::updateOrCreate(["nation_id" => $nation->id], ['tag' => $nation->name]);
+            NationDetails::updateOrCreate(["nation_id" => $nation->id], ['tag' => '']);
         }
         return response()->json(['status'=>'ok','data'=>$nation],200);
     }
@@ -76,8 +76,12 @@ class NationController extends Controller
      */
     public function show($id)
     {
+        
+		$hq_nations = $this->dao->get_hq_nations();
+        $data['hq_pic_nation'] = $this->MNation->getAllSyncPicNations();
+        
         $nation = $this->dao->get($id);
-        return response()->json(['status'=>'ok','data'=>$nation],200);
+        return response()->json(['status'=>'ok','data'=>['nation' => $nation,'hq_nations' => $hq_nations]],200);
     }
 
     /**
