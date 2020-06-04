@@ -247,25 +247,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -1166,35 +1147,13 @@ var render = function() {
                     [
                       _c("div", { staticClass: "card-body" }, [
                         _c("h5", { staticClass: "card-title" }, [
-                          _vm._v("Add Boostrap (Header)")
-                        ]),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          { staticClass: "scroll-area-md" },
-                          [_vm._m(1)],
-                          1
-                        )
-                      ])
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    {
-                      staticClass: "main-card mb-3 card col-md-12",
-                      staticStyle: { "max-height": "150px" }
-                    },
-                    [
-                      _c("div", { staticClass: "card-body" }, [
-                        _c("h5", { staticClass: "card-title" }, [
                           _vm._v("Add HTML")
                         ]),
                         _vm._v(" "),
                         _c(
                           "div",
                           { staticClass: "scroll-area-md" },
-                          [_vm._m(2)],
+                          [_vm._m(1)],
                           1
                         )
                       ])
@@ -1212,57 +1171,70 @@ var render = function() {
                         { staticClass: "scroll-area-md" },
                         [
                           _c("VuePerfectScrollbar", [
-                            _c("pre", [
-                              _vm._v("                        "),
-                              _c("code", { staticClass: "js" }, [
-                                _vm._v(
-                                  '     \n                          <script type="text/javascript">\n                          '
-                                ),
-                                _c("br"),
-                                _vm._v(
-                                  "var dominolink\n                          "
-                                ),
-                                _c("br"),
-                                _vm._v(
-                                  "container: '.directory-listing',\n                          "
-                                ),
-                                _c("br"),
-                                _vm._v(
-                                  "nationSlug : '" +
-                                    _vm._s(_vm.nation.slug) +
-                                    "',\n                          "
-                                ),
-                                _c("br"),
-                                _vm._v(
-                                  "showSearchForm: 'true',\n                          "
-                                ),
-                                _c("br"),
-                                _vm._v(
-                                  "theme: " +
-                                    _vm._s(
-                                      _vm.nation.theme == 0
-                                        ? "'light'"
-                                        : "'dark'"
-                                    ) +
-                                    "\n                          "
-                                ),
-                                _c("br"),
-                                _vm._v("};\n                          "),
-                                _c("br"),
-                                _vm._v(
-                                  '</script>\n                          <script type="text/javascript" src="/' +
-                                    _vm._s(_vm.nation.slug) +
-                                    '.min.js" charset="utf-8"></script>\n                          <link rel="stylesheet" href="/' +
-                                    _vm._s(_vm.nation.slug) +
-                                    '.min.css">\n                          '
-                                ),
-                                _c("br"),
-                                _vm._v(
-                                  '<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">\n                          '
-                                )
-                              ]),
-                              _vm._v("\n                      ")
-                            ])
+                            _c(
+                              "pre",
+                              {
+                                directives: [
+                                  {
+                                    name: "highlightjs",
+                                    rawName: "v-highlightjs",
+                                    value: _vm.sourcecode,
+                                    expression: "sourcecode"
+                                  }
+                                ]
+                              },
+                              [
+                                _vm._v("                        "),
+                                _c("code", { staticClass: "javascript" }, [
+                                  _vm._v(
+                                    '<script type="text/javascript"\n                          '
+                                  ),
+                                  _c("br"),
+                                  _vm._v(
+                                    "var dominolink\n                          "
+                                  ),
+                                  _c("br"),
+                                  _vm._v(
+                                    "container: '.directory-listing',\n                          "
+                                  ),
+                                  _c("br"),
+                                  _vm._v(
+                                    "nationSlug : '" +
+                                      _vm._s(_vm.nation.slug) +
+                                      "',\n                          "
+                                  ),
+                                  _c("br"),
+                                  _vm._v(
+                                    "showSearchForm: 'true',\n                          "
+                                  ),
+                                  _c("br"),
+                                  _vm._v(
+                                    "theme: " +
+                                      _vm._s(
+                                        _vm.nation.theme == 0
+                                          ? "'light'"
+                                          : "'dark'"
+                                      ) +
+                                      "\n                          "
+                                  ),
+                                  _c("br"),
+                                  _vm._v("};\n                          "),
+                                  _c("br"),
+                                  _vm._v(
+                                    '</script>\n                          <script type="text/javascript" src="/' +
+                                      _vm._s(_vm.nation.slug) +
+                                      '.min.js" charset="utf-8"></script>\n                          <link rel="stylesheet" href="/' +
+                                      _vm._s(_vm.nation.slug) +
+                                      '.min.css">\n                          '
+                                  ),
+                                  _c("br"),
+                                  _vm._v(
+                                    '<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">\n                          '
+                                  )
+                                ]),
+                                _vm._v("\n                      ")
+                              ]
+                            )
                           ])
                         ],
                         1
@@ -1462,43 +1434,26 @@ var staticRenderFns = [
       "VuePerfectScrollbar",
       { staticClass: "scrollbar-container text-left" },
       [
-        _c("pre", [
-          _vm._v("                        "),
-          _c("code", { staticClass: "js" }, [
-            _vm._v(
-              '      \n                      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>\n                      '
-            ),
-            _c("br"),
-            _vm._v(
-              '<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>\n                      '
-            ),
-            _c("br"),
-            _vm._v(
-              '<link href="https://fonts.googleapis.com/css?family=PT+Serif:400,700|Roboto+Slab:300,400,700" rel="stylesheet">\n                      '
-            )
-          ]),
-          _vm._v("\n                    ")
-        ])
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "VuePerfectScrollbar",
-      { staticClass: "scrollbar-container text-left" },
-      [
-        _c("pre", [
-          _vm._v("                        "),
-          _c("code", { staticClass: "language-html" }, [
-            _vm._v(
-              '     \n                        <div class="directory-listing"></div>\n                      '
-            )
-          ]),
-          _vm._v("\n                    ")
-        ])
+        _c(
+          "pre",
+          {
+            directives: [
+              {
+                name: "highlightjs",
+                rawName: "v-highlightjs",
+                value: _vm.sourcecode,
+                expression: "sourcecode"
+              }
+            ]
+          },
+          [
+            _vm._v("                        "),
+            _c("code", { staticClass: "html" }, [
+              _vm._v('<div class="directory-listing"></div>')
+            ]),
+            _vm._v("\n                    ")
+          ]
+        )
       ]
     )
   }
