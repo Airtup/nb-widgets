@@ -154,15 +154,15 @@
                     <VuePerfectScrollbar>
                       <pre v-highlightjs>
                           <code class="javascript">
-                            &lt;script type="text/javascript">
-                              var dominolink = {
-                            container: '.directory-listing',
-                            nationSlug : '{{nation.slug}}',
-                            showSearchForm: 'true',
-                            theme: {{nation.theme ==0?"'light'":"'dark'"}}
-                            ;
-                            &lt;/script>
-                            &lt;script type="text/javascript" src="/{{nation.slug}}.min.js" charset="utf-8">&lt;/script>
+&lt;script type="text/javascript">
+  var dominolink = {
+container: '.directory-listing',
+nationSlug : '{{nation.slug}}',
+showSearchForm: 'true',
+theme: {{nation.theme ==0?"'light'":"'dark'"}}
+;
+&lt;/script>
+&lt;script type="text/javascript" src="/{{nation.slug}}.min.js" charset="utf-8">&lt;/script>
                             </code>
                         </pre>
                     </VuePerfectScrollbar>
