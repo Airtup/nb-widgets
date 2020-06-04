@@ -271,7 +271,8 @@ export default {
       syncPicture: 0,
       hq_nations: [],
       hq_pictures: [],
-      htmlSource: `<div class="directory-listing"></div>`,
+      htmlSource: `<div class="directory-listing"></div>`
+    };
   },
   created() {
     axios
