@@ -105,6 +105,10 @@
                 <input type="text" disabled v-model="nation.updated_at" class="form-control" />
               </div>
               <div class="form-group col-md-4">
+                <label for="nation_last_refresh">Logo</label>
+                <input type="file" @change="updateImage" ref="file" class="form-control" />
+              </div>
+              <div class="form-group col-md-4">
                 <label for="nation_token">PDF Back Color</label>
                 <input type="color" v-model="nation.report_color" class="form-control" />
               </div>
@@ -131,7 +135,7 @@
                   </div>
                 </div>
               </div>
-              <div class="main-card mb-3 card col-md-12" style="max-height:150px">
+              <div class="main-card mb-3 card col-md-12" style="max-height:250px">
                 <div class="card-body">
                   <h5 class="card-title">Add Boostrap (Header)</h5>
                   <div class="scroll-area-md">
@@ -241,7 +245,6 @@
 </template>
 
 <script>
-
 import axios from "axios";
 import VueNotifications from "vue-notifications";
 import VuePerfectScrollbar from "vue-perfect-scrollbar";
@@ -260,6 +263,7 @@ export default {
   data() {
     return {
       id: this.$attrs.id,
+      image: "",
       nation: {
         id: 1,
         theme: 0,
@@ -310,7 +314,7 @@ Then Add the HTML code below where you want the listing to display. Add the Scri
   },
   components: {
     "font-awesome-icon": FontAwesomeIcon,
-    VuePerfectScrollbar,
+    VuePerfectScrollbar
   },
   computed: {
     currentUser() {
@@ -332,6 +336,33 @@ Then Add the HTML code below where you want the listing to display. Add the Scri
         })
         .catch(error => {
           swal("Error", error, "error");
+        });
+    },
+    updateImage() {
+      this.image = this.$refs.file.files[0];
+
+      const fd = new FormData();
+      fd.append("logo", this.image);
+      fd.append("nation_slug", this.nation.slug);
+      axios
+        .post(BASE_URL + "/api/update/image", fd, {
+          headers: {
+            "Content-Type": "multipart/form-data"
+          }
+        })
+        .then(response => {
+          if (response.data.status == "200") {
+            axios
+              .get(BASE_URL + `/api/nation/details/${this.id}`)
+              .then(response => {
+                if ((response.status = 200)) {
+                  this.nation = response.data.data[0][0];
+                  (this.hq_nations = response.data.data[1]),
+                    (this.hq_pictures = response.data.data[2]);
+                }
+              })
+              .catch(error => swal("Error!", error, "error"));
+          }
         });
     },
     reload() {
