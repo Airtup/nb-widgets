@@ -47,7 +47,7 @@
           class="h-100 d-flex bg-white justify-content-center align-items-center"
         >
           <b-col lg="9" md="10" sm="12" class="mx-auto app-login-box">
-            <div class="app-logo" />
+            <div class="logo-src" />
             <h4 class="mb-0">
               <div>Welcome back,</div>
               <span>Please sign in to your account.</span>
