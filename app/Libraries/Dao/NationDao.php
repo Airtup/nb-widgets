@@ -64,4 +64,13 @@ class NationDao
         $people->delete();
         $pages->delete();
     }
+
+    public function syncNations(){
+        $nations = Nation::where('status', '1')
+            ->join('nation_details', 'nation_details.nation_id', '=', 'nations.id')
+            ->where('membership_sync','!=','')
+            ->get();
+
+        return $nations; 
+    }
 }

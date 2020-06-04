@@ -24,8 +24,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        //$schedule->call('App\Http\Controllers\NationBuilderApiController@sync_all_nations')->everyMinute();
-        //$schedule->call('App\Http\Controllers\NationBuilderApiController@sync_all_nations')->everyMinute();
+        $schedule->call('App\Http\Controllers\NationBuilderApiController@refreshAllNation')->daily();
+        //$schedule->call('App\Http\Controllers\NationBuilderApiController@syncAllNation')->daily();
     }
 
     /**
