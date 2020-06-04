@@ -157,7 +157,7 @@
                       </div>
                       <div>
                         <pre>
-  <code>     
+  <code class="js">     
 <h5>Add Script Snippet</h5>  
 &lt;script type="text/javascript">
 <br />var dominolink
