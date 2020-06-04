@@ -136,12 +136,12 @@
                   <h5 class="card-title">Add Boostrap (Header)</h5>
                   <div class="scroll-area-md">
                     <VuePerfectScrollbar class="scrollbar-container text-left" v-once>
-                      <pre>
+                      <pre class="text-left">
                           <code class="js">      
-                        &lt;script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js">&lt;/script>
-                        <br />&lt;script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js">&lt;/script>
-                        <br />&lt;link href="https://fonts.googleapis.com/css?family=PT+Serif:400,700|Roboto+Slab:300,400,700" rel="stylesheet">
-                        </code>
+                            &lt;script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"&gt;&lt;/script&gt;
+                            &lt;script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"&gt;&lt;/script&gt;
+                            &lt;link href="https://fonts.googleapis.com/css?family=PT+Serif:400,700|Roboto+Slab:300,400,700" rel="stylesheet"&gt;
+                          </code>
                       </pre>
                     </VuePerfectScrollbar>
                   </div>
