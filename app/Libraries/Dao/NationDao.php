@@ -76,6 +76,7 @@ class NationDao
 
     public function getNationBySlug($slug){
         $nation = Nation::where('slug', $slug)
+            ->join('nation_details', 'nation_details.nation_id', '=', 'nations.id')
             ->get()
             ->first();
 

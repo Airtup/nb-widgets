@@ -780,4 +780,10 @@ class NationBuilderApiController extends Controller
         else
             echo '';
     }
+
+    public function getPDFDetail(Request $request){
+        $nation_slug = $request->nation_slug;
+        $result = $this->dao->getNationBySlug($nation_slug);
+        echo json_encode($result);
+    }
 }
