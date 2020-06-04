@@ -123,4 +123,32 @@ class NationBuilderApiController extends Controller
         Log::create(["user_id" => $user_id, "nation_id" => $nation->id, 'description' => 'Cache Refreshed Nation "' . $nation->name . '"']);
         return response()->json(['status' => 'ok'], 200);
     }
+    public function sync_image(Request $request){
+        $nation_id = $request->all()['nation_id'];
+        $user_id = $request->all()['user_id'];
+        $nation = $this->dao->get($nation_id)[0];
+        $next = '/api/v1/people?limit=50';
+        $url = 'https://'.$nation->slug.'.nationbuilder.com'.$next.'&access_token='.$nation->access_token;
+        $daoPeople = AbstractFactory::getFactory('DAO')->getDAO('PeopleDao');
+        while($next != null){
+            $url = $url;
+            $response = $this->api->get($url);
+            if(!empty($response)){
+                foreach($response->results as $person){
+    
+                    $updateData = array(
+                        'nation_id' => $nation->id,
+                        'profile_image' => $person->profile_image_url_ssl,
+                        'email' => $person->email,
+                    );
+                    $daoPeople->update_image($updateData);
+                }
+                $next = $response->next;
+            }else{
+                $next = null;
+            }
+        }
+        Log::create(["user_id" => $user_id, "nation_id" => $nation->id, 'description' => 'Sync Image Refreshed Nation "' . $nation->name . '"']);
+        return response()->json(['status' => 'ok'], 200);
+    }
 }

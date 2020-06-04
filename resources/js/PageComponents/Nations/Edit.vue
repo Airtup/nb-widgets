@@ -192,7 +192,19 @@ export default {
         .catch(error => swal("Error", error, "error"));
     },
     syncMembers: function() {},
-    syncPictures: function() {}
+    syncPictures: function() {
+      axios
+        .post(BASE_URL + "/api/nation/sync/imagen", {
+          nation_id: this.id,
+          user_id: this.currentUser.user.id
+        })
+        .then(response => {
+          if (response.status == 200) {
+            swal("Success", "Image Sync successfully", "success");
+          }
+        })
+        .catch(error => swal("Error", error, "error"));
+    }
   }
 };
 </script>
