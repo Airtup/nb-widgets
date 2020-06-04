@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Libraries\Factory\AbstractFactory;
 use App\Models\Log;
+use App\Models\Nation;
 
 class NationBuilderApiController extends Controller
 {
@@ -698,24 +699,24 @@ class NationBuilderApiController extends Controller
         $nation_slug = $request->nation_slug;
         $page = $request->page;
         $result = $this->dao->getNationBySlug($nation_slug);
-        if ($result != null){
+        if ($result != null) {
             $result =  $this->dao->getAllNationCacheByPage($result->id, $result->tag, $page);
             return response()->json(['status' => 'ok', 'data' => $result], 200);
-        }
-        else
+        } else
             echo '';
-    }   
-    public function getPersonDetail(Request $request){
+    }
+    public function getPersonDetail(Request $request)
+    {
 
         $nation_slug = $request->nation_slug;
         $person_id = $request->person_id;
         $result =  $this->dao->getNationBySlug($nation_slug);
-        if ($result != null){
+        if ($result != null) {
             $params = array(
                 'access_token' => $result->access_token
             );
-    
-            $url = 'https://'.$nation_slug. '.nationbuilder.com/api/v1/people/'. $person_id .'?'. http_build_query($params);
+
+            $url = 'https://' . $nation_slug . '.nationbuilder.com/api/v1/people/' . $person_id . '?' . http_build_query($params);
 
             $cookiesIn = '';
             $curl = curl_init();
@@ -734,13 +735,11 @@ class NationBuilderApiController extends Controller
                 CURLOPT_HTTP_VERSION   => CURL_HTTP_VERSION_1_1,
                 CURLOPT_COOKIE         => $cookiesIn
             );
-            curl_setopt_array( $curl, $options );
+            curl_setopt_array($curl, $options);
             $curlResponse = curl_exec($curl);
-            if(curl_error($curl)){
+            if (curl_error($curl)) {
                 echo '';
-            }
-            else
-            {
+            } else {
                 $data = json_decode($curlResponse);
                 if ($result['nation_pro_city'] == 0)
                     if ($data->person->primary_address != null)
@@ -750,15 +749,15 @@ class NationBuilderApiController extends Controller
                     if ($data->person->primary_address != null)
                         $data->person->primary_address->country = '';
 
-                if ($result['nation_pro_address'] == 0){
+                if ($result['nation_pro_address'] == 0) {
                     $data->person->home_address = null;
                     $data->person->work_address = null;
                 }
 
                 if ($result['nation_pro_email'] == 0)
                     $data->person->email = null;
-                
-                if ($result['nation_pro_phone'] == 0){
+
+                if ($result['nation_pro_phone'] == 0) {
                     $data->person->phone = null;
                     $data->person->work_phone_number = null;
                     $data->person->mobile = null;
@@ -766,23 +765,39 @@ class NationBuilderApiController extends Controller
 
                 if ($result['nation_pro_assist_name'] == 0)
                     $data->person->assistant_name = null;
-                    
+
                 if ($result['nation_pro_assist_email'] == 0)
                     $data->person->assistant_email = null;
-                
+
                 if ($result['nation_pro_assist_phone'] == 0)
                     $data->person->assistant_phone_number = null;
-                    return response()->json(['status' => 'ok', 'data' => $data], 200);
+                return response()->json(['status' => 'ok', 'data' => $data], 200);
             }
             curl_close($curl);
-        }
-        else
+        } else
             echo '';
     }
 
-    public function getPDFDetail(Request $request){
+    public function getPDFDetail(Request $request)
+    {
         $nation_slug = $request->all()['nation_slug'];
         $result = $this->dao->getNationBySlug($nation_slug);
         return response()->json(['status' => 'ok', 'data' => $result], 200);
+    }
+
+    public function update_image(Request $request)
+    {
+        if ($request->hasFile('logo')) {
+            $path = $request->logo->storeAs('/nations/images', $request->nation_slug.'.'.$request->file('logo')->getClientOriginalExtension());
+        } else {
+            $path = '';
+        }
+        $nation = Nation::where('slug',$request->nation_slug)->get()->first()->update(['logo' => $path]);
+    }
+
+    public function getPDFLogo(Request $request){
+        $nation_slug = $request->all()['nation_slug'];
+        $result = $this->dao->getNationBySlug($nation_slug);
+        return response()->json(['status' => 'ok', 'data' => $result->logo], 200);
     }
 }

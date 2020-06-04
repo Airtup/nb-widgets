@@ -247,13 +247,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -266,6 +259,7 @@ _fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_4__["library"].add(_f
   data: function data() {
     return {
       id: this.$attrs.id,
+      image: "",
       nation: {
         id: 1,
         theme: 0,
@@ -332,11 +326,35 @@ _fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_4__["library"].add(_f
         sweetalert__WEBPACK_IMPORTED_MODULE_3___default()("Error", error, "error");
       });
     },
+    updateImage: function updateImage() {
+      var _this2 = this;
+
+      this.image = this.$refs.file.files[0];
+      var fd = new FormData();
+      fd.append("logo", this.image);
+      fd.append("nation_slug", this.nation.slug);
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post(BASE_URL + "/api/update/image", fd, {
+        headers: {
+          "Content-Type": "multipart/form-data"
+        }
+      }).then(function (response) {
+        if (response.data.status == "200") {
+          axios__WEBPACK_IMPORTED_MODULE_0___default.a.get(BASE_URL + "/api/nation/details/".concat(_this2.id)).then(function (response) {
+            if (response.status = 200) {
+              _this2.nation = response.data.data[0][0];
+              _this2.hq_nations = response.data.data[1], _this2.hq_pictures = response.data.data[2];
+            }
+          }).catch(function (error) {
+            return sweetalert__WEBPACK_IMPORTED_MODULE_3___default()("Error!", error, "error");
+          });
+        }
+      });
+    },
     reload: function reload() {
       window.location.reload();
     },
     refreshCache: function refreshCache() {
-      var _this2 = this;
+      var _this3 = this;
 
       this.syncStatus = 1;
       this.syncPicture = 1;
@@ -345,12 +363,12 @@ _fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_4__["library"].add(_f
         user_id: this.currentUser.user.id
       }).then(function (response) {
         if (response.status == 200) {
-          _this2.syncStatus = 0;
-          _this2.syncPicture = 0;
+          _this3.syncStatus = 0;
+          _this3.syncPicture = 0;
           sweetalert__WEBPACK_IMPORTED_MODULE_3___default()("Success", "Cache Refresed successfully", "success");
-          axios__WEBPACK_IMPORTED_MODULE_0___default.a.get(BASE_URL + "/api/nation/details/".concat(_this2.id)).then(function (response) {
+          axios__WEBPACK_IMPORTED_MODULE_0___default.a.get(BASE_URL + "/api/nation/details/".concat(_this3.id)).then(function (response) {
             if (response.status = 200) {
-              _this2.nation = response.data.data[0][0];
+              _this3.nation = response.data.data[0][0];
             }
           }).catch(function (error) {
             return sweetalert__WEBPACK_IMPORTED_MODULE_3___default()("Error!", error, "error");
@@ -369,10 +387,10 @@ _fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_4__["library"].add(_f
         this.syncStatus = 1;
         this.syncCount = 0;
         this.updateSyncMembers("/api/v1/people?limit=50");
-      } else sweetalert__WEBPACK_IMPORTED_MODULE_3___default()("Error", "Select a hq to sync", "warning");
+      } else sweetalert__WEBPACK_IMPORTED_MODULE_3___default()("Error", "Select a membership to sync", "warning");
     },
     updateSyncMembers: function updateSyncMembers(url) {
-      var _this3 = this;
+      var _this4 = this;
 
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.post(BASE_URL + "/api/nation/update/members", {
         nation_id: this.nation.id,
@@ -381,18 +399,18 @@ _fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_4__["library"].add(_f
         if (response.status == 200) {
           var jsonData = JSON.parse(response.data.data);
 
-          _this3.findMatchPersonAndUpdate(jsonData["results"], 0, jsonData["next"]);
+          _this4.findMatchPersonAndUpdate(jsonData["results"], 0, jsonData["next"]);
         } else {
-          _this3.updateSyncMembers(url);
+          _this4.updateSyncMembers(url);
 
           return;
         }
       }).catch(function (error) {
-        _this3.updateSyncMembers(url);
+        _this4.updateSyncMembers(url);
       });
     },
     findMatchPersonAndUpdate: function findMatchPersonAndUpdate(results, index, next_url) {
-      var _this4 = this;
+      var _this5 = this;
 
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.post(BASE_URL + "/api/nation/update/match/person", {
         nation_id: this.nation.id,
@@ -400,32 +418,32 @@ _fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_4__["library"].add(_f
         person_info: results[index]
       }).then(function (response) {
         if (response == "fail") {
-          _this4.findMatchPersonAndUpdate(results, index, next_url);
+          _this5.findMatchPersonAndUpdate(results, index, next_url);
 
           return;
         }
 
-        _this4.syncCount = _this4.syncCount + 1;
+        _this5.syncCount = _this5.syncCount + 1;
 
         if (results.length - 1 == index) {
           if (next_url == null) {
             syncStatus = 0;
             axios__WEBPACK_IMPORTED_MODULE_0___default.a.post(BASE_URL + "/api/nation/sync/member/log", {
-              nation_id: _this4.nation.id,
-              user_id: _this4.currentUser.user.id
+              nation_id: _this5.nation.id,
+              user_id: _this5.currentUser.user.id
             });
           } else {
-            _this4.updateSyncMembers(next_url);
+            _this5.updateSyncMembers(next_url);
           }
         } else {
-          _this4.findMatchPersonAndUpdate(results, index + 1, next_url);
+          _this5.findMatchPersonAndUpdate(results, index + 1, next_url);
         }
       }).catch(function (error) {
-        return _this4.findMatchPersonAndUpdate(results, index, next_url);
+        return _this5.findMatchPersonAndUpdate(results, index, next_url);
       });
     },
     syncPictures: function syncPictures() {
-      var _this5 = this;
+      var _this6 = this;
 
       this.syncStatus = 1;
       this.syncPicture = 1;
@@ -434,8 +452,8 @@ _fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_4__["library"].add(_f
         user_id: this.currentUser.user.id
       }).then(function (response) {
         if (response.status == 200) {
-          _this5.syncStatus = 0;
-          _this5.syncPicture = 0;
+          _this6.syncStatus = 0;
+          _this6.syncPicture = 0;
           sweetalert__WEBPACK_IMPORTED_MODULE_3___default()("Success", "Image Sync successfully", "success");
         }
       }).catch(function (error) {
@@ -535,7 +553,7 @@ var render = function() {
                   }),
                   _vm._v(" "),
                   _c("br"),
-                  _vm._v("Update Nation\n              ")
+                  _vm._v("Update Nation\n            ")
                 ],
                 1
               ),
@@ -552,7 +570,7 @@ var render = function() {
                   }),
                   _vm._v(" "),
                   _c("br"),
-                  _vm._v("Refresh Cache\n              ")
+                  _vm._v("Refresh Cache\n            ")
                 ],
                 1
               ),
@@ -569,7 +587,7 @@ var render = function() {
                   }),
                   _vm._v(" "),
                   _c("br"),
-                  _vm._v("Sync Members\n              ")
+                  _vm._v("Sync Members\n            ")
                 ],
                 1
               ),
@@ -586,7 +604,7 @@ var render = function() {
                   }),
                   _vm._v(" "),
                   _c("br"),
-                  _vm._v("Sync Pictures\n              ")
+                  _vm._v("Sync Pictures\n            ")
                 ],
                 1
               )
@@ -996,6 +1014,19 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "form-group col-md-4" }, [
+                    _c("label", { attrs: { for: "nation_last_refresh" } }, [
+                      _vm._v("Logo")
+                    ]),
+                    _vm._v(" "),
+                    _c("input", {
+                      ref: "file",
+                      staticClass: "form-control",
+                      attrs: { type: "file" },
+                      on: { change: _vm.updateImage }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-group col-md-4" }, [
                     _c("label", { attrs: { for: "nation_token" } }, [
                       _vm._v("PDF Back Color")
                     ]),
@@ -1107,10 +1138,32 @@ var render = function() {
                     ]
                   ),
                   _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass: "main-card mb-3 card col-md-12",
+                      staticStyle: { "max-height": "250px" }
+                    },
+                    [
+                      _c("div", { staticClass: "card-body" }, [
+                        _c("h5", { staticClass: "card-title" }, [
+                          _vm._v("Add HTML")
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          { staticClass: "scroll-area-md" },
+                          [_vm._m(1)],
+                          1
+                        )
+                      ])
+                    ]
+                  ),
+                  _vm._v(" "),
                   _c("div", { staticClass: "main-card mb-3 card col-md-12" }, [
                     _c("div", { staticClass: "card-body" }, [
                       _c("h5", { staticClass: "card-title" }, [
-                        _vm._v("HTML code")
+                        _vm._v("Add Script Snippet")
                       ]),
                       _vm._v(" "),
                       _c(
@@ -1118,67 +1171,42 @@ var render = function() {
                         { staticClass: "scroll-area-md" },
                         [
                           _c("VuePerfectScrollbar", [
-                            _c("div", [
-                              _c("pre", [
-                                _vm._v("  "),
-                                _c("code", [
-                                  _vm._v("     \n"),
-                                  _c("h5", [_vm._v("Add Bootstrap (Header)")]),
+                            _c(
+                              "pre",
+                              {
+                                directives: [
+                                  {
+                                    name: "highlightjs",
+                                    rawName: "v-highlightjs",
+                                    value: _vm.sourcecode,
+                                    expression: "sourcecode"
+                                  }
+                                ]
+                              },
+                              [
+                                _vm._v("                        "),
+                                _c("code", { staticClass: "javascript" }, [
                                   _vm._v(
-                                    '  \n<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>\n'
+                                    '<script type="text/javascript"\n                          '
                                   ),
                                   _c("br"),
                                   _vm._v(
-                                    '<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>\n'
+                                    "var dominolink\n                          "
                                   ),
                                   _c("br"),
                                   _vm._v(
-                                    '<link href="https://fonts.googleapis.com/css?family=PT+Serif:400,700|Roboto+Slab:300,400,700" rel="stylesheet">\n '
-                                  )
-                                ]),
-                                _vm._v("\n")
-                              ])
-                            ]),
-                            _vm._v(" "),
-                            _c("div", [
-                              _c("pre", [
-                                _vm._v("  "),
-                                _c("code", [
-                                  _vm._v("     \n"),
-                                  _c("h5", [_vm._v("Add HTML")]),
-                                  _vm._v(
-                                    '  \n\n<div class="directory-listing"></div>\n '
-                                  )
-                                ]),
-                                _vm._v("\n")
-                              ])
-                            ]),
-                            _vm._v(" "),
-                            _c("div", [
-                              _c("pre", [
-                                _vm._v("  "),
-                                _c("code", [
-                                  _vm._v("     \n"),
-                                  _c("h5", [_vm._v("Add Script Snippet")]),
-                                  _vm._v(
-                                    '  \n<script type="text/javascript">\n'
+                                    "container: '.directory-listing',\n                          "
                                   ),
-                                  _c("br"),
-                                  _vm._v(
-                                    "var " +
-                                      _vm._s(_vm.nation.slug + "_config = {") +
-                                      "\n"
-                                  ),
-                                  _c("br"),
-                                  _vm._v("container: '.directory-listing',\n"),
                                   _c("br"),
                                   _vm._v(
                                     "nationSlug : '" +
                                       _vm._s(_vm.nation.slug) +
-                                      "',\n"
+                                      "',\n                          "
                                   ),
                                   _c("br"),
-                                  _vm._v("showSearchForm: 'true',\n"),
+                                  _vm._v(
+                                    "showSearchForm: 'true',\n                          "
+                                  ),
                                   _c("br"),
                                   _vm._v(
                                     "theme: " +
@@ -1187,22 +1215,26 @@ var render = function() {
                                           ? "'light'"
                                           : "'dark'"
                                       ) +
-                                      "\n"
+                                      "\n                          "
                                   ),
                                   _c("br"),
-                                  _vm._v("};\n"),
+                                  _vm._v("};\n                          "),
                                   _c("br"),
                                   _vm._v(
-                                    '</script>\n<script type="text/javascript" src="/dominolink.min.js" charset="utf-8"></script>\n<link rel="stylesheet" href="/dominolink.min.css">\n'
+                                    '</script>\n                          <script type="text/javascript" src="/' +
+                                      _vm._s(_vm.nation.slug) +
+                                      '.min.js" charset="utf-8"></script>\n                          <link rel="stylesheet" href="/' +
+                                      _vm._s(_vm.nation.slug) +
+                                      '.min.css">\n                          '
                                   ),
                                   _c("br"),
                                   _vm._v(
-                                    '<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">\n '
+                                    '<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">\n                          '
                                   )
                                 ]),
-                                _vm._v("\n")
-                              ])
-                            ])
+                                _vm._v("\n                      ")
+                              ]
+                            )
                           ])
                         ],
                         1
@@ -1388,9 +1420,40 @@ var staticRenderFns = [
       [
         _c("p", [
           _vm._v(
-            '\n                        Tag the people in the NationBuilder database with the tag "Forum:Austria" in order for the app to display them in the listings.\n                        Then Add the HTML code below where you want the listing to display. Add the Script Snippet in the HEADER(?)\n                        **** But must add bootstrap, jquery to site (Basic) ****\n                      '
+            '\n                      Tag the people in the NationBuilder database with the tag "Forum:Austria" in order for the app to display them in the listings.\n                      Then Add the HTML code below where you want the listing to display. Add the Script Snippet in the HEADER(?)\n                      **** But must add bootstrap, jquery to site (Basic) ****\n                    '
           )
         ])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "VuePerfectScrollbar",
+      { staticClass: "scrollbar-container text-left" },
+      [
+        _c(
+          "pre",
+          {
+            directives: [
+              {
+                name: "highlightjs",
+                rawName: "v-highlightjs",
+                value: _vm.sourcecode,
+                expression: "sourcecode"
+              }
+            ]
+          },
+          [
+            _vm._v("                        "),
+            _c("code", { staticClass: "html" }, [
+              _vm._v('<div class="directory-listing"></div>')
+            ]),
+            _vm._v("\n                    ")
+          ]
+        )
       ]
     )
   }
