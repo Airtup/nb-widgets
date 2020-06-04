@@ -262,7 +262,7 @@ export default {
         name: "",
         slug: "",
         access_token: "",
-        logo: null,
+        logo: "",
         people_count: 3,
         status: 1
       },
@@ -272,7 +272,8 @@ export default {
       syncPicture: 0,
       hq_nations: [],
       hq_pictures: [],
-      htmlSource: `<div class="directory-listing"></div>`,
+      htmlSource: `<div class="directory-listing"></div>`
+    };
   },
   created() {
     axios
