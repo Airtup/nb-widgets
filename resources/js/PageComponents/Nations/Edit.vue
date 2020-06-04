@@ -116,43 +116,66 @@
                 <label for="nation_token">Disclaimer</label>
                 <textarea v-model="nation.disclaimer" class="form-control"></textarea>
               </div>
-              <div class="mt-5" style="border: 1px solid black">
-                <h5>INSTALLATION INSTRUCTIONS</h5>
-                <p v-text="html[0]"></p>
+
+              <div class="main-card mb-3 card col-md-12" style="max-height:150px">
+                <div class="card-body">
+                  <h5 class="card-title">INSTALLATION INSTRUCTIONS</h5>
+                  <div class="scroll-area-md">
+                    <VuePerfectScrollbar class="scrollbar-container text-left" v-once>
+                      <p>
+                        Tag the people in the NationBuilder database with the tag "Forum:Austria" in order for the app to display them in the listings.
+                        Then Add the HTML code below where you want the listing to display. Add the Script Snippet in the HEADER(?)
+                        **** But must add bootstrap, jquery to site (Basic) ****
+                      </p>
+                    </VuePerfectScrollbar>
+                  </div>
+                </div>
               </div>
-              <div class="mt-5 col-md-12" style="border: 1px solid black">
-                <h5>Add Bootstrap (Header)</h5>
-                <p>
-                  <b>
-                    &lt;script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js">
-                    <br />&lt;/script>&lt;script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js">&lt;/script>
-                    <br />&lt;link href="https://fonts.googleapis.com/css?family=PT+Serif:400,700|Roboto+Slab:300,400,700" rel="stylesheet">
-                  </b>
-                </p>
-              </div>
-              <div class="mt-5 col-md-12" style="border: 1px solid black">
-                <h5>Add HTML</h5>
-                <p>
-                  <b>&lt;div class="directory-listing">&lt;/div></b>
-                </p>
-              </div>
-              <div class="mt-5 col-md-12" style="border: 1px solid black">
-                <h5>Add Script Snippet</h5>
-                <p>
-                  <b>
-                    &lt;script type="text/javascript">
-                    <br />var dominolink_config = {
-                    <br />container: '.directory-listing',
-                    <br />nationSlug : 'iwfaustria',
-                    <br />showSearchForm: 'true',
-                    <br />theme: 'light'
-                    <br />};
-                    <br />&lt;/script>
-                    &lt;script type="text/javascript" src="/dominolink.min.js" charset="utf-8">&lt;/script>
-                    &lt;link rel="stylesheet" href="/dominolink.min.css">
-                    <br />&lt;link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-                  </b>
-                </p>
+              <div class="main-card mb-3 card col-md-12">
+                <div class="card-body">
+                  <h5 class="card-title">HTML code</h5>
+                  <div class="scroll-area-md">
+                    <VuePerfectScrollbar>
+                      <div>
+                        <pre>
+  <code>     
+<h5>Add Bootstrap (Header)</h5>  
+&lt;script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js">&lt;/script>
+<br />&lt;script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js">&lt;/script>
+<br />&lt;link href="https://fonts.googleapis.com/css?family=PT+Serif:400,700|Roboto+Slab:300,400,700" rel="stylesheet">
+ </code>
+</pre>
+                      </div>
+                      <div>
+                        <pre>
+  <code>     
+<h5>Add HTML</h5>  
+
+&lt;div class="directory-listing">&lt;/div>
+ </code>
+</pre>
+                      </div>
+                      <div>
+                        <pre>
+  <code>     
+<h5>Add Script Snippet</h5>  
+&lt;script type="text/javascript">
+<br />var dominolink
+<br />container: '.directory-listing',
+<br />nationSlug : '{{nation.slug}}',
+<br />showSearchForm: 'true',
+<br />theme: {{nation.theme ==0?"'light'":"'dark'"}}
+<br />};
+<br />&lt;/script>
+&lt;script type="text/javascript" src="/{{nation.slug}}.min.js" charset="utf-8">&lt;/script>
+&lt;link rel="stylesheet" href="/{{nation.slug}}.min.css">
+<br />&lt;link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+ </code>
+</pre>
+                      </div>
+                    </VuePerfectScrollbar>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -210,8 +233,10 @@
 </template>
 
 <script>
+
 import axios from "axios";
 import VueNotifications from "vue-notifications";
+import VuePerfectScrollbar from "vue-perfect-scrollbar";
 import swal from "sweetalert";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
@@ -227,7 +252,28 @@ export default {
   data() {
     return {
       id: this.$attrs.id,
-      nation: {},
+      nation: {
+        id: 1,
+        theme: 0,
+        tag: "",
+        nation_id: 1,
+        show_options: "",
+        intro: null,
+        disclaimer: null,
+        report_color: null,
+        hq: 1,
+        membership_sync: undefined,
+        sync_picture: 0,
+        picture_sync: null,
+        created_at: null,
+        updated_at: "",
+        name: "",
+        slug: "",
+        access_token: "",
+        logo: null,
+        people_count: 3,
+        status: 1
+      },
       menu: 0,
       syncStatus: 0,
       syncCount: 0,
@@ -235,8 +281,9 @@ export default {
       hq_nations: [],
       hq_pictures: [],
       html: [
-        `Tag the people in the NationBuilder database with the tag "Forum:Austria" in order for the app to display them in the listings. Then Add the HTML code below where you want the listing to display. Add the Script Snippet in the < HEADER >'(?)
-              **** But must add bootstrap, jquery to site (Basic) ****`,
+        `Tag the people in the NationBuilder database with the tag "Forum:Austria" in order for the app to display them in the listings. 
+Then Add the HTML code below where you want the listing to display. Add the Script Snippet in the < HEADER >'(?)
+**** But must add bootstrap, jquery to site (Basic) ****`,
         '&lt;script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js">&lt;/script>&lt;script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js">&lt;/script>&lt;link href="https://fonts.googleapis.com/css?family=PT+Serif:400,700|Roboto+Slab:300,400,700" rel="stylesheet">'
       ]
     };
@@ -254,7 +301,8 @@ export default {
       .catch(error => swal("Error!", error, "error"));
   },
   components: {
-    "font-awesome-icon": FontAwesomeIcon
+    "font-awesome-icon": FontAwesomeIcon,
+    VuePerfectScrollbar,
   },
   computed: {
     currentUser() {
