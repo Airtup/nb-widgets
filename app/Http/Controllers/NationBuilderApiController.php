@@ -585,4 +585,95 @@ class NationBuilderApiController extends Controller
         Log::create(["user_id" => $user_id, "nation_id" => $nation->id, 'description' => 'Sync Image Refreshed Nation "' . $nation->name . '"']);
         return response()->json(['status' => 'ok'], 200);
     }
+
+    // For cronjob start
+    public function refreshAllNation()
+    {
+        $nations = AbstractFactory::getFactory('DAO')->getDAO('NationDetailsDao')->select();
+
+        foreach ($nations as $result) {
+            $cnt = $result->people_count;
+            $nation_id = $result->nation_id;
+            $nation = $this->dao->get($nation_id)->first();
+            $this->dao->deleteCache($nation_id);
+
+
+            $mytag = str_replace(' ', '%20', $nation->nation_details->tag);
+            $temp_url = 'https://' . $nation->slug . '.nationbuilder.com';
+            $next = '/api/v1/tags/' . $mytag . '/people?limit=50';
+            $page = 1;
+            $daoPage = AbstractFactory::getFactory('DAO')->getDAO('NationPagesDao');
+            $daoPeople = AbstractFactory::getFactory('DAO')->getDAO('PeopleDao');
+            while ($next != null) {
+                $daoPage->insert(['nation_id' => $nation->id, 'nation_tag' => $nation->nation_details->tag, 'number_page' => $page, 'page_url' => $next]);
+                $url =  $temp_url . $next . '&access_token=' . $nation->access_token;
+                $response = $this->api->get($url);
+                if (!empty($response)) {
+                    foreach ($response->results as $person) {
+                        $city = null;
+                        $country = '';
+                        $home_address = null;
+                        $address2 = null;
+                        $address3 = null;
+                        $zip = null;
+                        $state = '';
+                        $country_code = null;
+                        $industry = null;
+                        if ($person->primary_address != null) {
+                            $city = $person->primary_address->city;
+                            $country = $person->primary_address->country_code;
+                            $home_address = $person->primary_address->address1;
+                            $state = $person->primary_address->state;
+                            $address2 = $person->primary_address->address2;
+                            $address3 = $person->primary_address->address3;
+                            $zip = $person->primary_address->zip;
+                            $country_code = $person->primary_address->country_code;
+                        }
+                        if (isset($this->isoCountries[$country]))
+                            $country = $this->isoCountries[$country];
+                        $insertData = array(
+                            'nation_id' => $nation->id,
+                            'nation_tag' => $nation->nation_details->tag,
+                            'number_page' => $page,
+                            'first_name' => $person->first_name,
+                            'last_name' => $person->last_name,
+                            'industry' => $industry,
+                            'city' => $city,
+                            'country' => $country,
+                            'state' => $state,
+                            'profile_image' => $person->profile_image_url_ssl,
+                            'occupation' => $person->occupation,
+                            'employer' => $person->employer,
+                            'email' => $person->email,
+                            'twitter' => $person->twitter_id,
+                            'linkedin' => $person->linkedin_id,
+                            'facebook' => $person->has_facebook,
+                            'person_id' => $person->id,
+                            'phone' => $person->phone,
+                            'work_phone' => $person->work_phone_number,
+                            'mobile' => $person->mobile,
+                            'primary_address' => $home_address,
+                            'secondary_address' => $address2,
+                            'tertiary_address' => $address3,
+                            'zip' => $zip,
+                            'country_code' => $country_code,
+                            'tags' => json_encode($person->tags)
+                        );
+
+                        $daoPeople->insert($insertData);
+                    }
+                    $next = $response->next;
+                } else {
+                    $next = null;
+                }
+                $page++;
+            }
+            $temp_url = 'https://' . $nation->slug . '.nationbuilder.com/api/v1/people/count?access_token=' . $nation->access_token;;
+            $response = $this->api->get($temp_url);
+
+            $this->dao->update(['people_count' => $response->people_count], $nation_id);
+            Log::create(["user_id" => 0, "nation_id" => $nation->id, 'description' => 'Cache Refreshed by Cron Nation "' . $nation->name . '"']);
+        }
+    }
+    //For cronjob end
 }
