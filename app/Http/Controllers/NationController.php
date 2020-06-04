@@ -63,7 +63,7 @@ class NationController extends Controller
         
         if ($nation->id) {
             Log::create(["user_id"=>$request->user_id,"nation_id"=>$nation->id,'description'=>'Add new Nation "'.$nation->name.'"']);
-            NationDetails::updateOrCreate(["nation_id" => $nation->id], ['tag' => $nation->name]);
+            NationDetails::updateOrCreate(["nation_id" => $nation->id], ['tag' => '']);
         }
         return response()->json(['status'=>'ok','data'=>$nation],200);
     }
