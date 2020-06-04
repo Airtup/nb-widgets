@@ -14,10 +14,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', 'HomeController@index')->name('home');
-Route::post('/getAllPeopleList','NationBuilderApiController@getAllPeopleList');
-Route::post('/getPeopleList','NationBuilderApiController@getPeopleList');
-Route::post('/getPersonDetail','NationBuilderApiController@getPersonDetail');
-Route::post('/getPDFDetail','NationBuilderApiController@getPDFDetail');
 
 
 

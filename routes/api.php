@@ -60,3 +60,8 @@ Route::get('/users','UserController@index');
 Route::post('/users','UserController@store');
 Route::delete('/users/{user}','UserController@destroy');
 Route::get('/roles','RoleController@index');
+
+Route::post('/getAllPeopleList','NationBuilderApiController@getAllPeopleList');
+Route::post('/getPeopleList','NationBuilderApiController@getPeopleList');
+Route::post('/getPersonDetail','NationBuilderApiController@getPersonDetail');
+Route::post('/getPDFDetail','NationBuilderApiController@getPDFDetail');
