@@ -26,7 +26,13 @@
     <script src=js/main.js> </script> <script type="text/javascript">
         var BASE_URL = "{{URL::to('/')}}";
     </script>
-    <script>hljs.initHighlightingOnLoad();</script>
+    <script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+        document.querySelectorAll('pre code').forEach((block) => {
+            hljs.highlightBlock(block);
+        });
+    });
+</script>
 </body>
 
 </html>
