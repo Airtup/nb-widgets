@@ -298,7 +298,7 @@ export default {
               .get(BASE_URL + `/api/nation/details/${this.id}`)
               .then(response => {
                 if ((response.status = 200)) {
-                  this.nation = response.data.data[0];
+                  this.nation = response.data.data[0][0];
                 }
               })
               .catch(error => swal("Error!", error, "error"));
