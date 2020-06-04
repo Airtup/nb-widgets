@@ -37,7 +37,7 @@ export default {
   components: {
     Header,
     Sidebar,
-    VuePerfectScrollbar,
+    //VuePerfectScrollbar,
     "font-awesome-icon": FontAwesomeIcon
   },
   methods: {
