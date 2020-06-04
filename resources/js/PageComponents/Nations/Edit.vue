@@ -157,7 +157,7 @@
                       <span class="sr-only">Loading...</span>
                     </div>
                   </div>
-                  <div>Members synchronized: {{syncCount}}</div>
+                  <div v-if="syncPicture!=1">Members synchronized: {{syncCount}}</div>
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" @click="reload">Cancel</button>
@@ -193,6 +193,7 @@ export default {
       menu: 0,
       syncStatus: 0,
       syncCount: 0,
+      syncPicture: 0,
       hq_nations: [],
       hq_pictures: []
     };
@@ -238,6 +239,8 @@ export default {
       window.location.reload();
     },
     refreshCache: function() {
+      this.syncStatus = 1;
+      this.syncPicture = 1;
       axios
         .post(BASE_URL + "/api/nation/clear/cache", {
           nation_id: this.id,
@@ -245,6 +248,8 @@ export default {
         })
         .then(response => {
           if (response.status == 200) {
+            this.syncStatus = 0;
+            this.syncPicture = 0;
             swal("Success", "Cache Refresed successfully", "success");
             axios
               .get(BASE_URL + `/api/nation/details/${this.id}`)
@@ -321,6 +326,8 @@ export default {
         );
     },
     syncPictures: function() {
+      this.syncStatus = 1;
+      this.syncPicture = 1;
       axios
         .post(BASE_URL + "/api/nation/sync/imagen", {
           nation_id: this.id,
@@ -328,6 +335,8 @@ export default {
         })
         .then(response => {
           if (response.status == 200) {
+            this.syncStatus = 0;
+            this.syncPicture = 0;
             swal("Success", "Image Sync successfully", "success");
           }
         })

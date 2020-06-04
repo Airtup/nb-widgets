@@ -262,6 +262,7 @@ class NationBuilderApiController extends Controller
 
     public function __construct()
     {
+        ini_set('max_execution_time', 1000);
         $this->factory = AbstractFactory::getFactory('Api');
         $this->api = $this->factory->getDAO('NationApiConexion');
         $this->dao = AbstractFactory::getFactory('DAO')->getDAO('NationDao');
@@ -555,7 +556,7 @@ class NationBuilderApiController extends Controller
         $nation = $this->dao->get($nation_id)->first();
         Log::create(["user_id" => $user_id, "nation_id" => $nation->id, 'description' => 'Sync Members in Nation "' . $nation->name . '"']);
     }
-    
+
     public function sync_image(Request $request)
     {
         $nation_id = $request->all()['nation_id'];
@@ -569,11 +570,10 @@ class NationBuilderApiController extends Controller
             $response = $this->api->get($url);
             if (!empty($response)) {
                 foreach ($response->results as $person) {
-
                     $updateData = array(
                         'nation_id' => $nation->id,
                         'profile_image' => $person->profile_image_url_ssl,
-                        'email' => $person->email,
+                        'person_id' => $person->id,
                     );
                     $daoPeople->update_image($updateData);
                 }

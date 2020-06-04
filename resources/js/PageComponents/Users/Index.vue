@@ -55,9 +55,9 @@
       >
         <template v-slot:cell(actions)="row">
           <div class="row">
-            <a :href="'/#/users/edit/' + row.item.id">
+            <!-- <a :href="'/#/users/edit/' + row.item.id">
               <font-awesome-icon size="2x" icon="edit" style="color:green" />
-            </a>
+            </a> -->
             <a @click="deleteUser(row.item.id)" class="ml-4 link" style="color:red">
               <font-awesome-icon size="2x" icon="trash" />
             </a>
