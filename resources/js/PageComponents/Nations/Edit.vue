@@ -131,13 +131,13 @@
                   </div>
                 </div>
               </div>
-              <div class="main-card mb-3 card col-md-12" style="max-height:150px">
+              <div class="main-card mb-3 card col-md-12" style="max-height:250px">
                 <div class="card-body">
                   <h5 class="card-title">Add Boostrap (Header)</h5>
                   <div class="scroll-area-md">
                     <VuePerfectScrollbar class="scrollbar-container text-left" v-once>
-                      <pre>
-                          <code class="js">      
+                      <pre v-highlightjs="sourcecode">
+                          <code class="css">      
                         &lt;script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js">&lt;/script>
                         <br />&lt;script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js">&lt;/script>
                         <br />&lt;link href="https://fonts.googleapis.com/css?family=PT+Serif:400,700|Roboto+Slab:300,400,700" rel="stylesheet">
@@ -152,8 +152,8 @@
                   <h5 class="card-title">Add HTML</h5>
                   <div class="scroll-area-md">
                     <VuePerfectScrollbar class="scrollbar-container text-left" v-once>
-                      <pre>
-                          <code class="language-html">     
+                      <pre v-highlightjs="sourcecode">
+                          <code class="html">     
                           &lt;div class="directory-listing">&lt;/div>
                         </code>
                       </pre>
@@ -166,8 +166,8 @@
                   <h5 class="card-title">Add Script Snippet</h5>
                   <div class="scroll-area-md">
                     <VuePerfectScrollbar>
-                      <pre>
-                          <code class="js">     
+                      <pre v-highlightjs="sourcecode">
+                          <code class="javascript">     
                             &lt;script type="text/javascript">
                             <br />var dominolink
                             <br />container: '.directory-listing',
