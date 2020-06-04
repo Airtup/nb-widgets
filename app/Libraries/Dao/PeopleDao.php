@@ -29,7 +29,14 @@ class PeopleDao
     {
        $person = People::find($id);
         
-        return$person->update($request);
+        return $person->update($request);
+    }
+    public function update_image($data)
+    {
+       $person = People::where([['nation_id','=',$data['nation_id']],['email','=',$data['email']]])->get();
+        $person->profile_image = $data['image_profile'];
+        $person->save();
+        return $person;
     }
     public function delete($id)
     {

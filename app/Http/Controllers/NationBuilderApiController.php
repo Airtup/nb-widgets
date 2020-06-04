@@ -406,9 +406,9 @@ class NationBuilderApiController extends Controller
         curl_setopt_array($curl, $options);
         $curlResponse = curl_exec($curl);
         if (curl_error($curl)) {
-            return response()->json(['status' => 'error','data' => $curlResponse], 500);
+            return response()->json(['status' => 'error', 'data' => $curlResponse], 500);
         } else {
-            return response()->json(['status' => 'ok','data' => $curlResponse], 200);
+            return response()->json(['status' => 'ok', 'data' => $curlResponse], 200);
         }
     }
 
@@ -422,8 +422,8 @@ class NationBuilderApiController extends Controller
 
         $sub_nation = $this->dao->get($nation_id)->first();
 
-        
-        $org_membership_url = 'https://' . $sub_nation->slug. '.nationbuilder.com/api/v1/people/' . $org_person_id . '/memberships?limit=50&access_token=' . $sub_nation->access_token;
+
+        $org_membership_url = 'https://' . $sub_nation->slug . '.nationbuilder.com/api/v1/people/' . $org_person_id . '/memberships?limit=50&access_token=' . $sub_nation->access_token;
 
         $cookiesIn = '';
         $curl = curl_init();
@@ -547,11 +547,42 @@ class NationBuilderApiController extends Controller
         }
     }
 
-    public function create_sync_member_log(Request $request){
+    public function create_sync_member_log(Request $request)
+    {
         $nation_id = $request->all()['nation_id'];
         $user_id = $request->all()['user_id'];
 
         $nation = $this->dao->get($nation_id)->first();
         Log::create(["user_id" => $user_id, "nation_id" => $nation->id, 'description' => 'Sync Members in Nation "' . $nation->name . '"']);
+    }
+    
+    public function sync_image(Request $request)
+    {
+        $nation_id = $request->all()['nation_id'];
+        $user_id = $request->all()['user_id'];
+        $nation = $this->dao->get($nation_id)[0];
+        $next = '/api/v1/people?limit=50';
+        $url = 'https://' . $nation->slug . '.nationbuilder.com' . $next . '&access_token=' . $nation->access_token;
+        $daoPeople = AbstractFactory::getFactory('DAO')->getDAO('PeopleDao');
+        while ($next != null) {
+            $url = $url;
+            $response = $this->api->get($url);
+            if (!empty($response)) {
+                foreach ($response->results as $person) {
+
+                    $updateData = array(
+                        'nation_id' => $nation->id,
+                        'profile_image' => $person->profile_image_url_ssl,
+                        'email' => $person->email,
+                    );
+                    $daoPeople->update_image($updateData);
+                }
+                $next = $response->next;
+            } else {
+                $next = null;
+            }
+        }
+        Log::create(["user_id" => $user_id, "nation_id" => $nation->id, 'description' => 'Sync Image Refreshed Nation "' . $nation->name . '"']);
+        return response()->json(['status' => 'ok'], 200);
     }
 }
