@@ -135,7 +135,7 @@ export default {
   },
   mounted() {
     if (this.currentUser) {
-      this.$router.push("/");
+      this.$router.push("/nations");
     }
   }
 };
