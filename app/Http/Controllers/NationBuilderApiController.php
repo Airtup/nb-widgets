@@ -277,7 +277,7 @@ class NationBuilderApiController extends Controller
     public function generate_token(Request $request)
     {
         $params = array(
-            'code' => $request->nation["access_token"],
+            'code' => $request->code,
             'redirect_uri' => 'https://stage.nbwidgets.com/nbcallback',
             'client_id' => $request->client["id"],
             'client_secret' => $request->client["secret"],
