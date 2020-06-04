@@ -50,7 +50,9 @@ Route::delete('/logs/{log}', 'LogController@destroy');
 
 Route::post('/nation/generate/token', 'NationBuilderApiController@generate_token');
 Route::post('/nation/clear/cache', 'NationBuilderApiController@clear_cache');
-
+Route::post('/nation/update/members', 'NationBuilderApiController@update_sync_members');
+Route::post('/nation/update/match/person', 'NationBuilderApiController@update_match_person');
+Route::post('/nation/sync/member/log','NationBuilderApiController@create_sync_member_log');
 
 Route::get('/users','UserController@index');
 Route::post('/users','UserController@store');

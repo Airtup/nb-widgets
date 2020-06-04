@@ -96,8 +96,8 @@ export default {
     "font-awesome-icon": FontAwesomeIcon
   },
   data: () => ({
-    heading: "Logs list",
-    subheading: "All logs are shown here",
+    heading: "Users list",
+    subheading: "All users are shown here",
     icon: "fa fa-search",
 
     items: items,
