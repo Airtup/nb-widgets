@@ -73,4 +73,35 @@ class NationDao
 
         return $nations; 
     }
+
+    public function getNationBySlug($slug){
+        $nation = Nation::where('slug', $slug)
+            ->get()
+            ->first();
+
+        return $nation;    
+    }
+
+    public function getAllNationCache($slug,$tag,$forum){
+        $nations = [];
+        if($forum){
+        $nations = People::where([['nation_id',$slug],['nation_tag',$tag],['tags','like','%'.json_encode($forum).'%']])
+            ->orderBy('last_name', 'asc')
+            ->get();
+        }
+        else{
+            $nations = People::where([['nation_id',$slug],['nation_tag',$tag]])
+            ->orderBy('last_name', 'asc')
+            ->get();
+        }
+        return $nations;
+    }
+
+    public function getAllNationCacheByPage($slug,$tag,$page){
+
+        $nations = People::where([['nation_id',$slug],['nation_tag',$tag],['number_page',$page]])
+                    ->orderBy('last_name', 'asc')
+                    ->get();
+        return $nations;
+    }
 }

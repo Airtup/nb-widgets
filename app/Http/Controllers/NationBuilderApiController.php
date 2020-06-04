@@ -680,4 +680,104 @@ class NationBuilderApiController extends Controller
         }
     }
     //For cronjob end
+
+    public function getAllPeopleList(Request $request)
+    {
+        $nation_slug =  $request->nation_slug;
+        $forum =  $request->nation_slug;
+        $result = $this->dao->getNationBySlug($nation_slug);
+        if ($result != null) {
+            $result =  $this->dao->getAllNationCache($result->id, $result->tag, $forum);
+            echo json_encode($result);
+        } else
+            echo '';
+    }
+
+    public function getPeopleList(Request $request)
+    {
+        $nation_slug = $request->nation_slug;
+        $page = $request->page;
+        $result = $this->dao->getNationBySlug($nation_slug);
+        if ($result != null){
+            $result =  $this->dao->getAllNationCacheByPage($result->id, $result->tag, $page);
+            echo json_encode($result);
+        }
+        else
+            echo '';
+    }   
+    public function getPersonDetail(Request $request){
+
+        $nation_slug = $request->nation_slug;
+        $person_id = $request->person_id;
+        $result =  $this->dao->getNationBySlug($nation_slug);
+        if ($result != null){
+            $params = array(
+                'access_token' => $result->access_token
+            );
+    
+            $url = 'https://'.$nation_slug. '.nationbuilder.com/api/v1/people/'. $person_id .'?'. http_build_query($params);
+
+            $cookiesIn = '';
+            $curl = curl_init();
+            $options = array(
+                CURLOPT_URL => $url,
+                CURLOPT_RETURNTRANSFER => true,     // return web page
+                // CURLOPT_HEADER         => true,     //return headers in  addition to content
+                CURLOPT_FOLLOWLOCATION => true,     // follow redirects
+                CURLOPT_ENCODING       => "",       // handle all encodings
+                CURLOPT_AUTOREFERER    => true,     // set referer on redirect
+                CURLOPT_CONNECTTIMEOUT => 120,      // timeout on connect
+                CURLOPT_TIMEOUT        => 120,      // timeout on response
+                // CURLOPT_MAXREDIRS      => 10,       // stop after 10 redirects
+                CURLINFO_HEADER_OUT    => true,
+                CURLOPT_SSL_VERIFYPEER => true,     // Validate SSL Certificates
+                CURLOPT_HTTP_VERSION   => CURL_HTTP_VERSION_1_1,
+                CURLOPT_COOKIE         => $cookiesIn
+            );
+            curl_setopt_array( $curl, $options );
+            $curlResponse = curl_exec($curl);
+            if(curl_error($curl)){
+                echo '';
+            }
+            else
+            {
+                $data = json_decode($curlResponse);
+                if ($result['nation_pro_city'] == 0)
+                    if ($data->person->primary_address != null)
+                        $data->person->primary_address->city = null;
+
+                if ($result['nation_pro_country'] == 0)
+                    if ($data->person->primary_address != null)
+                        $data->person->primary_address->country = '';
+
+                if ($result['nation_pro_address'] == 0){
+                    $data->person->home_address = null;
+                    $data->person->work_address = null;
+                }
+
+                if ($result['nation_pro_email'] == 0)
+                    $data->person->email = null;
+                
+                if ($result['nation_pro_phone'] == 0){
+                    $data->person->phone = null;
+                    $data->person->work_phone_number = null;
+                    $data->person->mobile = null;
+                }
+
+                if ($result['nation_pro_assist_name'] == 0)
+                    $data->person->assistant_name = null;
+                    
+                if ($result['nation_pro_assist_email'] == 0)
+                    $data->person->assistant_email = null;
+                
+                if ($result['nation_pro_assist_phone'] == 0)
+                    $data->person->assistant_phone_number = null;
+
+                echo json_encode($data);
+            }
+            curl_close($curl);
+        }
+        else
+            echo '';
+    }
 }
