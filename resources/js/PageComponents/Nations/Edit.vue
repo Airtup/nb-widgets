@@ -135,13 +135,13 @@
                   </div>
                 </div>
               </div>
-              <div class="main-card mb-3 card col-md-12" style="max-height:250px">
+              <div class="main-card mb-3 card col-md-12" style="max-height:100px">
                 <div class="card-body">
                   <h5 class="card-title">Add HTML</h5>
                   <div class="scroll-area-md">
                     <VuePerfectScrollbar class="scrollbar-container text-left" v-once>
-                      <pre v-highlightjs="sourcecode">
-                          <code class="html">&lt;div class="directory-listing"&gt;&lt;/div&gt;</code>
+                      <pre v-highlightjs="htmlSource">
+                          <code class="html"></code>
                       </pre>
                     </VuePerfectScrollbar>
                   </div>
@@ -152,9 +152,9 @@
                   <h5 class="card-title">Add Script Snippet</h5>
                   <div class="scroll-area-md">
                     <VuePerfectScrollbar>
-                      <pre v-highlightjs="sourcecode">
-                          <code class="javascript">&lt;script type="text/javascript"
-                            <br />var dominolink
+                      <pre v-highlightjs>
+                          <code class="javascript">&lt;script type="text/javascript">
+                            <br />var dominolink = {
                             <br />container: '.directory-listing',
                             <br />nationSlug : '{{nation.slug}}',
                             <br />showSearchForm: 'true',
@@ -162,8 +162,6 @@
                             <br />};
                             <br />&lt;/script>
                             &lt;script type="text/javascript" src="/{{nation.slug}}.min.js" charset="utf-8">&lt;/script>
-                            &lt;link rel="stylesheet" href="/{{nation.slug}}.min.css">
-                            <br />&lt;link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
                             </code>
                         </pre>
                     </VuePerfectScrollbar>
@@ -273,13 +271,7 @@ export default {
       syncPicture: 0,
       hq_nations: [],
       hq_pictures: [],
-      html: [
-        `Tag the people in the NationBuilder database with the tag "Forum:Austria" in order for the app to display them in the listings. 
-Then Add the HTML code below where you want the listing to display. Add the Script Snippet in the < HEADER >'(?)
-**** But must add bootstrap, jquery to site (Basic) ****`,
-        '&lt;script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js">&lt;/script>&lt;script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js">&lt;/script>&lt;link href="https://fonts.googleapis.com/css?family=PT+Serif:400,700|Roboto+Slab:300,400,700" rel="stylesheet">'
-      ]
-    };
+      htmlSource: `<div class="directory-listing"></div>`,
   },
   created() {
     axios
