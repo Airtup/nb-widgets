@@ -116,6 +116,44 @@
                 <label for="nation_token">Disclaimer</label>
                 <textarea v-model="nation.disclaimer" class="form-control"></textarea>
               </div>
+              <div class="mt-5" style="border: 1px solid black">
+                <h5>INSTALLATION INSTRUCTIONS</h5>
+                <p v-text="html[0]"></p>
+              </div>
+              <div class="mt-5 col-md-12" style="border: 1px solid black">
+                <h5>Add Bootstrap (Header)</h5>
+                <p>
+                  <b>
+                    &lt;script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js">
+                    <br />&lt;/script>&lt;script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js">&lt;/script>
+                    <br />&lt;link href="https://fonts.googleapis.com/css?family=PT+Serif:400,700|Roboto+Slab:300,400,700" rel="stylesheet">
+                  </b>
+                </p>
+              </div>
+              <div class="mt-5 col-md-12" style="border: 1px solid black">
+                <h5>Add HTML</h5>
+                <p>
+                  <b>&lt;div class="directory-listing">&lt;/div></b>
+                </p>
+              </div>
+              <div class="mt-5 col-md-12" style="border: 1px solid black">
+                <h5>Add Script Snippet</h5>
+                <p>
+                  <b>
+                    &lt;script type="text/javascript">
+                    <br />var dominolink_config = {
+                    <br />container: '.directory-listing',
+                    <br />nationSlug : 'iwfaustria',
+                    <br />showSearchForm: 'true',
+                    <br />theme: 'light'
+                    <br />};
+                    <br />&lt;/script>
+                    &lt;script type="text/javascript" src="/dominolink.min.js" charset="utf-8">&lt;/script>
+                    &lt;link rel="stylesheet" href="/dominolink.min.css">
+                    <br />&lt;link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+                  </b>
+                </p>
+              </div>
             </div>
           </div>
         </div>
@@ -195,7 +233,12 @@ export default {
       syncCount: 0,
       syncPicture: 0,
       hq_nations: [],
-      hq_pictures: []
+      hq_pictures: [],
+      html: [
+        `Tag the people in the NationBuilder database with the tag "Forum:Austria" in order for the app to display them in the listings. Then Add the HTML code below where you want the listing to display. Add the Script Snippet in the < HEADER >'(?)
+              **** But must add bootstrap, jquery to site (Basic) ****`,
+        '&lt;script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js">&lt;/script>&lt;script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js">&lt;/script>&lt;link href="https://fonts.googleapis.com/css?family=PT+Serif:400,700|Roboto+Slab:300,400,700" rel="stylesheet">'
+      ]
     };
   },
   created() {
