@@ -16,11 +16,11 @@
                 <font-awesome-icon icon="redo" size="2x" />
                 <br />Refresh Cache
               </button>
-              <button class="col-md-2 mb-1 offset-md-1 p-3 btn btn-success" @click="syncMembers">
+              <button class="col-md-2 mb-1 offset-md-1 p-3 btn btn-success" @click="syncMembers" v-if="nation.membership_sync">
                 <font-awesome-icon icon="user-cog" size="2x" />
                 <br />Sync Members
               </button>
-              <button class="col-md-2 mb-1 offset-md-1 p-3 btn btn-success" @click="syncPictures">
+              <button class="col-md-2 mb-1 offset-md-1 p-3 btn btn-success"  v-if="nation.sync_picture" @click="syncPictures">
                 <font-awesome-icon icon="portrait" size="2x" />
                 <br />Sync Pictures
               </button>
