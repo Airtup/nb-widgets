@@ -127,9 +127,8 @@
                   <div class="scroll-area-md">
                     <VuePerfectScrollbar class="scrollbar-container text-left" v-once>
                       <p>
-                        Tag the people in the NationBuilder database with the tag "Forum:Austria" in order for the app to display them in the listings.
-                        Then Add the HTML code below where you want the listing to display. Add the Script Snippet in the HEADER(?)
-                        **** But must add bootstrap, jquery to site (Basic) ****
+                        Tag the people in the NationBuilder database with the tag "{{nation.tag}}" in order for the app to display them in the listings.
+                        Then Add the HTML code below where you want the listing to display. Add the Script Snippet before the &lt;/body> tag.
                       </p>
                     </VuePerfectScrollbar>
                   </div>
@@ -152,18 +151,11 @@
                   <h5 class="card-title">Add Script Snippet</h5>
                   <div class="scroll-area-md">
                     <VuePerfectScrollbar>
-                      <pre v-highlightjs>
-                          <code class="javascript">&lt;script type="text/javascript">
-                            <br />var dominolink = {
-                            <br />container: '.directory-listing',
-                            <br />nationSlug : '{{nation.slug}}',
-                            <br />showSearchForm: 'true',
-                            <br />theme: {{nation.theme ==0?"'light'":"'dark'"}}
-                            <br />};
-                            <br />&lt;/script>
-                            &lt;script type="text/javascript" src="/{{nation.slug}}.min.js" charset="utf-8">&lt;/script>
-                            </code>
-                        </pre>
+                      <pre v-highlightjs="sourcecode">
+                        <code class="javascript">
+
+                        </code>
+                      </pre>
                     </VuePerfectScrollbar>
                   </div>
                 </div>
@@ -261,7 +253,7 @@ export default {
         name: "",
         slug: "",
         access_token: "",
-        logo: null,
+        logo: "",
         people_count: 3,
         status: 1
       },
@@ -276,7 +268,7 @@ export default {
   },
   created() {
     axios
-      .get(BASE_URL + `/api/nation/details/${this.id}`)
+      .get(BASE_URL + "/api/nation/details/" + this.id)
       .then(response => {
         if ((response.status = 200)) {
           this.nation = response.data.data[0][0];
@@ -293,6 +285,15 @@ export default {
   computed: {
     currentUser() {
       return this.$store.state.auth.user;
+    },
+    sourcecode() {
+      return `<script type=\"text\/javascript\">\r\n  var dominolink = {\r\n    container: \'.directory-listing\',\r\n    nationSlug : \'${
+        this.nation.slug
+      }\',\r\n    showSearchForm: \'true\',\r\n    theme: \'${
+        this.nation.theme == 0 ? "light" : "dark"
+      }\'\r\n  };\r\n<\/script>\r\n<script type=\"text\/javascript\" src=\"\/${
+        this.nation.slug
+      }.min.js\" charset=\"utf-8\"><\/script>\r\n`;
     }
   },
   methods: {
@@ -327,7 +328,7 @@ export default {
         .then(response => {
           if (response.data.status == "200") {
             axios
-              .get(BASE_URL + `/api/nation/details/${this.id}`)
+              .get(BASE_URL + "/api/nation/details/" + this.id)
               .then(response => {
                 if ((response.status = 200)) {
                   this.nation = response.data.data[0][0];
@@ -356,7 +357,7 @@ export default {
             this.syncPicture = 0;
             swal("Success", "Cache Refresed successfully", "success");
             axios
-              .get(BASE_URL + `/api/nation/details/${this.id}`)
+              .get(BASE_URL + "/api/nation/details/" + this.id)
               .then(response => {
                 if ((response.status = 200)) {
                   this.nation = response.data.data[0][0];
