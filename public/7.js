@@ -307,6 +307,47 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -386,13 +427,12 @@ _fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_4__["library"].add(_f
       return this.$store.state.auth.user;
     },
     sourcecode: function sourcecode() {
-      return "<script type=\"text/javascript\">\r\n  var dominolink = {\r\n    container: '.directory-listing',\r\n    nationSlug : '".concat(this.nation.slug, "',\r\n    showSearchForm: 'true',\r\n    theme: '").concat(this.nation.theme == 0 ? "light" : "dark", "'\r\n  };\r\n</script>\r\n<script type=\"text/javascript\" src=\"/").concat(this.nation.slug, ".min.js\" charset=\"utf-8\"></script>\r\n");
+      return "<script type=\"text/javascript\">\r\n  var dominolink = {\r\n    container: '.directory-listing',\r\n    nationSlug : '".concat(this.nation.slug, "',\r\n    showSearchForm: 'true',\r\n    theme: '").concat(this.nation.theme == 0 ? "light" : "dark", "'\r\n  };\r\n</script>\r\n<script type=\"text/javascript\" src=\"").concat(BASE_URL, "/widgets/").concat(this.nation.slug, ".min.js\" charset=\"utf-8\"></script>\r\n");
     }
   },
   methods: {
     updateNation: function updateNation() {
       this.nation.show_options = JSON.stringify(this.options);
-      console.log(this.nation);
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.put(BASE_URL + "/api/nation/details/" + this.nation.id, {
         nation: this.nation,
         user_id: this.currentUser.user.id
@@ -1209,15 +1249,14 @@ var render = function() {
                             "VuePerfectScrollbar",
                             { staticClass: "scrollbar-container text-left" },
                             [
-                              _c("div", { staticClass: "row" }, [
+                              _c("div", { staticClass: "form-group" }, [
                                 _c(
                                   "div",
-                                  { staticClass: "form-group col-md-6" },
+                                  {
+                                    staticClass:
+                                      "custom-checkbox custom-control col-md-6"
+                                  },
                                   [
-                                    _c("label", { attrs: { for: "" } }, [
-                                      _vm._v("First Name")
-                                    ]),
-                                    _vm._v(" "),
                                     _c("input", {
                                       directives: [
                                         {
@@ -1227,8 +1266,8 @@ var render = function() {
                                           expression: "options.first_name"
                                         }
                                       ],
-                                      staticClass: "form-control",
-                                      attrs: { type: "checkbox" },
+                                      staticClass: "custom-control-input",
+                                      attrs: { type: "checkbox", id: "1" },
                                       domProps: {
                                         checked: Array.isArray(
                                           _vm.options.first_name
@@ -1273,18 +1312,26 @@ var render = function() {
                                           }
                                         }
                                       }
-                                    })
+                                    }),
+                                    _vm._v(" "),
+                                    _c(
+                                      "label",
+                                      {
+                                        staticClass: "custom-control-label",
+                                        attrs: { for: "1" }
+                                      },
+                                      [_vm._v("First Name")]
+                                    )
                                   ]
                                 ),
                                 _vm._v(" "),
                                 _c(
                                   "div",
-                                  { staticClass: "form-group col-md-6" },
+                                  {
+                                    staticClass:
+                                      "custom-checkbox custom-control col-md-6"
+                                  },
                                   [
-                                    _c("label", { attrs: { for: "" } }, [
-                                      _vm._v("Last Name")
-                                    ]),
-                                    _vm._v(" "),
                                     _c("input", {
                                       directives: [
                                         {
@@ -1294,8 +1341,8 @@ var render = function() {
                                           expression: "options.last_name"
                                         }
                                       ],
-                                      staticClass: "form-control",
-                                      attrs: { type: "checkbox" },
+                                      staticClass: "custom-control-input",
+                                      attrs: { type: "checkbox", id: "2" },
                                       domProps: {
                                         checked: Array.isArray(
                                           _vm.options.last_name
@@ -1340,18 +1387,26 @@ var render = function() {
                                           }
                                         }
                                       }
-                                    })
+                                    }),
+                                    _vm._v(" "),
+                                    _c(
+                                      "label",
+                                      {
+                                        staticClass: "custom-control-label",
+                                        attrs: { for: "2" }
+                                      },
+                                      [_vm._v("Last Name")]
+                                    )
                                   ]
                                 ),
                                 _vm._v(" "),
                                 _c(
                                   "div",
-                                  { staticClass: "form-group col-md-6" },
+                                  {
+                                    staticClass:
+                                      "custom-checkbox custom-control col-md-6"
+                                  },
                                   [
-                                    _c("label", { attrs: { for: "" } }, [
-                                      _vm._v("City")
-                                    ]),
-                                    _vm._v(" "),
                                     _c("input", {
                                       directives: [
                                         {
@@ -1361,8 +1416,8 @@ var render = function() {
                                           expression: "options.city"
                                         }
                                       ],
-                                      staticClass: "form-control",
-                                      attrs: { type: "checkbox" },
+                                      staticClass: "custom-control-input",
+                                      attrs: { type: "checkbox", id: "3" },
                                       domProps: {
                                         checked: Array.isArray(_vm.options.city)
                                           ? _vm._i(_vm.options.city, null) > -1
@@ -1398,18 +1453,26 @@ var render = function() {
                                           }
                                         }
                                       }
-                                    })
+                                    }),
+                                    _vm._v(" "),
+                                    _c(
+                                      "label",
+                                      {
+                                        staticClass: "custom-control-label",
+                                        attrs: { for: "3" }
+                                      },
+                                      [_vm._v("City")]
+                                    )
                                   ]
                                 ),
                                 _vm._v(" "),
                                 _c(
                                   "div",
-                                  { staticClass: "form-group col-md-6" },
+                                  {
+                                    staticClass:
+                                      "custom-checkbox custom-control col-md-6"
+                                  },
                                   [
-                                    _c("label", { attrs: { for: "" } }, [
-                                      _vm._v("Country")
-                                    ]),
-                                    _vm._v(" "),
                                     _c("input", {
                                       directives: [
                                         {
@@ -1419,8 +1482,8 @@ var render = function() {
                                           expression: "options.country"
                                         }
                                       ],
-                                      staticClass: "form-control",
-                                      attrs: { type: "checkbox" },
+                                      staticClass: "custom-control-input",
+                                      attrs: { type: "checkbox", id: "4" },
                                       domProps: {
                                         checked: Array.isArray(
                                           _vm.options.country
@@ -1463,18 +1526,26 @@ var render = function() {
                                           }
                                         }
                                       }
-                                    })
+                                    }),
+                                    _vm._v(" "),
+                                    _c(
+                                      "label",
+                                      {
+                                        staticClass: "custom-control-label",
+                                        attrs: { for: "4" }
+                                      },
+                                      [_vm._v("Country")]
+                                    )
                                   ]
                                 ),
                                 _vm._v(" "),
                                 _c(
                                   "div",
-                                  { staticClass: "form-group col-md-6" },
+                                  {
+                                    staticClass:
+                                      "custom-checkbox custom-control col-md-6"
+                                  },
                                   [
-                                    _c("label", { attrs: { for: "" } }, [
-                                      _vm._v("Adress")
-                                    ]),
-                                    _vm._v(" "),
                                     _c("input", {
                                       directives: [
                                         {
@@ -1484,8 +1555,8 @@ var render = function() {
                                           expression: "options.address"
                                         }
                                       ],
-                                      staticClass: "form-control",
-                                      attrs: { type: "checkbox" },
+                                      staticClass: "custom-control-input",
+                                      attrs: { type: "checkbox", id: "5" },
                                       domProps: {
                                         checked: Array.isArray(
                                           _vm.options.address
@@ -1528,18 +1599,26 @@ var render = function() {
                                           }
                                         }
                                       }
-                                    })
+                                    }),
+                                    _vm._v(" "),
+                                    _c(
+                                      "label",
+                                      {
+                                        staticClass: "custom-control-label",
+                                        attrs: { for: "5" }
+                                      },
+                                      [_vm._v("Adress")]
+                                    )
                                   ]
                                 ),
                                 _vm._v(" "),
                                 _c(
                                   "div",
-                                  { staticClass: "form-group col-md-6" },
+                                  {
+                                    staticClass:
+                                      "custom-checkbox custom-control col-md-6"
+                                  },
                                   [
-                                    _c("label", { attrs: { for: "" } }, [
-                                      _vm._v("Email")
-                                    ]),
-                                    _vm._v(" "),
                                     _c("input", {
                                       directives: [
                                         {
@@ -1549,8 +1628,8 @@ var render = function() {
                                           expression: "options.email"
                                         }
                                       ],
-                                      staticClass: "form-control",
-                                      attrs: { type: "checkbox" },
+                                      staticClass: "custom-control-input",
+                                      attrs: { type: "checkbox", id: "6" },
                                       domProps: {
                                         checked: Array.isArray(
                                           _vm.options.email
@@ -1588,18 +1667,26 @@ var render = function() {
                                           }
                                         }
                                       }
-                                    })
+                                    }),
+                                    _vm._v(" "),
+                                    _c(
+                                      "label",
+                                      {
+                                        staticClass: "custom-control-label",
+                                        attrs: { for: "6" }
+                                      },
+                                      [_vm._v("Email")]
+                                    )
                                   ]
                                 ),
                                 _vm._v(" "),
                                 _c(
                                   "div",
-                                  { staticClass: "form-group col-md-6" },
+                                  {
+                                    staticClass:
+                                      "custom-checkbox custom-control col-md-6"
+                                  },
                                   [
-                                    _c("label", { attrs: { for: "" } }, [
-                                      _vm._v("Phone")
-                                    ]),
-                                    _vm._v(" "),
                                     _c("input", {
                                       directives: [
                                         {
@@ -1609,8 +1696,8 @@ var render = function() {
                                           expression: "options.phone"
                                         }
                                       ],
-                                      staticClass: "form-control",
-                                      attrs: { type: "checkbox" },
+                                      staticClass: "custom-control-input",
+                                      attrs: { type: "checkbox", id: "7" },
                                       domProps: {
                                         checked: Array.isArray(
                                           _vm.options.phone
@@ -1648,18 +1735,26 @@ var render = function() {
                                           }
                                         }
                                       }
-                                    })
+                                    }),
+                                    _vm._v(" "),
+                                    _c(
+                                      "label",
+                                      {
+                                        staticClass: "custom-control-label",
+                                        attrs: { for: "7" }
+                                      },
+                                      [_vm._v("Phone")]
+                                    )
                                   ]
                                 ),
                                 _vm._v(" "),
                                 _c(
                                   "div",
-                                  { staticClass: "form-group col-md-6" },
+                                  {
+                                    staticClass:
+                                      "custom-checkbox custom-control col-md-6"
+                                  },
                                   [
-                                    _c("label", { attrs: { for: "" } }, [
-                                      _vm._v("Assist Email")
-                                    ]),
-                                    _vm._v(" "),
                                     _c("input", {
                                       directives: [
                                         {
@@ -1669,8 +1764,8 @@ var render = function() {
                                           expression: "options.assist_email"
                                         }
                                       ],
-                                      staticClass: "form-control",
-                                      attrs: { type: "checkbox" },
+                                      staticClass: "custom-control-input",
+                                      attrs: { type: "checkbox", id: "8" },
                                       domProps: {
                                         checked: Array.isArray(
                                           _vm.options.assist_email
@@ -1715,18 +1810,26 @@ var render = function() {
                                           }
                                         }
                                       }
-                                    })
+                                    }),
+                                    _vm._v(" "),
+                                    _c(
+                                      "label",
+                                      {
+                                        staticClass: "custom-control-label",
+                                        attrs: { for: "8" }
+                                      },
+                                      [_vm._v("Assist email")]
+                                    )
                                   ]
                                 ),
                                 _vm._v(" "),
                                 _c(
                                   "div",
-                                  { staticClass: "form-group col-md-6" },
+                                  {
+                                    staticClass:
+                                      "custom-checkbox custom-control col-md-6"
+                                  },
                                   [
-                                    _c("label", { attrs: { for: "" } }, [
-                                      _vm._v("Assist Name")
-                                    ]),
-                                    _vm._v(" "),
                                     _c("input", {
                                       directives: [
                                         {
@@ -1736,8 +1839,8 @@ var render = function() {
                                           expression: "options.assist_name"
                                         }
                                       ],
-                                      staticClass: "form-control",
-                                      attrs: { type: "checkbox" },
+                                      staticClass: "custom-control-input",
+                                      attrs: { type: "checkbox", id: "9" },
                                       domProps: {
                                         checked: Array.isArray(
                                           _vm.options.assist_name
@@ -1782,18 +1885,26 @@ var render = function() {
                                           }
                                         }
                                       }
-                                    })
+                                    }),
+                                    _vm._v(" "),
+                                    _c(
+                                      "label",
+                                      {
+                                        staticClass: "custom-control-label",
+                                        attrs: { for: "9" }
+                                      },
+                                      [_vm._v("Assist name")]
+                                    )
                                   ]
                                 ),
                                 _vm._v(" "),
                                 _c(
                                   "div",
-                                  { staticClass: "form-group col-md-6" },
+                                  {
+                                    staticClass:
+                                      "custom-checkbox custom-control col-md-6"
+                                  },
                                   [
-                                    _c("label", { attrs: { for: "" } }, [
-                                      _vm._v("Assist Phone")
-                                    ]),
-                                    _vm._v(" "),
                                     _c("input", {
                                       directives: [
                                         {
@@ -1803,8 +1914,8 @@ var render = function() {
                                           expression: "options.assist_phone"
                                         }
                                       ],
-                                      staticClass: "form-control",
-                                      attrs: { type: "checkbox" },
+                                      staticClass: "custom-control-input",
+                                      attrs: { type: "checkbox", id: "10" },
                                       domProps: {
                                         checked: Array.isArray(
                                           _vm.options.assist_phone
@@ -1849,7 +1960,16 @@ var render = function() {
                                           }
                                         }
                                       }
-                                    })
+                                    }),
+                                    _vm._v(" "),
+                                    _c(
+                                      "label",
+                                      {
+                                        staticClass: "custom-control-label",
+                                        attrs: { for: "10" }
+                                      },
+                                      [_vm._v("Assist Phone")]
+                                    )
                                   ]
                                 )
                               ])

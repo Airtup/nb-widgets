@@ -98,7 +98,7 @@
               </div>
               <div class="form-group col-md-4">
                 <label for="nation_hq">HQ Nation</label>
-                <input type="checkbox" v-model="nation.hq" class="form-control" />
+                <input type="checkbox" class="form-control" v-model="nation.hq" />
               </div>
               <div class="form-group col-md-4">
                 <label for="nation_last_refresh">Last Refresh</label>
@@ -120,60 +120,101 @@
                 <label for="nation_token">Disclaimer</label>
                 <textarea v-model="nation.disclaimer" class="form-control"></textarea>
               </div>
-
               <div class="main-card mb-3 card col-md-12">
                 <div class="card-body">
                   <h5 class="card-title">Select Profile Fields to Display :</h5>
                   <div class="scroll-area-md">
                     <VuePerfectScrollbar class="scrollbar-container text-left">
-                      <div class="row">
-                        <div class="form-group col-md-6">
-                          <label for>First Name</label>
-                          <input type="checkbox" class="form-control" v-model="options.first_name" />
-                        </div>
-                        <div class="form-group col-md-6">
-                          <label for>Last Name</label>
-                          <input type="checkbox" class="form-control" v-model="options.last_name" />
-                        </div>
-                        <div class="form-group col-md-6">
-                          <label for>City</label>
-                          <input type="checkbox" class="form-control" v-model="options.city" />
-                        </div>
-                        <div class="form-group col-md-6">
-                          <label for>Country</label>
-                          <input type="checkbox" class="form-control" v-model="options.country" />
-                        </div>
-                        <div class="form-group col-md-6">
-                          <label for>Adress</label>
-                          <input type="checkbox" class="form-control" v-model="options.address" />
-                        </div>
-                        <div class="form-group col-md-6">
-                          <label for>Email</label>
-                          <input type="checkbox" class="form-control" v-model="options.email" />
-                        </div>
-                        <div class="form-group col-md-6">
-                          <label for>Phone</label>
-                          <input type="checkbox" class="form-control" v-model="options.phone" />
-                        </div>
-                        <div class="form-group col-md-6">
-                          <label for>Assist Email</label>
+                      <div class="form-group">
+                        <div class="custom-checkbox custom-control col-md-6">
                           <input
                             type="checkbox"
-                            class="form-control"
+                            class="custom-control-input"
+                            v-model="options.first_name"
+                            id="1"
+                          />
+                          <label class="custom-control-label" for="1">First Name</label>
+                        </div>
+                        <div class="custom-checkbox custom-control col-md-6">
+                          <input
+                            type="checkbox"
+                            class="custom-control-input"
+                            v-model="options.last_name"
+                            id="2"
+                          />
+                          <label class="custom-control-label" for="2">Last Name</label>
+                        </div>
+                        <div class="custom-checkbox custom-control col-md-6">
+                          <input
+                            type="checkbox"
+                            class="custom-control-input"
+                            v-model="options.city"
+                            id="3"
+                          />
+                          <label class="custom-control-label" for="3">City</label>
+                        </div>
+                        <div class="custom-checkbox custom-control col-md-6">
+                          <input
+                            type="checkbox"
+                            class="custom-control-input"
+                            v-model="options.country"
+                            id="4"
+                          />
+                          <label class="custom-control-label" for="4">Country</label>
+                        </div>
+                        <div class="custom-checkbox custom-control col-md-6">
+                          <input
+                            type="checkbox"
+                            class="custom-control-input"
+                            v-model="options.address"
+                            id="5"
+                          />
+                          <label class="custom-control-label" for="5">Adress</label>
+                        </div>
+                        <div class="custom-checkbox custom-control col-md-6">
+                          <input
+                            type="checkbox"
+                            class="custom-control-input"
+                            v-model="options.email"
+                            id="6"
+                          />
+                          <label class="custom-control-label" for="6">Email</label>
+                        </div>
+                        <div class="custom-checkbox custom-control col-md-6">
+                          <input
+                            type="checkbox"
+                            class="custom-control-input"
+                            v-model="options.phone"
+                            id="7"
+                          />
+                          <label class="custom-control-label" for="7">Phone</label>
+                        </div>
+                        <div class="custom-checkbox custom-control col-md-6">
+                          <input
+                            type="checkbox"
+                            class="custom-control-input"
                             v-model="options.assist_email"
+                            id="8"
                           />
+                          <label class="custom-control-label" for="8">Assist email</label>
                         </div>
-                        <div class="form-group col-md-6">
-                          <label for>Assist Name</label>
-                          <input type="checkbox" class="form-control" v-model="options.assist_name" />
-                        </div>
-                        <div class="form-group col-md-6">
-                          <label for>Assist Phone</label>
+                        <div class="custom-checkbox custom-control col-md-6">
                           <input
                             type="checkbox"
-                            class="form-control"
-                            v-model="options.assist_phone"
+                            class="custom-control-input"
+                            v-model="options.assist_name"
+                            id="9"
                           />
+                          <label class="custom-control-label" for="9">Assist name</label>
+                        </div>
+                        <div class="custom-checkbox custom-control col-md-6">
+                          <input
+                            type="checkbox"
+                            class="custom-control-input"
+                            v-model="options.assist_phone"
+                            id="10"
+                          />
+                          <label class="custom-control-label" for="10">Assist Phone</label>
                         </div>
                       </div>
                     </VuePerfectScrollbar>
@@ -383,7 +424,6 @@ export default {
   methods: {
     updateNation: function() {
       this.nation.show_options = JSON.stringify(this.options);
-      console.log(this.nation);
       axios
         .put(BASE_URL + "/api/nation/details/" + this.nation.id, {
           nation: this.nation,
