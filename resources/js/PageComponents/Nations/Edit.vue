@@ -94,7 +94,7 @@
               </div>
               <div class="form-group col-md-4">
                 <label for="nation_token">Directory Tag Count</label>
-                <input type="number" disabled v-model="nation.people_count" class="form-control" />
+                <input type="number" disabled v-model="tag_count" class="form-control" />
               </div>
               <div class="col-md-4">
                 <div class="custom-checkbox custom-control">
@@ -376,6 +376,7 @@ export default {
       syncStatus: 0,
       syncCount: 0,
       syncPicture: 0,
+      tag_count: 0,
       hq_nations: [],
       hq_pictures: [],
       htmlSource: `<div class="directory-listing"></div>`,
@@ -402,7 +403,7 @@ export default {
           this.options.assist_phone = this.options.assist_phone == 1;
           this.options.city = this.options.city == 1;
           this.options.country = this.options.country == 1;
-          return this.options;
+          this.tag_count = response.data.data[3];
         }
       })
       .catch(error => swal("Error!", error, "error"));

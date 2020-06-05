@@ -59,8 +59,10 @@ class NationDetailsController extends Controller
         $nations = $this->dao->get($id);
         $hq_nations = $this->dao->get_hq_nations();
         $hq_pictures = $this->dao->get_hq_pictures();
+        
+        $nation_total = AbstractFactory::getFactory('DAO')->getDAO('PeopleDao')->get_count_by_tag($nations->first()->tag);
         //$data['hq_pic_nation'] = $this->MNation->getAllSyncPicNations();
-        return response()->json(['status' => 'ok', 'data' => [ $nations,$hq_nations,$hq_pictures]], 200);
+        return response()->json(['status' => 'ok', 'data' => [ $nations,$hq_nations,$hq_pictures, $nation_total]], 200);
     }
 
     /**

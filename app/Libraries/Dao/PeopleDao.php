@@ -61,4 +61,8 @@ class PeopleDao
         ->first();
         return $people;
     }
+
+    public function get_count_by_tag($tag){
+        return People::where('nation_tag',$tag)->count();
+    }
 }
