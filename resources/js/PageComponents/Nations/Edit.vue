@@ -184,11 +184,14 @@
                 <div class="card-body">
                   <h5 class="card-title">INSTALLATION INSTRUCTIONS</h5>
                   <div class="scroll-area-md">
-                    <VuePerfectScrollbar class="scrollbar-container text-left" v-once>
+                    
+                    <VuePerfectScrollbar class="scrollbar-container text-left" >
+                      <template>
                       <p>
                         Tag the people in the NationBuilder database with the tag "{{nation.tag}}" in order for the app to display them in the listings.
                         Then Add the HTML code below where you want the listing to display. Add the Script Snippet before the &lt;/body> tag.
                       </p>
+                      </template>
                     </VuePerfectScrollbar>
                   </div>
                 </div>
@@ -344,6 +347,7 @@ export default {
       .then(response => {
         if ((response.status = 200)) {
           this.nation = response.data.data[0][0];
+          
           (this.hq_nations = response.data.data[1]),
             (this.hq_pictures = response.data.data[2]);
           this.options = JSON.parse(this.nation.show_options);
