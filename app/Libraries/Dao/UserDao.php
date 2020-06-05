@@ -31,20 +31,37 @@ class UserDao
             ->roles()
             ->attach(Role::find($role));
 
-        return response()->json(['status' => 'ok', 'data' => $user], 200);;
+        return response()->json(['status' => 'ok', 'data' => $user], 200);
     }
 
     public function get($id)
     {
-        $user = User::where('id', $id)->where('status', '1')->get();
+        $user = User::where('id', $id)->where('access', '1')->get()->first();
+        $user->role = $user->hasRole('admin')?1:1;
 
         return $user;
     }
-    public function update($request, $id)
+    public function update($userRequest,$roleRequest)
     {
-        $user = User::find($id);
+        $user = User::find($userRequest['id']);
+        if (empty($user)) {
+            return response()->json(['status' => 'error', 'data' => 'Email has already been taken'], 200);
+        }
+        $user->name = $userRequest['name'];
+        $user->email = $userRequest['email'];
+        if(isset($userRequest['password'])){
+            $user->password = bcrypt($userRequest['password']);
+        }
+        $user->save();
+        //dd($user->roles);
+        $user
+            ->roles()
+            ->detach($user->roles[0]->id);
+        $user
+            ->roles()
+            ->attach(Role::find($roleRequest));
 
-        return $user->update($request);
+        return response()->json(['status' => 'ok', 'data' => $user], 200);;
     }
     public function delete($id)
     {

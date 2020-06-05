@@ -36,7 +36,12 @@ class UserController extends Controller
     {
         return $this->dao->insert($request->user,$request->role);
     }
-
+    public function update(Request $request){
+        return $this->dao->update($request->user,$request->role);
+    }
+    public function edit(Request $request){
+        return $this->dao->get($request->id);
+    }
     /**
      * Remove the specified resource from storage.
      *
