@@ -291,7 +291,7 @@ export default {
         this.nation.slug
       }\',\r\n    showSearchForm: \'true\',\r\n    theme: \'${
         this.nation.theme == 0 ? "light" : "dark"
-      }\'\r\n  };\r\n<\/script>\r\n<script type=\"text\/javascript\" src=\"\/${
+      }\'\r\n  };\r\n<\/script>\r\n<script type=\"text\/javascript\" src=\"${BASE_URL}/widgets/${
         this.nation.slug
       }.min.js\" charset=\"utf-8\"><\/script>\r\n`;
     }
