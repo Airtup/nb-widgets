@@ -377,8 +377,7 @@ class NationBuilderApiController extends Controller
 
         $temp_url = 'https://' . $nation->slug . '.nationbuilder.com/api/v1/people/count?access_token=' . $nation->access_token;;
         $response = $this->api->get($temp_url);
-
-        $this->dao->update(['people_count' => $count], $nation_id);
+        $this->dao->update(['people_count' => $response->people_count], $nation_id);
         $details_dao = AbstractFactory::getFactory('DAO')->getDAO('NationDetailsDao');
 
         Log::create(["user_id" => $user_id, "nation_id" => $nation->id, 'description' => 'Cache Refreshed Nation "' . $nation->name . '"']);
@@ -707,75 +706,11 @@ class NationBuilderApiController extends Controller
     }
     public function getPersonDetail(Request $request)
     {
-
         $nation_slug = $request->nation_slug;
         $person_id = $request->person_id;
-        $result =  $this->dao->getNationBySlug($nation_slug);
-        if ($result != null) {
-            $params = array(
-                'access_token' => $result->access_token
-            );
-
-            $url = 'https://' . $nation_slug . '.nationbuilder.com/api/v1/people/' . $person_id . '?' . http_build_query($params);
-
-            $cookiesIn = '';
-            $curl = curl_init();
-            $options = array(
-                CURLOPT_URL => $url,
-                CURLOPT_RETURNTRANSFER => true,     // return web page
-                // CURLOPT_HEADER         => true,     //return headers in  addition to content
-                CURLOPT_FOLLOWLOCATION => true,     // follow redirects
-                CURLOPT_ENCODING       => "",       // handle all encodings
-                CURLOPT_AUTOREFERER    => true,     // set referer on redirect
-                CURLOPT_CONNECTTIMEOUT => 120,      // timeout on connect
-                CURLOPT_TIMEOUT        => 120,      // timeout on response
-                // CURLOPT_MAXREDIRS      => 10,       // stop after 10 redirects
-                CURLINFO_HEADER_OUT    => true,
-                CURLOPT_SSL_VERIFYPEER => true,     // Validate SSL Certificates
-                CURLOPT_HTTP_VERSION   => CURL_HTTP_VERSION_1_1,
-                CURLOPT_COOKIE         => $cookiesIn
-            );
-            curl_setopt_array($curl, $options);
-            $curlResponse = curl_exec($curl);
-            if (curl_error($curl)) {
-                echo '';
-            } else {
-                $data = json_decode($curlResponse);
-                if ($result['nation_pro_city'] == 0)
-                    if ($data->person->primary_address != null)
-                        $data->person->primary_address->city = null;
-
-                if ($result['nation_pro_country'] == 0)
-                    if ($data->person->primary_address != null)
-                        $data->person->primary_address->country = '';
-
-                if ($result['nation_pro_address'] == 0) {
-                    $data->person->home_address = null;
-                    $data->person->work_address = null;
-                }
-
-                if ($result['nation_pro_email'] == 0)
-                    $data->person->email = null;
-
-                if ($result['nation_pro_phone'] == 0) {
-                    $data->person->phone = null;
-                    $data->person->work_phone_number = null;
-                    $data->person->mobile = null;
-                }
-
-                if ($result['nation_pro_assist_name'] == 0)
-                    $data->person->assistant_name = null;
-
-                if ($result['nation_pro_assist_email'] == 0)
-                    $data->person->assistant_email = null;
-
-                if ($result['nation_pro_assist_phone'] == 0)
-                    $data->person->assistant_phone_number = null;
-                return response()->json(['status' => 'ok', 'data' => $data], 200);
-            }
-            curl_close($curl);
-        } else
-            echo '';
+        $nation =  $this->dao->getNationBySlug($nation_slug);
+        $result = AbstractFactory::getFactory('DAO')->getDAO('PeopleDao')->getPersonDetail($person_id);
+        return response()->json($result);
     }
 
     public function getPDFDetail(Request $request)

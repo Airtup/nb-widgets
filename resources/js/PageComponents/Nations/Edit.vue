@@ -16,11 +16,11 @@
                 <font-awesome-icon icon="redo" size="2x" />
                 <br />Refresh Cache
               </button>
-              <button class="col-md-2 mb-1 offset-md-1 p-3 btn btn-success" @click="syncMembers">
+              <button class="col-md-2 mb-1 offset-md-1 p-3 btn btn-success" @click="syncMembers" v-if="nation.membership_sync">
                 <font-awesome-icon icon="user-cog" size="2x" />
                 <br />Sync Members
               </button>
-              <button class="col-md-2 mb-1 offset-md-1 p-3 btn btn-success" @click="syncPictures">
+              <button class="col-md-2 mb-1 offset-md-1 p-3 btn btn-success"  v-if="nation.sync_picture" @click="syncPictures">
                 <font-awesome-icon icon="portrait" size="2x" />
                 <br />Sync Pictures
               </button>
@@ -34,8 +34,7 @@
                   class="form-control"
                   id="nation_name"
                   aria-describedby="nation_help"
-                  :value="nation.name"
-                  disabled
+                  v-model="nation.name"
                 />
                 <small id="nation_help" class="form-text text-muted">Choose a name for the nation</small>
               </div>
@@ -94,7 +93,7 @@
               </div>
               <div class="form-group col-md-4">
                 <label for="nation_token">Directory Tag Count</label>
-                <input type="number" disabled v-model="nation.people_count" class="form-control" />
+                <input type="number" disabled v-model="tag_count" class="form-control" />
               </div>
               <div class="col-md-4">
                 <div class="custom-checkbox custom-control">
@@ -376,6 +375,7 @@ export default {
       syncStatus: 0,
       syncCount: 0,
       syncPicture: 0,
+      tag_count: 0,
       hq_nations: [],
       hq_pictures: [],
       htmlSource: `<div class="directory-listing"></div>`,
@@ -402,7 +402,7 @@ export default {
           this.options.assist_phone = this.options.assist_phone == 1;
           this.options.city = this.options.city == 1;
           this.options.country = this.options.country == 1;
-          return this.options;
+          this.tag_count = response.data.data[3];
         }
       })
       .catch(error => swal("Error!", error, "error"));

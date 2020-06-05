@@ -21,7 +21,7 @@
                                             name="email"
                                             v-model="user.email"
                                             id="exampleEmail"
-                                            placeholder="Email here...">
+                                            placeholder="Email...">
                                 </b-form-input>
                             </b-form-group>
                             <b-form-group id="exampleInputGroup2"
@@ -30,7 +30,7 @@
                                                 type="password"
                                                 name="password"
                                                 id="examplePassword"
-                                                placeholder="Password here...">
+                                                placeholder="Password...">
                                 </b-form-input>
                             </b-form-group>
                             <!-- <b-form-checkbox name="check" id="exampleCheck">

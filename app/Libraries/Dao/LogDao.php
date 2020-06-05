@@ -11,6 +11,7 @@ class LogDao
        $logs = Log::join('users','users.id','=','logs.user_id')
                     ->leftJoin('nations','nations.id','=','logs.nation_id')
                     ->select('logs.*','users.name as user_name','nations.name as nation_name')
+                    ->orderBy('created_at', 'DESC')
                     ->get();
         return $logs;
     }

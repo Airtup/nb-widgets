@@ -3,52 +3,14 @@
     <div class="header-btn-lg pr-0">
       <div class="widget-content p-0">
         <div class="widget-content-wrapper">
-          <div class="widget-content-left">
-            <b-dropdown toggle-class="p-0 mr-2" variant="link" menu-class="dropdown-menu-lg" no-caret right>
-              <div slot="button-content">
-                <font-awesome-icon icon="user" size="2x" />
-              </div>
-              <div class="dropdown-menu-header">
-                <div class="dropdown-menu-header-inner bg-midnight-bloom text-lighter">
-                  <div class="menu-header-content text-left">
-                    <div class="widget-content p-0">
-                      <div class="widget-content-wrapper">
-                        <div class="widget-content-left mr-3">
-                          <font-awesome-icon icon="user" size="2x" />
-                        </div>
-                        <div class="widget-content-left">
-                          <div class="widget-heading">{{currentUser.user.name}}</div>
-                        </div>
-                        <div class="widget-content-right mr-2">
-                          <button
-                            @click.prevent="logOut"
-                            class="btn-pill btn-shadow btn-shine btn btn-focus"
-                          >Logout</button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!-- <div class="scroll-area-xs" style="height: 150px;">
-                <VuePerfectScrollbar class="scrollbar-container" v-once>
-                  <ul class="nav flex-column">
-                    <li class="nav-item-header nav-item">Activity</li>
-                    <li class="nav-item">
-                      <a href="javascript:void(0);" class="nav-link">Recover Password</a>
-                    </li>
-                    <li class="nav-item-header nav-item">My Account</li>
-                    <li class="nav-item">
-                      <a href="javascript:void(0);" class="nav-link">Settings</a>
-                    </li>
-                  </ul>
-                </VuePerfectScrollbar>
-              </div> -->
-            </b-dropdown>
-          </div>
           <div class="widget-content-left ml-3 header-user-info">
             <div class="widget-heading">{{currentUser.user.name}}</div>
             <div class="widget-subheading">{{currentUser.user.email}}</div>
+          </div>
+          <div class="widget-content-right header-user-info ml-3">
+            <button type="button" class="btn btn-icon btn-icon-only btn-outline-link" @click.prevent="logOut">
+              <font-awesome-icon icon="sign-out-alt" size="2x" color="#FFFFFF" />
+            </button>
           </div>
         </div>
       </div>
@@ -57,10 +19,6 @@
 </template>
 
 <script>
-import VuePerfectScrollbar from "vue-perfect-scrollbar";
-import VueCircle from "vue2-circle-progress";
-import Trend from "vuetrend";
-
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
   faAngleDown,
@@ -73,7 +31,8 @@ import {
   faFilePdf,
   faFileArchive,
   faEllipsisH,
-  faUser
+  faUser,
+  faSignOutAlt
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
@@ -88,15 +47,13 @@ library.add(
   faFileExcel,
   faFilePdf,
   faFileArchive,
-  faEllipsisH
+  faEllipsisH,
+  faSignOutAlt
 );
 
 export default {
   components: {
-    VuePerfectScrollbar,
     "font-awesome-icon": FontAwesomeIcon,
-    VueCircle,
-    trend: Trend
   },
   data: () => ({
     fill1: { gradient: ["#00b09b", "#96c93d"] },
