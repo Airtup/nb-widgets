@@ -245,8 +245,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 
 
@@ -288,7 +286,7 @@ _fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_4__["library"].add(_f
       syncPicture: 0,
       hq_nations: [],
       hq_pictures: [],
-      html: ["Tag the people in the NationBuilder database with the tag \"Forum:Austria\" in order for the app to display them in the listings. \nThen Add the HTML code below where you want the listing to display. Add the Script Snippet in the < HEADER >'(?)\n**** But must add bootstrap, jquery to site (Basic) ****", '&lt;script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js">&lt;/script>&lt;script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js">&lt;/script>&lt;link href="https://fonts.googleapis.com/css?family=PT+Serif:400,700|Roboto+Slab:300,400,700" rel="stylesheet">']
+      htmlSource: "<div class=\"directory-listing\"></div>"
     };
   },
   created: function created() {
@@ -1142,7 +1140,7 @@ var render = function() {
                     "div",
                     {
                       staticClass: "main-card mb-3 card col-md-12",
-                      staticStyle: { "max-height": "250px" }
+                      staticStyle: { "max-height": "150px" }
                     },
                     [
                       _c("div", { staticClass: "card-body" }, [
@@ -1177,9 +1175,7 @@ var render = function() {
                                 directives: [
                                   {
                                     name: "highlightjs",
-                                    rawName: "v-highlightjs",
-                                    value: _vm.sourcecode,
-                                    expression: "sourcecode"
+                                    rawName: "v-highlightjs"
                                   }
                                 ]
                               },
@@ -1187,11 +1183,11 @@ var render = function() {
                                 _vm._v("                        "),
                                 _c("code", { staticClass: "javascript" }, [
                                   _vm._v(
-                                    '<script type="text/javascript"\n                          '
+                                    '<script type="text/javascript">\n                          '
                                   ),
                                   _c("br"),
                                   _vm._v(
-                                    "var dominolink\n                          "
+                                    "var dominolink = {\n                          "
                                   ),
                                   _c("br"),
                                   _vm._v(
@@ -1223,13 +1219,7 @@ var render = function() {
                                   _vm._v(
                                     '</script>\n                          <script type="text/javascript" src="/' +
                                       _vm._s(_vm.nation.slug) +
-                                      '.min.js" charset="utf-8"></script>\n                          <link rel="stylesheet" href="/' +
-                                      _vm._s(_vm.nation.slug) +
-                                      '.min.css">\n                          '
-                                  ),
-                                  _c("br"),
-                                  _vm._v(
-                                    '<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">\n                          '
+                                      '.min.js" charset="utf-8"></script>\n                          '
                                   )
                                 ]),
                                 _vm._v("\n                      ")
@@ -1441,16 +1431,14 @@ var staticRenderFns = [
               {
                 name: "highlightjs",
                 rawName: "v-highlightjs",
-                value: _vm.sourcecode,
-                expression: "sourcecode"
+                value: _vm.htmlSource,
+                expression: "htmlSource"
               }
             ]
           },
           [
             _vm._v("                        "),
-            _c("code", { staticClass: "html" }, [
-              _vm._v('<div class="directory-listing"></div>')
-            ]),
+            _c("code", { staticClass: "html" }),
             _vm._v("\n                    ")
           ]
         )
