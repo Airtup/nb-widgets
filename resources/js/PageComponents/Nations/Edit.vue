@@ -96,17 +96,25 @@
                 <label for="nation_token">Directory Tag Count</label>
                 <input type="number" disabled v-model="nation.people_count" class="form-control" />
               </div>
-              <div class="form-group col-md-4">
-                <label for="nation_hq">HQ Nation</label>
-                <input type="checkbox" class="form-control" v-model="nation.hq" />
+              <div class="col-md-4">
+                <div class="custom-checkbox custom-control">
+                  <input type="checkbox" class="custom-control-input" v-model="nation.hq" id="11" />
+                  <label class="custom-control-label" for="11">HQ Nation</label>
+                </div>
               </div>
               <div class="form-group col-md-4">
-                <label for="nation_last_refresh">Last Refresh</label>
-                <input type="text" disabled v-model="nation.updated_at" class="form-control" />
-              </div>
-              <div class="form-group col-md-4">
-                <label for="nation_last_refresh">Logo</label>
-                <input type="file" @change="updateImage" ref="file" class="form-control" />
+                <label for="exampleCustomFileBrowser" class>File Browser</label>
+                <div class="custom-file">
+                  <input
+                    type="file"
+                    id="exampleCustomFileBrowser"
+                    name="customFile"
+                    class="custom-file-input"
+                    @change="updateImage"
+                    ref="file"
+                  />
+                  <label class="custom-file-label" for="exampleCustomFileBrowser">Choose Logo</label>
+                </div>
               </div>
               <div class="form-group col-md-4">
                 <label for="nation_token">PDF Back Color</label>
