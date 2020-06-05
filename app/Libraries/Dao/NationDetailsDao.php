@@ -30,6 +30,7 @@ class NationDetailsDao
     public function update($request, $id)
     {
         $nation = NationDetails::find($id);
+        Nation::find($request['nation_id'])->update($request);
 
         return $nation->update($request);
     }

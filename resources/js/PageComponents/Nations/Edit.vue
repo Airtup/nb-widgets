@@ -34,8 +34,7 @@
                   class="form-control"
                   id="nation_name"
                   aria-describedby="nation_help"
-                  :value="nation.name"
-                  disabled
+                  v-model="nation.name"
                 />
                 <small id="nation_help" class="form-text text-muted">Choose a name for the nation</small>
               </div>
