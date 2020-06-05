@@ -195,18 +195,6 @@
               </div>
               <div class="main-card mb-3 card col-md-12" style="max-height:150px">
                 <div class="card-body">
-                  <h5 class="card-title">Add Bootstrap (Header)</h5>
-                  <div class="scroll-area-md">
-                    <VuePerfectScrollbar class="scrollbar-container text-left" v-once>
-                      <pre v-highlightjs="bootstrapSource">
-                          <code class="html"></code>
-                      </pre>
-                    </VuePerfectScrollbar>
-                  </div>
-                </div>
-              </div>
-              <div class="main-card mb-3 card col-md-12" style="max-height:150px">
-                <div class="card-body">
                   <h5 class="card-title">Add HTML</h5>
                   <div class="scroll-area-md">
                     <VuePerfectScrollbar class="scrollbar-container text-left" v-once>
