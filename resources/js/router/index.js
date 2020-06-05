@@ -13,7 +13,7 @@ const router = new Router({
     {
       path: "/",
       name: "analytics",
-      component: () => import("../PageComponents/Analytics.vue"),
+      component: () => import("../PageComponents/Nations/Index.vue"),
     },
     // Pages
 
