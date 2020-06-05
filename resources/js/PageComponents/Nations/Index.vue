@@ -1,7 +1,7 @@
 <template>
   <div>
     <page-title :heading="heading" :subheading="subheading" icon="hashtag"></page-title>
-    <b-card title="Nations List" class="main-card mb-4">
+    <b-card class="main-card mb-4">
       <b-row>
         <b-col md="6" class="my-1">
           <b-form-group horizontal label="Filter" class="mb-0">
@@ -97,7 +97,7 @@ export default {
     "font-awesome-icon": FontAwesomeIcon
   },
   data: () => ({
-    heading: "Nations list",
+    heading: "View all Nations",
     subheading: "All registered nations are shown here",
     icon: "fa fa-hashtag",
 
