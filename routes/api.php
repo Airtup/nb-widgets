@@ -58,6 +58,8 @@ Route::get('/nation/activate/{id}', 'NationBuilderApiController@activate');
 
 Route::get('/users','UserController@index');
 Route::post('/users','UserController@store');
+Route::get('/users/edit/{id}','UserController@edit');
+Route::post('/users/edit/{id}','UserController@update');
 Route::delete('/users/{user}','UserController@destroy');
 Route::get('/roles','RoleController@index');
 

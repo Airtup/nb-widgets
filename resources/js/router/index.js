@@ -53,7 +53,7 @@ const router = new Router({
       path: "/users/edit/:id",
       props: true,
       name: "edit-user",
-      component: () => import("../PageComponents/Users/Index.vue"),
+      component: () => import("../PageComponents/Users/Edit.vue"),
     },
     {
       path: "/users/create",
