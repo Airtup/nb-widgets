@@ -121,6 +121,65 @@
                 <textarea v-model="nation.disclaimer" class="form-control"></textarea>
               </div>
 
+              <div class="main-card mb-3 card col-md-12">
+                <div class="card-body">
+                  <h5 class="card-title">Select Profile Fields to Display :</h5>
+                  <div class="scroll-area-md">
+                    <VuePerfectScrollbar class="scrollbar-container text-left">
+                      <div class="row">
+                        <div class="form-group col-md-6">
+                          <label for>First Name</label>
+                          <input type="checkbox" class="form-control" v-model="options.first_name" />
+                        </div>
+                        <div class="form-group col-md-6">
+                          <label for>Last Name</label>
+                          <input type="checkbox" class="form-control" v-model="options.last_name" />
+                        </div>
+                        <div class="form-group col-md-6">
+                          <label for>City</label>
+                          <input type="checkbox" class="form-control" v-model="options.city" />
+                        </div>
+                        <div class="form-group col-md-6">
+                          <label for>Country</label>
+                          <input type="checkbox" class="form-control" v-model="options.country" />
+                        </div>
+                        <div class="form-group col-md-6">
+                          <label for>Adress</label>
+                          <input type="checkbox" class="form-control" v-model="options.address" />
+                        </div>
+                        <div class="form-group col-md-6">
+                          <label for>Email</label>
+                          <input type="checkbox" class="form-control" v-model="options.email" />
+                        </div>
+                        <div class="form-group col-md-6">
+                          <label for>Phone</label>
+                          <input type="checkbox" class="form-control" v-model="options.phone" />
+                        </div>
+                        <div class="form-group col-md-6">
+                          <label for>Assist Email</label>
+                          <input
+                            type="checkbox"
+                            class="form-control"
+                            v-model="options.assist_email"
+                          />
+                        </div>
+                        <div class="form-group col-md-6">
+                          <label for>Assist Name</label>
+                          <input type="checkbox" class="form-control" v-model="options.assist_name" />
+                        </div>
+                        <div class="form-group col-md-6">
+                          <label for>Assist Phone</label>
+                          <input
+                            type="checkbox"
+                            class="form-control"
+                            v-model="options.assist_phone"
+                          />
+                        </div>
+                      </div>
+                    </VuePerfectScrollbar>
+                  </div>
+                </div>
+              </div>
               <div class="main-card mb-3 card col-md-12" style="max-height:150px">
                 <div class="card-body">
                   <h5 class="card-title">INSTALLATION INSTRUCTIONS</h5>
@@ -130,6 +189,18 @@
                         Tag the people in the NationBuilder database with the tag "{{nation.tag}}" in order for the app to display them in the listings.
                         Then Add the HTML code below where you want the listing to display. Add the Script Snippet before the &lt;/body> tag.
                       </p>
+                    </VuePerfectScrollbar>
+                  </div>
+                </div>
+              </div>
+              <div class="main-card mb-3 card col-md-12" style="max-height:150px">
+                <div class="card-body">
+                  <h5 class="card-title">Add Bootstrap (Header)</h5>
+                  <div class="scroll-area-md">
+                    <VuePerfectScrollbar class="scrollbar-container text-left" v-once>
+                      <pre v-highlightjs="bootstrapSource">
+                          <code class="html"></code>
+                      </pre>
                     </VuePerfectScrollbar>
                   </div>
                 </div>
@@ -153,7 +224,6 @@
                     <VuePerfectScrollbar>
                       <pre v-highlightjs="sourcecode">
                         <code class="javascript">
-
                         </code>
                       </pre>
                     </VuePerfectScrollbar>
@@ -240,7 +310,7 @@ export default {
         theme: 0,
         tag: "",
         nation_id: 1,
-        show_options: "",
+        show_options: "{}",
         intro: null,
         disclaimer: null,
         report_color: null,
@@ -257,13 +327,15 @@ export default {
         people_count: 3,
         status: 1
       },
+      options: {},
       menu: 0,
       syncStatus: 0,
       syncCount: 0,
       syncPicture: 0,
       hq_nations: [],
       hq_pictures: [],
-      htmlSource: `<div class="directory-listing"></div>`
+      htmlSource: `<div class="directory-listing"></div>`,
+      bootstrapSource: `<script src=\"https:\/\/ajax.googleapis.com\/ajax\/libs\/jquery\/3.4.1\/jquery.min.js\"><\/script>\r\n<script src=\"https:\/\/maxcdn.bootstrapcdn.com\/bootstrap\/3.4.0\/js\/bootstrap.min.js\"><\/script>\r\n<link href=\"https:\/\/fonts.googleapis.com\/css?family=PT+Serif:400,700|Roboto+Slab:300,400,700\" rel=\"stylesheet\">`
     };
   },
   created() {
@@ -274,6 +346,18 @@ export default {
           this.nation = response.data.data[0][0];
           (this.hq_nations = response.data.data[1]),
             (this.hq_pictures = response.data.data[2]);
+          this.options = JSON.parse(this.nation.show_options);
+          this.options.first_name = this.options.first_name == 1;
+          this.options.last_name = this.options.last_name == 1;
+          this.options.phone = this.options.phone == 1;
+          this.options.email = this.options.email == 1;
+          this.options.address = this.options.address == 1;
+          this.options.assist_email = this.options.assist_email == 1;
+          this.options.assist_name = this.options.assist_name == 1;
+          this.options.assist_phone = this.options.assist_phone == 1;
+          this.options.city = this.options.city == 1;
+          this.options.country = this.options.country == 1;
+          return this.options;
         }
       })
       .catch(error => swal("Error!", error, "error"));
@@ -291,13 +375,15 @@ export default {
         this.nation.slug
       }\',\r\n    showSearchForm: \'true\',\r\n    theme: \'${
         this.nation.theme == 0 ? "light" : "dark"
-      }\'\r\n  };\r\n<\/script>\r\n<script type=\"text\/javascript\" src=\"\/${
+      }\'\r\n  };\r\n<\/script>\r\n<script type=\"text\/javascript\" src=\"${BASE_URL}/widgets/${
         this.nation.slug
       }.min.js\" charset=\"utf-8\"><\/script>\r\n`;
     }
   },
   methods: {
     updateNation: function() {
+      this.nation.show_options = JSON.stringify(this.options);
+      console.log(this.nation);
       axios
         .put(BASE_URL + "/api/nation/details/" + this.nation.id, {
           nation: this.nation,

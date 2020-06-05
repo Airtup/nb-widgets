@@ -237,6 +237,76 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -255,7 +325,7 @@ _fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_4__["library"].add(_f
         theme: 0,
         tag: "",
         nation_id: 1,
-        show_options: "",
+        show_options: "{}",
         intro: null,
         disclaimer: null,
         report_color: null,
@@ -272,13 +342,15 @@ _fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_4__["library"].add(_f
         people_count: 3,
         status: 1
       },
+      options: {},
       menu: 0,
       syncStatus: 0,
       syncCount: 0,
       syncPicture: 0,
       hq_nations: [],
       hq_pictures: [],
-      htmlSource: "<div class=\"directory-listing\"></div>"
+      htmlSource: "<div class=\"directory-listing\"></div>",
+      bootstrapSource: "<script src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js\"></script>\r\n<script src=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js\"></script>\r\n<link href=\"https://fonts.googleapis.com/css?family=PT+Serif:400,700|Roboto+Slab:300,400,700\" rel=\"stylesheet\">"
     };
   },
   created: function created() {
@@ -288,6 +360,18 @@ _fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_4__["library"].add(_f
       if (response.status = 200) {
         _this.nation = response.data.data[0][0];
         _this.hq_nations = response.data.data[1], _this.hq_pictures = response.data.data[2];
+        _this.options = JSON.parse(_this.nation.show_options);
+        _this.options.first_name = _this.options.first_name == 1;
+        _this.options.last_name = _this.options.last_name == 1;
+        _this.options.phone = _this.options.phone == 1;
+        _this.options.email = _this.options.email == 1;
+        _this.options.address = _this.options.address == 1;
+        _this.options.assist_email = _this.options.assist_email == 1;
+        _this.options.assist_name = _this.options.assist_name == 1;
+        _this.options.assist_phone = _this.options.assist_phone == 1;
+        _this.options.city = _this.options.city == 1;
+        _this.options.country = _this.options.country == 1;
+        return _this.options;
       }
     }).catch(function (error) {
       return sweetalert__WEBPACK_IMPORTED_MODULE_3___default()("Error!", error, "error");
@@ -302,11 +386,13 @@ _fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_4__["library"].add(_f
       return this.$store.state.auth.user;
     },
     sourcecode: function sourcecode() {
-      return "<script type=\"text/javascript\">\r\n  var dominolink = {\r\n    container: '.directory-listing',\r\n    nationSlug : '".concat(this.nation.slug, "',\r\n    showSearchForm: 'true',\r\n    theme: '").concat(this.nation.theme == 0 ? "light" : "dark", "'\r\n  };\r\n</script>\r\n<script type=\"text/javascript\" src=\"/").concat(this.nation.slug, ".min.js\" charset=\"utf-8\"></script>\r\n");
+      return "<script type=\"text/javascript\">\r\n  var dominolink = {\r\n    container: '.directory-listing',\r\n    nationSlug : '".concat(this.nation.slug, "',\r\n    showSearchForm: 'true',\r\n    theme: '").concat(this.nation.theme == 0 ? "light" : "dark", "'\r\n  };\r\n</script>\r\n<script type=\"text/javascript\" src=\"").concat(BASE_URL, "/widgets/").concat(this.nation.slug, ".min.js\" charset=\"utf-8\"></script>\r\n");
     }
   },
   methods: {
     updateNation: function updateNation() {
+      this.nation.show_options = JSON.stringify(this.options);
+      console.log(this.nation);
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.put(BASE_URL + "/api/nation/details/" + this.nation.id, {
         nation: this.nation,
         user_id: this.currentUser.user.id
@@ -1109,6 +1195,672 @@ var render = function() {
                     })
                   ]),
                   _vm._v(" "),
+                  _c("div", { staticClass: "main-card mb-3 card col-md-12" }, [
+                    _c("div", { staticClass: "card-body" }, [
+                      _c("h5", { staticClass: "card-title" }, [
+                        _vm._v("Select Profile Fields to Display :")
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "scroll-area-md" },
+                        [
+                          _c(
+                            "VuePerfectScrollbar",
+                            { staticClass: "scrollbar-container text-left" },
+                            [
+                              _c("div", { staticClass: "row" }, [
+                                _c(
+                                  "div",
+                                  { staticClass: "form-group col-md-6" },
+                                  [
+                                    _c("label", { attrs: { for: "" } }, [
+                                      _vm._v("First Name")
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("input", {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: _vm.options.first_name,
+                                          expression: "options.first_name"
+                                        }
+                                      ],
+                                      staticClass: "form-control",
+                                      attrs: { type: "checkbox" },
+                                      domProps: {
+                                        checked: Array.isArray(
+                                          _vm.options.first_name
+                                        )
+                                          ? _vm._i(
+                                              _vm.options.first_name,
+                                              null
+                                            ) > -1
+                                          : _vm.options.first_name
+                                      },
+                                      on: {
+                                        change: function($event) {
+                                          var $$a = _vm.options.first_name,
+                                            $$el = $event.target,
+                                            $$c = $$el.checked ? true : false
+                                          if (Array.isArray($$a)) {
+                                            var $$v = null,
+                                              $$i = _vm._i($$a, $$v)
+                                            if ($$el.checked) {
+                                              $$i < 0 &&
+                                                _vm.$set(
+                                                  _vm.options,
+                                                  "first_name",
+                                                  $$a.concat([$$v])
+                                                )
+                                            } else {
+                                              $$i > -1 &&
+                                                _vm.$set(
+                                                  _vm.options,
+                                                  "first_name",
+                                                  $$a
+                                                    .slice(0, $$i)
+                                                    .concat($$a.slice($$i + 1))
+                                                )
+                                            }
+                                          } else {
+                                            _vm.$set(
+                                              _vm.options,
+                                              "first_name",
+                                              $$c
+                                            )
+                                          }
+                                        }
+                                      }
+                                    })
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  { staticClass: "form-group col-md-6" },
+                                  [
+                                    _c("label", { attrs: { for: "" } }, [
+                                      _vm._v("Last Name")
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("input", {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: _vm.options.last_name,
+                                          expression: "options.last_name"
+                                        }
+                                      ],
+                                      staticClass: "form-control",
+                                      attrs: { type: "checkbox" },
+                                      domProps: {
+                                        checked: Array.isArray(
+                                          _vm.options.last_name
+                                        )
+                                          ? _vm._i(
+                                              _vm.options.last_name,
+                                              null
+                                            ) > -1
+                                          : _vm.options.last_name
+                                      },
+                                      on: {
+                                        change: function($event) {
+                                          var $$a = _vm.options.last_name,
+                                            $$el = $event.target,
+                                            $$c = $$el.checked ? true : false
+                                          if (Array.isArray($$a)) {
+                                            var $$v = null,
+                                              $$i = _vm._i($$a, $$v)
+                                            if ($$el.checked) {
+                                              $$i < 0 &&
+                                                _vm.$set(
+                                                  _vm.options,
+                                                  "last_name",
+                                                  $$a.concat([$$v])
+                                                )
+                                            } else {
+                                              $$i > -1 &&
+                                                _vm.$set(
+                                                  _vm.options,
+                                                  "last_name",
+                                                  $$a
+                                                    .slice(0, $$i)
+                                                    .concat($$a.slice($$i + 1))
+                                                )
+                                            }
+                                          } else {
+                                            _vm.$set(
+                                              _vm.options,
+                                              "last_name",
+                                              $$c
+                                            )
+                                          }
+                                        }
+                                      }
+                                    })
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  { staticClass: "form-group col-md-6" },
+                                  [
+                                    _c("label", { attrs: { for: "" } }, [
+                                      _vm._v("City")
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("input", {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: _vm.options.city,
+                                          expression: "options.city"
+                                        }
+                                      ],
+                                      staticClass: "form-control",
+                                      attrs: { type: "checkbox" },
+                                      domProps: {
+                                        checked: Array.isArray(_vm.options.city)
+                                          ? _vm._i(_vm.options.city, null) > -1
+                                          : _vm.options.city
+                                      },
+                                      on: {
+                                        change: function($event) {
+                                          var $$a = _vm.options.city,
+                                            $$el = $event.target,
+                                            $$c = $$el.checked ? true : false
+                                          if (Array.isArray($$a)) {
+                                            var $$v = null,
+                                              $$i = _vm._i($$a, $$v)
+                                            if ($$el.checked) {
+                                              $$i < 0 &&
+                                                _vm.$set(
+                                                  _vm.options,
+                                                  "city",
+                                                  $$a.concat([$$v])
+                                                )
+                                            } else {
+                                              $$i > -1 &&
+                                                _vm.$set(
+                                                  _vm.options,
+                                                  "city",
+                                                  $$a
+                                                    .slice(0, $$i)
+                                                    .concat($$a.slice($$i + 1))
+                                                )
+                                            }
+                                          } else {
+                                            _vm.$set(_vm.options, "city", $$c)
+                                          }
+                                        }
+                                      }
+                                    })
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  { staticClass: "form-group col-md-6" },
+                                  [
+                                    _c("label", { attrs: { for: "" } }, [
+                                      _vm._v("Country")
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("input", {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: _vm.options.country,
+                                          expression: "options.country"
+                                        }
+                                      ],
+                                      staticClass: "form-control",
+                                      attrs: { type: "checkbox" },
+                                      domProps: {
+                                        checked: Array.isArray(
+                                          _vm.options.country
+                                        )
+                                          ? _vm._i(_vm.options.country, null) >
+                                            -1
+                                          : _vm.options.country
+                                      },
+                                      on: {
+                                        change: function($event) {
+                                          var $$a = _vm.options.country,
+                                            $$el = $event.target,
+                                            $$c = $$el.checked ? true : false
+                                          if (Array.isArray($$a)) {
+                                            var $$v = null,
+                                              $$i = _vm._i($$a, $$v)
+                                            if ($$el.checked) {
+                                              $$i < 0 &&
+                                                _vm.$set(
+                                                  _vm.options,
+                                                  "country",
+                                                  $$a.concat([$$v])
+                                                )
+                                            } else {
+                                              $$i > -1 &&
+                                                _vm.$set(
+                                                  _vm.options,
+                                                  "country",
+                                                  $$a
+                                                    .slice(0, $$i)
+                                                    .concat($$a.slice($$i + 1))
+                                                )
+                                            }
+                                          } else {
+                                            _vm.$set(
+                                              _vm.options,
+                                              "country",
+                                              $$c
+                                            )
+                                          }
+                                        }
+                                      }
+                                    })
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  { staticClass: "form-group col-md-6" },
+                                  [
+                                    _c("label", { attrs: { for: "" } }, [
+                                      _vm._v("Adress")
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("input", {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: _vm.options.address,
+                                          expression: "options.address"
+                                        }
+                                      ],
+                                      staticClass: "form-control",
+                                      attrs: { type: "checkbox" },
+                                      domProps: {
+                                        checked: Array.isArray(
+                                          _vm.options.address
+                                        )
+                                          ? _vm._i(_vm.options.address, null) >
+                                            -1
+                                          : _vm.options.address
+                                      },
+                                      on: {
+                                        change: function($event) {
+                                          var $$a = _vm.options.address,
+                                            $$el = $event.target,
+                                            $$c = $$el.checked ? true : false
+                                          if (Array.isArray($$a)) {
+                                            var $$v = null,
+                                              $$i = _vm._i($$a, $$v)
+                                            if ($$el.checked) {
+                                              $$i < 0 &&
+                                                _vm.$set(
+                                                  _vm.options,
+                                                  "address",
+                                                  $$a.concat([$$v])
+                                                )
+                                            } else {
+                                              $$i > -1 &&
+                                                _vm.$set(
+                                                  _vm.options,
+                                                  "address",
+                                                  $$a
+                                                    .slice(0, $$i)
+                                                    .concat($$a.slice($$i + 1))
+                                                )
+                                            }
+                                          } else {
+                                            _vm.$set(
+                                              _vm.options,
+                                              "address",
+                                              $$c
+                                            )
+                                          }
+                                        }
+                                      }
+                                    })
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  { staticClass: "form-group col-md-6" },
+                                  [
+                                    _c("label", { attrs: { for: "" } }, [
+                                      _vm._v("Email")
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("input", {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: _vm.options.email,
+                                          expression: "options.email"
+                                        }
+                                      ],
+                                      staticClass: "form-control",
+                                      attrs: { type: "checkbox" },
+                                      domProps: {
+                                        checked: Array.isArray(
+                                          _vm.options.email
+                                        )
+                                          ? _vm._i(_vm.options.email, null) > -1
+                                          : _vm.options.email
+                                      },
+                                      on: {
+                                        change: function($event) {
+                                          var $$a = _vm.options.email,
+                                            $$el = $event.target,
+                                            $$c = $$el.checked ? true : false
+                                          if (Array.isArray($$a)) {
+                                            var $$v = null,
+                                              $$i = _vm._i($$a, $$v)
+                                            if ($$el.checked) {
+                                              $$i < 0 &&
+                                                _vm.$set(
+                                                  _vm.options,
+                                                  "email",
+                                                  $$a.concat([$$v])
+                                                )
+                                            } else {
+                                              $$i > -1 &&
+                                                _vm.$set(
+                                                  _vm.options,
+                                                  "email",
+                                                  $$a
+                                                    .slice(0, $$i)
+                                                    .concat($$a.slice($$i + 1))
+                                                )
+                                            }
+                                          } else {
+                                            _vm.$set(_vm.options, "email", $$c)
+                                          }
+                                        }
+                                      }
+                                    })
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  { staticClass: "form-group col-md-6" },
+                                  [
+                                    _c("label", { attrs: { for: "" } }, [
+                                      _vm._v("Phone")
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("input", {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: _vm.options.phone,
+                                          expression: "options.phone"
+                                        }
+                                      ],
+                                      staticClass: "form-control",
+                                      attrs: { type: "checkbox" },
+                                      domProps: {
+                                        checked: Array.isArray(
+                                          _vm.options.phone
+                                        )
+                                          ? _vm._i(_vm.options.phone, null) > -1
+                                          : _vm.options.phone
+                                      },
+                                      on: {
+                                        change: function($event) {
+                                          var $$a = _vm.options.phone,
+                                            $$el = $event.target,
+                                            $$c = $$el.checked ? true : false
+                                          if (Array.isArray($$a)) {
+                                            var $$v = null,
+                                              $$i = _vm._i($$a, $$v)
+                                            if ($$el.checked) {
+                                              $$i < 0 &&
+                                                _vm.$set(
+                                                  _vm.options,
+                                                  "phone",
+                                                  $$a.concat([$$v])
+                                                )
+                                            } else {
+                                              $$i > -1 &&
+                                                _vm.$set(
+                                                  _vm.options,
+                                                  "phone",
+                                                  $$a
+                                                    .slice(0, $$i)
+                                                    .concat($$a.slice($$i + 1))
+                                                )
+                                            }
+                                          } else {
+                                            _vm.$set(_vm.options, "phone", $$c)
+                                          }
+                                        }
+                                      }
+                                    })
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  { staticClass: "form-group col-md-6" },
+                                  [
+                                    _c("label", { attrs: { for: "" } }, [
+                                      _vm._v("Assist Email")
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("input", {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: _vm.options.assist_email,
+                                          expression: "options.assist_email"
+                                        }
+                                      ],
+                                      staticClass: "form-control",
+                                      attrs: { type: "checkbox" },
+                                      domProps: {
+                                        checked: Array.isArray(
+                                          _vm.options.assist_email
+                                        )
+                                          ? _vm._i(
+                                              _vm.options.assist_email,
+                                              null
+                                            ) > -1
+                                          : _vm.options.assist_email
+                                      },
+                                      on: {
+                                        change: function($event) {
+                                          var $$a = _vm.options.assist_email,
+                                            $$el = $event.target,
+                                            $$c = $$el.checked ? true : false
+                                          if (Array.isArray($$a)) {
+                                            var $$v = null,
+                                              $$i = _vm._i($$a, $$v)
+                                            if ($$el.checked) {
+                                              $$i < 0 &&
+                                                _vm.$set(
+                                                  _vm.options,
+                                                  "assist_email",
+                                                  $$a.concat([$$v])
+                                                )
+                                            } else {
+                                              $$i > -1 &&
+                                                _vm.$set(
+                                                  _vm.options,
+                                                  "assist_email",
+                                                  $$a
+                                                    .slice(0, $$i)
+                                                    .concat($$a.slice($$i + 1))
+                                                )
+                                            }
+                                          } else {
+                                            _vm.$set(
+                                              _vm.options,
+                                              "assist_email",
+                                              $$c
+                                            )
+                                          }
+                                        }
+                                      }
+                                    })
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  { staticClass: "form-group col-md-6" },
+                                  [
+                                    _c("label", { attrs: { for: "" } }, [
+                                      _vm._v("Assist Name")
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("input", {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: _vm.options.assist_name,
+                                          expression: "options.assist_name"
+                                        }
+                                      ],
+                                      staticClass: "form-control",
+                                      attrs: { type: "checkbox" },
+                                      domProps: {
+                                        checked: Array.isArray(
+                                          _vm.options.assist_name
+                                        )
+                                          ? _vm._i(
+                                              _vm.options.assist_name,
+                                              null
+                                            ) > -1
+                                          : _vm.options.assist_name
+                                      },
+                                      on: {
+                                        change: function($event) {
+                                          var $$a = _vm.options.assist_name,
+                                            $$el = $event.target,
+                                            $$c = $$el.checked ? true : false
+                                          if (Array.isArray($$a)) {
+                                            var $$v = null,
+                                              $$i = _vm._i($$a, $$v)
+                                            if ($$el.checked) {
+                                              $$i < 0 &&
+                                                _vm.$set(
+                                                  _vm.options,
+                                                  "assist_name",
+                                                  $$a.concat([$$v])
+                                                )
+                                            } else {
+                                              $$i > -1 &&
+                                                _vm.$set(
+                                                  _vm.options,
+                                                  "assist_name",
+                                                  $$a
+                                                    .slice(0, $$i)
+                                                    .concat($$a.slice($$i + 1))
+                                                )
+                                            }
+                                          } else {
+                                            _vm.$set(
+                                              _vm.options,
+                                              "assist_name",
+                                              $$c
+                                            )
+                                          }
+                                        }
+                                      }
+                                    })
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  { staticClass: "form-group col-md-6" },
+                                  [
+                                    _c("label", { attrs: { for: "" } }, [
+                                      _vm._v("Assist Phone")
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("input", {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: _vm.options.assist_phone,
+                                          expression: "options.assist_phone"
+                                        }
+                                      ],
+                                      staticClass: "form-control",
+                                      attrs: { type: "checkbox" },
+                                      domProps: {
+                                        checked: Array.isArray(
+                                          _vm.options.assist_phone
+                                        )
+                                          ? _vm._i(
+                                              _vm.options.assist_phone,
+                                              null
+                                            ) > -1
+                                          : _vm.options.assist_phone
+                                      },
+                                      on: {
+                                        change: function($event) {
+                                          var $$a = _vm.options.assist_phone,
+                                            $$el = $event.target,
+                                            $$c = $$el.checked ? true : false
+                                          if (Array.isArray($$a)) {
+                                            var $$v = null,
+                                              $$i = _vm._i($$a, $$v)
+                                            if ($$el.checked) {
+                                              $$i < 0 &&
+                                                _vm.$set(
+                                                  _vm.options,
+                                                  "assist_phone",
+                                                  $$a.concat([$$v])
+                                                )
+                                            } else {
+                                              $$i > -1 &&
+                                                _vm.$set(
+                                                  _vm.options,
+                                                  "assist_phone",
+                                                  $$a
+                                                    .slice(0, $$i)
+                                                    .concat($$a.slice($$i + 1))
+                                                )
+                                            }
+                                          } else {
+                                            _vm.$set(
+                                              _vm.options,
+                                              "assist_phone",
+                                              $$c
+                                            )
+                                          }
+                                        }
+                                      }
+                                    })
+                                  ]
+                                )
+                              ])
+                            ]
+                          )
+                        ],
+                        1
+                      )
+                    ])
+                  ]),
+                  _vm._v(" "),
                   _c(
                     "div",
                     {
@@ -1140,13 +1892,35 @@ var render = function() {
                     [
                       _c("div", { staticClass: "card-body" }, [
                         _c("h5", { staticClass: "card-title" }, [
-                          _vm._v("Add HTML")
+                          _vm._v("Add Bootstrap (Header)")
                         ]),
                         _vm._v(" "),
                         _c(
                           "div",
                           { staticClass: "scroll-area-md" },
                           [_vm._m(1)],
+                          1
+                        )
+                      ])
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass: "main-card mb-3 card col-md-12",
+                      staticStyle: { "max-height": "150px" }
+                    },
+                    [
+                      _c("div", { staticClass: "card-body" }, [
+                        _c("h5", { staticClass: "card-title" }, [
+                          _vm._v("Add HTML")
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          { staticClass: "scroll-area-md" },
+                          [_vm._m(2)],
                           1
                         )
                       ])
@@ -1179,7 +1953,7 @@ var render = function() {
                               [
                                 _vm._v("                      "),
                                 _c("code", { staticClass: "javascript" }, [
-                                  _vm._v("\n\n                      ")
+                                  _vm._v("\n                      ")
                                 ]),
                                 _vm._v("\n                    ")
                               ]
@@ -1374,6 +2148,35 @@ var staticRenderFns = [
               '" in order for the app to display them in the listings.\n                      Then Add the HTML code below where you want the listing to display. Add the Script Snippet before the </body> tag.\n                    '
           )
         ])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "VuePerfectScrollbar",
+      { staticClass: "scrollbar-container text-left" },
+      [
+        _c(
+          "pre",
+          {
+            directives: [
+              {
+                name: "highlightjs",
+                rawName: "v-highlightjs",
+                value: _vm.bootstrapSource,
+                expression: "bootstrapSource"
+              }
+            ]
+          },
+          [
+            _vm._v("                        "),
+            _c("code", { staticClass: "html" }),
+            _vm._v("\n                    ")
+          ]
+        )
       ]
     )
   },
