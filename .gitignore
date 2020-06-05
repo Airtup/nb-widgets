@@ -13,6 +13,7 @@ Homestead.yaml
 npm-debug.log
 yarn-error.log
 .editorconfig
+/public/css
 /public/fonts
 /public/img
 /public/js
