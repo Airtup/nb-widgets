@@ -344,6 +344,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -1114,6 +1118,38 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "form-group col-md-4" }, [
+                    _c("label", { attrs: { for: "nation_token" } }, [
+                      _vm._v("Last Refresh")
+                    ]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.nation.updated_at,
+                          expression: "nation.updated_at"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: { type: "text", disabled: "" },
+                      domProps: { value: _vm.nation.updated_at },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.nation,
+                            "updated_at",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-group col-md-4" }, [
                     _c(
                       "label",
                       { attrs: { for: "exampleCustomFileBrowser" } },
@@ -1816,7 +1852,7 @@ var render = function() {
                                         staticClass: "custom-control-label",
                                         attrs: { for: "8" }
                                       },
-                                      [_vm._v("Assist email")]
+                                      [_vm._v("Assistant email")]
                                     )
                                   ]
                                 ),
@@ -1891,7 +1927,7 @@ var render = function() {
                                         staticClass: "custom-control-label",
                                         attrs: { for: "9" }
                                       },
-                                      [_vm._v("Assist name")]
+                                      [_vm._v("Assistant name")]
                                     )
                                   ]
                                 ),
@@ -1966,7 +2002,7 @@ var render = function() {
                                         staticClass: "custom-control-label",
                                         attrs: { for: "10" }
                                       },
-                                      [_vm._v("Assist Phone")]
+                                      [_vm._v("Assistant Phone")]
                                     )
                                   ]
                                 )

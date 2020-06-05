@@ -103,6 +103,10 @@
                 </div>
               </div>
               <div class="form-group col-md-4">
+                <label for="nation_token">Last Refresh</label>
+                <input type="text" disabled v-model="nation.updated_at" class="form-control" />
+              </div>
+              <div class="form-group col-md-4">
                 <label for="exampleCustomFileBrowser" class>File Browser</label>
                 <div class="custom-file">
                   <input
