@@ -204,7 +204,7 @@
                             v-model="options.assist_email"
                             id="8"
                           />
-                          <label class="custom-control-label" for="8">Assist email</label>
+                          <label class="custom-control-label" for="8">Assistant email</label>
                         </div>
                         <div class="custom-checkbox custom-control col-md-6">
                           <input
@@ -213,7 +213,7 @@
                             v-model="options.assist_name"
                             id="9"
                           />
-                          <label class="custom-control-label" for="9">Assist name</label>
+                          <label class="custom-control-label" for="9">Assistant name</label>
                         </div>
                         <div class="custom-checkbox custom-control col-md-6">
                           <input
@@ -222,7 +222,7 @@
                             v-model="options.assist_phone"
                             id="10"
                           />
-                          <label class="custom-control-label" for="10">Assist Phone</label>
+                          <label class="custom-control-label" for="10">Assistant Phone</label>
                         </div>
                       </div>
                     </VuePerfectScrollbar>
