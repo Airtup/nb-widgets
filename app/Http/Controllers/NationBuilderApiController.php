@@ -377,7 +377,8 @@ class NationBuilderApiController extends Controller
 
         $temp_url = 'https://' . $nation->slug . '.nationbuilder.com/api/v1/people/count?access_token=' . $nation->access_token;;
         $response = $this->api->get($temp_url);
-        $this->dao->update(['people_count' => $response->people_count], $nation_id);
+
+        $this->dao->update(['people_count' => $count], $nation_id);
         $details_dao = AbstractFactory::getFactory('DAO')->getDAO('NationDetailsDao');
 
         Log::create(["user_id" => $user_id, "nation_id" => $nation->id, 'description' => 'Cache Refreshed Nation "' . $nation->name . '"']);
@@ -723,7 +724,8 @@ class NationBuilderApiController extends Controller
     public function update_image(Request $request)
     {
         if ($request->hasFile('logo')) {
-            $path = $request->logo->storeAs('/nations/images', $request->nation_slug . '.' . $request->file('logo')->getClientOriginalExtension());
+            $path = base64_encode(file_get_contents($request->file('logo')));
+
         } else {
             $path = '';
         }

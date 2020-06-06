@@ -77,7 +77,6 @@ class NationController extends Controller
     public function show($id)
     {
 		$hq_nations = $this->dao->get_hq_nations();
-        $data['hq_pic_nation'] = $this->MNation->getAllSyncPicNations();
         
         $nation = $this->dao->get($id);
 
