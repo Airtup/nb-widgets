@@ -57,12 +57,11 @@ class NationDao
     }
 
     public function deleteCache($id)
-    {
+{
         $nation = Nation::find($id);
         $tag = $nation->nation_details->tag;
-        $people = People::where([['nation_id', $nation->id], ['nation_tag', $tag]]);
-        $nation->update(['people_count' => 0]);
-        $pages = NationPages::where([['nation_id', $nation->id], ['nation_tag', $tag]]);
+        $people = People::where([['nation_id', $nation->id], ['nation_tag', $tag],['actual',0]]);
+        $pages = NationPages::where([['nation_id', $nation->id], ['nation_tag', $tag],['actual',0]]);
         $people->delete();
         $pages->delete();
     }
@@ -106,5 +105,10 @@ class NationDao
                     ->orderBy('last_name', 'asc')
                     ->get();
         return $nations;
+    }
+
+    public function deactivatePeople($nation_id,$nation_tag){
+        return People::where([['nation_id',$nation_id],['nation_tag',$nation_tag]])
+                    ->update(['actual' => 0]);     
     }
 }

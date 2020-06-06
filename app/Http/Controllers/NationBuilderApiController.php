@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Libraries\Factory\AbstractFactory;
 use App\Models\Log;
 use App\Models\Nation;
+use App\Models\People;
+use Exception;
 
 class NationBuilderApiController extends Controller
 {
@@ -297,92 +299,95 @@ class NationBuilderApiController extends Controller
         $nation_id = $request->all()['nation_id'];
         $user_id = $request->all()['user_id'];
         $nation = $this->dao->get($nation_id)[0];
+        $this->dao->deactivatePeople($nation_id, $nation->nation_details->tag);
+        try {
+            AbstractFactory::getFactory('DAO')->getDAO('NationPagesDao')->deactivatePages($nation_id, $nation->nation_details->tag);
 
+            $mytag = str_replace(' ', '%20', $nation->nation_details->tag);
+            $temp_url = 'https://' . $nation->slug . '.nationbuilder.com';
+            $next = '/api/v1/tags/' . $mytag . '/people?limit=50';
+            $page = 1;
+            $count = 0;
+            $daoPage = AbstractFactory::getFactory('DAO')->getDAO('NationPagesDao');
+            $daoPeople = AbstractFactory::getFactory('DAO')->getDAO('PeopleDao');
+            while ($next != null) {
+                $daoPage->insert(['nation_id' => $nation->id, 'nation_tag' => $nation->nation_details->tag, 'number_page' => $page, 'page_url' => $next]);
+                $url =  $temp_url . $next . '&access_token=' . $nation->access_token;
+                $response = $this->api->get($url);
+                if (!empty($response)) {
+                    foreach ($response->results as $person) {
+                        $count += 1;
+                        $city = null;
+                        $country = '';
+                        $home_address = null;
+                        $address2 = null;
+                        $address3 = null;
+                        $zip = null;
+                        $state = '';
+                        $country_code = null;
+                        $industry = null;
+                        if ($person->primary_address != null) {
+                            $city = $person->primary_address->city;
+                            $country = $person->primary_address->country_code;
+                            $home_address = $person->primary_address->address1;
+                            $state = $person->primary_address->state;
+                            $address2 = $person->primary_address->address2;
+                            $address3 = $person->primary_address->address3;
+                            $zip = $person->primary_address->zip;
+                            $country_code = $person->primary_address->country_code;
+                        }
+                        if (isset($this->isoCountries[$country]))
+                            $country = $this->isoCountries[$country];
+                        $insertData = array(
+                            'nation_id' => $nation->id,
+                            'nation_tag' => $nation->nation_details->tag,
+                            'number_page' => $page,
+                            'first_name' => $person->first_name,
+                            'last_name' => $person->last_name,
+                            'industry' => $industry,
+                            'city' => $city,
+                            'country' => $country,
+                            'state' => $state,
+                            'profile_image' => $person->profile_image_url_ssl,
+                            'occupation' => $person->occupation,
+                            'employer' => $person->employer,
+                            'email' => $person->email,
+                            'twitter' => $person->twitter_id,
+                            'linkedin' => $person->linkedin_id,
+                            'facebook' => $person->has_facebook,
+                            'person_id' => $person->id,
+                            'phone' => $person->phone,
+                            'work_phone' => $person->work_phone_number,
+                            'mobile' => $person->mobile,
+                            'primary_address' => $home_address,
+                            'secondary_address' => $address2,
+                            'tertiary_address' => $address3,
+                            'zip' => $zip,
+                            'country_code' => $country_code,
+                            'tags' => json_encode($person->tags)
+                        );
 
-        $this->dao->deleteCache($nation_id);
-
-
-        $mytag = str_replace(' ', '%20', $nation->nation_details->tag);
-        $temp_url = 'https://' . $nation->slug . '.nationbuilder.com';
-        $next = '/api/v1/tags/' . $mytag . '/people?limit=50';
-        $page = 1;
-        $count = 0;
-        $daoPage = AbstractFactory::getFactory('DAO')->getDAO('NationPagesDao');
-        $daoPeople = AbstractFactory::getFactory('DAO')->getDAO('PeopleDao');
-        while ($next != null) {
-            $daoPage->insert(['nation_id' => $nation->id, 'nation_tag' => $nation->nation_details->tag, 'number_page' => $page, 'page_url' => $next]);
-            $url =  $temp_url . $next . '&access_token=' . $nation->access_token;
-            $response = $this->api->get($url);
-            if (!empty($response)) {
-                foreach ($response->results as $person) {
-                    $count += 1;
-                    $city = null;
-                    $country = '';
-                    $home_address = null;
-                    $address2 = null;
-                    $address3 = null;
-                    $zip = null;
-                    $state = '';
-                    $country_code = null;
-                    $industry = null;
-                    if ($person->primary_address != null) {
-                        $city = $person->primary_address->city;
-                        $country = $person->primary_address->country_code;
-                        $home_address = $person->primary_address->address1;
-                        $state = $person->primary_address->state;
-                        $address2 = $person->primary_address->address2;
-                        $address3 = $person->primary_address->address3;
-                        $zip = $person->primary_address->zip;
-                        $country_code = $person->primary_address->country_code;
+                        $daoPeople->insert($insertData);
                     }
-                    if (isset($this->isoCountries[$country]))
-                        $country = $this->isoCountries[$country];
-                    $insertData = array(
-                        'nation_id' => $nation->id,
-                        'nation_tag' => $nation->nation_details->tag,
-                        'number_page' => $page,
-                        'first_name' => $person->first_name,
-                        'last_name' => $person->last_name,
-                        'industry' => $industry,
-                        'city' => $city,
-                        'country' => $country,
-                        'state' => $state,
-                        'profile_image' => $person->profile_image_url_ssl,
-                        'occupation' => $person->occupation,
-                        'employer' => $person->employer,
-                        'email' => $person->email,
-                        'twitter' => $person->twitter_id,
-                        'linkedin' => $person->linkedin_id,
-                        'facebook' => $person->has_facebook,
-                        'person_id' => $person->id,
-                        'phone' => $person->phone,
-                        'work_phone' => $person->work_phone_number,
-                        'mobile' => $person->mobile,
-                        'primary_address' => $home_address,
-                        'secondary_address' => $address2,
-                        'tertiary_address' => $address3,
-                        'zip' => $zip,
-                        'country_code' => $country_code,
-                        'tags' => json_encode($person->tags)
-                    );
-
-                    $daoPeople->insert($insertData);
+                    $next = $response->next;
+                } else {
+                    $next = null;
                 }
-                $next = $response->next;
-            } else {
-                $next = null;
+                $page++;
             }
-            $page++;
+            $this->dao->deleteCache($nation_id);
+            $temp_url = 'https://' . $nation->slug . '.nationbuilder.com/api/v1/people/count?access_token=' . $nation->access_token;
+            $response = $this->api->get($temp_url);
+            //  $this->dao->deleteCache($nation_id);
+            $this->dao->update(['people_count' => $count], $nation_id);
+            $details_dao = AbstractFactory::getFactory('DAO')->getDAO('NationDetailsDao');
+
+            Log::create(["user_id" => $user_id, "nation_id" => $nation->id, 'description' => 'Cache Refreshed Nation "' . $nation->name . '"']);
+            return response()->json(['status' => 'ok'], 200);
+        } catch (Exception $e) {
+            People::where('actual',0)->update(['actual' => 1]);
+            return  response()->json(['status' => 'kk'], 500);
         }
-
-        $temp_url = 'https://' . $nation->slug . '.nationbuilder.com/api/v1/people/count?access_token=' . $nation->access_token;;
-        $response = $this->api->get($temp_url);
-
-        $this->dao->update(['people_count' => $count], $nation_id);
-        $details_dao = AbstractFactory::getFactory('DAO')->getDAO('NationDetailsDao');
-
-        Log::create(["user_id" => $user_id, "nation_id" => $nation->id, 'description' => 'Cache Refreshed Nation "' . $nation->name . '"']);
-        return response()->json(['status' => 'ok'], 200);
     }
 
     public function update_sync_members(Request $request)
@@ -712,7 +717,7 @@ class NationBuilderApiController extends Controller
         $nation =  $this->dao->getNationBySlug($nation_slug);
 
         $result = AbstractFactory::getFactory('DAO')->getDAO('PeopleDao')->getPersonDetail($person_id);
-        if ( $nation != null) {
+        if ($nation != null) {
             $params = array(
                 'access_token' =>  $nation->access_token
             );
@@ -742,7 +747,7 @@ class NationBuilderApiController extends Controller
                 echo '';
             } else {
                 $data = json_decode($curlResponse);
-                $result->bio =$data->person->bio;
+                $result->bio = $data->person->bio;
             }
             curl_close($curl);
         }

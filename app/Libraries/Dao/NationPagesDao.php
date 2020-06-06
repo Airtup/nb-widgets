@@ -42,4 +42,9 @@ class NationPagesDao
     {
         return NationPages::where('nation_id', $slug)->exists();
     }
+
+    public function deactivatePages($nation_id,$nation_tag){
+        return NationPages::where([['nation_id',$nation_id],['nation_tag',$nation_tag]])
+                    ->update(['actual' => 0]);
+    }
 }
