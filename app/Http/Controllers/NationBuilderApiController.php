@@ -8,6 +8,7 @@ use App\Models\Log;
 use App\Models\Nation;
 use App\Models\People;
 use Exception;
+use Illuminate\Support\Facades\Storage;
 
 class NationBuilderApiController extends Controller
 {
@@ -748,6 +749,12 @@ class NationBuilderApiController extends Controller
             } else {
                 $data = json_decode($curlResponse);
                 $result->bio = $data->person->bio;
+                $result->twitter = $data->person->twitter_login;
+                if (!empty($data->person->facebook_username)){
+                    $result->facebook = $data->person->facebook_username;
+                } else{
+                    $result->facebook = $data->person->facebook_profile_url;
+                }   
             }
             curl_close($curl);
         }
@@ -781,5 +788,19 @@ class NationBuilderApiController extends Controller
     public function activate($id)
     {
         Nation::find($id)->update(["status" => 1]);
+    }
+    public function update_logo(Request $request)
+    {
+        if ($request->hasFile('logo')) {
+            //Eliminar Anterior
+            Storage::delete('/images/logo.png');
+            //Guardar Imagen
+            $path = $request->file('logo')->storeAs('/images', 'logo.'.$request->file('logo')->getClientOriginalExtension());
+            
+        } else {
+            $path = '';
+            return response()->json(['status' => 'fail'], 500);
+        }
+        return response()->json(['status' => 'ok'], 200);
     }
 }

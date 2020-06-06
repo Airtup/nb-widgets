@@ -15,6 +15,7 @@
                 aria-describedby="email_help"
                 placeholder="Enter email"
                 v-model="user.email"
+                disabled="disabled"
               />
               <small id="email_help" class="form-text text-muted">Will be used for login</small>
             </div>
@@ -24,24 +25,12 @@
             </div>
             <div class="form-group col-md-6">
               <label>Password</label>
-              <input type="text" class="form-control" v-model="user.password" />
+              <input type="password" class="form-control" v-model="user.password" />
             </div>
             <div class="form-group col-md-6">
               <label>Password Confirmation</label>
               <input type="password" class="form-control" v-model="user.password_confirmation" />
             </div>
-            <div class="form-group col-md-6">
-              <label>Role</label>
-              <select class="form-control text-capitalize" v-model="role">
-                <option
-                  class="text-capitalize"
-                  v-for="role in roles"
-                  :key="role.id"
-                  :value="role.id"
-                >{{role.name}}</option>
-              </select>
-            </div>
-
             <div class="col-md-12 mt-5">
               <div class="text-center">
                 <button class="btn btn-primary text-right" @click="createUser">Save User</button>
@@ -69,7 +58,6 @@ export default {
         password_confirmation: ""
       },
       role: 2,
-      roles: []
     };
   },
   created() {

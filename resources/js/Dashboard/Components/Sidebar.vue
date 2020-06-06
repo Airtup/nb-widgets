@@ -37,7 +37,7 @@ export default {
     SidebarMenu,
     VuePerfectScrollbar
   },
-  data() {
+  data:function() {
     return {
       isOpen: false,
       sidebarActive: false,
@@ -67,6 +67,16 @@ export default {
             {
               href: "/logs",
               title: "View all Logs"
+            }
+          ]
+        },
+        {
+          title: "Settings",
+          icon: "pe-7s-note",
+          child: [
+            {
+              href: "/password/edit/"+this.$store.state.auth.user.user.id,
+              title: "Change Password"
             }
           ]
         }
@@ -111,6 +121,20 @@ export default {
             {
               href: "/logs",
               title: "View all Logs"
+            }
+          ]
+        },
+        {
+          title: "Settings",
+          icon: "pe-7s-note",
+          child: [
+            {
+              href: "/password/edit/"+this.$store.state.auth.user.user.id,
+              title: "Change Password"
+            },
+            {
+              href: "/change/logo/",
+              title: "Change Logo"
             }
           ]
         }
