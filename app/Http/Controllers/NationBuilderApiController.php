@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Libraries\Factory\AbstractFactory;
 use App\Models\Log;
 use App\Models\Nation;
+use Illuminate\Support\Facades\Storage;
 
 class NationBuilderApiController extends Controller
 {
@@ -782,5 +783,19 @@ class NationBuilderApiController extends Controller
     public function activate($id)
     {
         Nation::find($id)->update(["status" => 1]);
+    }
+    public function update_logo(Request $request)
+    {
+        if ($request->hasFile('logo')) {
+            //Eliminar Anterior
+            Storage::delete('/images/logo.png');
+            //Guardar Imagen
+            $path = $request->file('logo')->storeAs('/images', 'logo.'.$request->file('logo')->getClientOriginalExtension());
+            
+        } else {
+            $path = '';
+            return response()->json(['status' => 'fail'], 500);
+        }
+        return response()->json(['status' => 'ok'], 200);
     }
 }
