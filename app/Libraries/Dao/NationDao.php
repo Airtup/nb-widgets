@@ -3,6 +3,7 @@
 namespace App\Libraries\Dao;
 
 use App\Models\Nation;
+use App\Models\NationDetails;
 use App\Models\People;
 use App\Models\NationPages;
 
@@ -10,7 +11,7 @@ class NationDao
 {
     public function select()
     {
-        $nations = Nation::where('status', '1')->get();
+        $nations = Nation::join('nation_details','nations.id','=','nation_details.nation_id')->where('status', '1')->select('nations.*','nation_details.hq')->get();
         return $nations;
     }
     public function insert($request)
@@ -23,7 +24,6 @@ class NationDao
     public function get($id)
     {
         $nation = Nation::where('id', $id)->where('status', '1')->get();
-
         return $nation;
     }
 
