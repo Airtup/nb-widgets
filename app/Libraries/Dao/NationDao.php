@@ -6,12 +6,14 @@ use App\Models\Nation;
 use App\Models\NationDetails;
 use App\Models\People;
 use App\Models\NationPages;
+use Illuminate\Support\Facades\DB;
 
 class NationDao
 {
     public function select()
     {
-        $nations = Nation::join('nation_details','nations.id','=','nation_details.nation_id')->where('status', '1')->select('nations.*','nation_details.hq')->get();
+        //$nations = Nation::join('nation_details','nations.id','=','nation_details.nation_id')->where('nations.status', '1')->select(DB::raw('DISTINCT(nations.slug)'),'nation_details.hq','nations.*')->get();
+        $nations = Nation::where('nations.status', '1')->get();
         return $nations;
     }
     public function insert($request)

@@ -52,7 +52,7 @@
             </span>
           </div>
         </template>
-        <template v-slot:cell(actions)="row">
+        <!-- <template v-slot:cell(actions)="row">
           <div class="row" style="align:center">
             <a :href="'/#/nations/edit/' + row.item.id">
               <font-awesome-icon size="1x" icon="edit" style="color:green" />
@@ -61,7 +61,7 @@
               <font-awesome-icon size="1x" icon="trash" />
             </a>
           </div>
-        </template>
+        </template> -->
         <template v-slot:cell(updated_at)="row">{{new Date(row.item.updated_at).toUTCString()}}</template>
         <template slot="row-details" slot-scope="row">
           <b-card class="no-shadow">
@@ -122,9 +122,9 @@ export default {
       },
       { key: "slug", label: "Nation Slug" },
       { key: "access_token", label: "Nation API Token" },
+      //{ key: "hq", label: "HQ" },
       { key: "people_count", label: "Listing Count" },
       { key: "updated_at", label: "Last Refresh" },
-      { key: "hq", label: "HQ" },
       { key: "actions", label: "Actions" }
     ],
     currentPage: 1,
