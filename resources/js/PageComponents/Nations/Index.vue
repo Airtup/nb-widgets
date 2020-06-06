@@ -42,8 +42,18 @@
         :sort-direction="sortDirection"
         @filtered="onFiltered"
       >
-        <template v-slot:cell(actions)="row">
+        <template v-slot:cell(hq)="row">
           <div class="row">
+            <span v-if="row.item.hq == 1">
+              <font-awesome-icon icon="check-circle" style="color:green"></font-awesome-icon>
+            </span>
+            <span v-if="row.item.hq == 0">
+              <font-awesome-icon icon="check-circle" style="color:red"></font-awesome-icon>
+            </span>
+          </div>
+        </template>
+        <template v-slot:cell(actions)="row">
+          <div class="row" style="align:center">
             <a :href="'/#/nations/edit/' + row.item.id">
               <font-awesome-icon size="1x" icon="edit" style="color:green" />
             </a>
@@ -86,9 +96,9 @@ import PageTitle from "../PageTitle";
 import swal from "sweetalert";
 
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faEdit, faEye, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faEdit, faEye, faTrash, faCircle, faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-library.add(faEdit, faEye, faTrash);
+library.add(faEdit, faEye, faTrash,faCheckCircle);
 
 const items = [];
 export default {
@@ -114,6 +124,7 @@ export default {
       { key: "access_token", label: "Nation API Token" },
       { key: "people_count", label: "Listing Count" },
       { key: "updated_at", label: "Last Refresh" },
+      { key: "hq", label: "HQ" },
       { key: "actions", label: "Actions" }
     ],
     currentPage: 1,
@@ -148,7 +159,7 @@ export default {
     },
     currentUser() {
       return this.$store.state.auth.user;
-    }
+    },
   },
   methods: {
     info(item, index, button) {
