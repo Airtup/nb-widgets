@@ -743,7 +743,13 @@ class NationBuilderApiController extends Controller
                 echo '';
             } else {
                 $data = json_decode($curlResponse);
-                $result->bio =$data->person->bio;
+                $result->bio = $data->person->bio;
+                $result->twitter = $data->person->twitter_name;
+                if (!empty($data->person->facebook_username)){
+                    $result->facebook = $data->person->facebook_username;
+                } else{
+                    $result->facebook = $data->person->facebook_profile_url;
+                }   
             }
             curl_close($curl);
         }
