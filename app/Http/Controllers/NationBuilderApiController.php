@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Libraries\Factory\AbstractFactory;
 use App\Models\Log;
 use App\Models\Nation;
+use App\Models\NationPages;
 use App\Models\People;
 use Exception;
 use Illuminate\Support\Facades\Storage;
@@ -387,6 +388,7 @@ class NationBuilderApiController extends Controller
             return response()->json(['status' => 'ok'], 200);
         } catch (Exception $e) {
             People::where('actual',0)->update(['actual' => 1]);
+            NationPages::where('actual',0)->update(['actual' => 1]);
             return  response()->json(['status' => 'kk'], 500);
         }
     }
