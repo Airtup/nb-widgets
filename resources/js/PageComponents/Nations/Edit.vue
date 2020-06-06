@@ -75,22 +75,18 @@
                   <option value="1">Dark</option>
                 </select>
               </div>
-              <div class="form-group col-md-6">
+              <div class="form-group col-md-6" v-if="nation.hq != 1">
                 <label for="nation_token">Membership Sync?</label>
                 <select v-model="nation.membership_sync" class="form-control">
                   <option :value="null">Don't sync</option>
-                  <option :value="hq.id" v-for="hq in hq_nations" :key="hq.id">{{hq.name}}</option>
+                  <option :value="hq.id" v-for="hq in hqNations" :key="hq.id">{{hq.name}}</option>
                 </select>
               </div>
-              <div class="form-group col-md-6">
+              <div class="form-group col-md-6" v-if="nation.hq != 1">
                 <label for="nation_token">Profile Picture Cache Sync?</label>
                 <select v-model="nation.picture_sync" class="form-control">
                   <option :value="null">Don't sync</option>
-                  <option
-                    :value="picture_sync.id"
-                    v-for="picture_sync in hq_pictures"
-                    :key="picture_sync.id"
-                  >{{picture_sync.name}}</option>
+                  <option :value="hq.id" v-for="hq in hqNations" :key="hq.id">{{hq.name}}</option>
                 </select>
               </div>
               <div class="form-group col-md-4">
@@ -116,6 +112,10 @@
                 <input type="text" disabled v-model="nation.updated_at" class="form-control" />
               </div>
               <div class="form-group col-md-4">
+                <label for="nation_token">PDF Back Color</label>
+                <input type="color" v-model="nation.report_color" class="form-control" />
+              </div>
+              <div class="form-group col-md-4">
                 <label for="exampleCustomFileBrowser" class>File Browser</label>
                 <div class="custom-file">
                   <input
@@ -124,15 +124,16 @@
                     name="customFile"
                     class="custom-file-input"
                     @change="updateImage"
-                    ref="file"
-                  />
+                    ref="file"/>
                   <label class="custom-file-label" for="exampleCustomFileBrowser">Choose Logo</label>
                 </div>
               </div>
-              <div class="form-group col-md-4">
-                <label for="nation_token">PDF Back Color</label>
-                <input type="color" v-model="nation.report_color" class="form-control" />
+              <div class="col-md-4">
+                <template>
+                  <img :src="`data:image/png;base64,${nation.logo}`" width="80" height="80"/>
+                </template>
               </div>
+              
               <div class="form-group col-md-12">
                 <label for="nation_token">About Document</label>
                 <textarea v-model="nation.intro" class="form-control"></textarea>
@@ -421,6 +422,9 @@ export default {
     VuePerfectScrollbar
   },
   computed: {
+    hqNations(){
+      return this.hq_nations.filter(nation => nation.id != this.nation.id);
+    },
     currentUser() {
       return this.$store.state.auth.user;
     },
@@ -465,7 +469,9 @@ export default {
           }
         })
         .then(response => {
-          if (response.data.status == "200") {
+          
+          if (response.status == "200") {
+            
             axios
               .get(BASE_URL + "/api/nation/details/" + this.id)
               .then(response => {

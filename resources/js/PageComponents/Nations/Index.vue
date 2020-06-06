@@ -42,16 +42,6 @@
         :sort-direction="sortDirection"
         @filtered="onFiltered"
       >
-        <!-- <template v-slot:cell(hq)="row">
-          <div class="row">
-            <span v-if="row.item.hq == 1">
-              <font-awesome-icon icon="check-circle" style="color:green"></font-awesome-icon>
-            </span>
-            <span v-if="row.item.hq == 0">
-              <font-awesome-icon icon="check-circle" style="color:red"></font-awesome-icon>
-            </span>
-          </div>
-        </template> -->
         <template v-slot:cell(actions)="row">
           <div class="row" style="align:center">
             <a :href="'/#/nations/edit/' + row.item.id">

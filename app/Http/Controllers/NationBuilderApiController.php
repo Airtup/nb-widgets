@@ -711,7 +711,42 @@ class NationBuilderApiController extends Controller
         $nation_slug = $request->nation_slug;
         $person_id = $request->person_id;
         $nation =  $this->dao->getNationBySlug($nation_slug);
+
         $result = AbstractFactory::getFactory('DAO')->getDAO('PeopleDao')->getPersonDetail($person_id);
+        if ( $nation != null) {
+            $params = array(
+                'access_token' =>  $nation->access_token
+            );
+
+            $url = 'https://' . $nation_slug . '.nationbuilder.com/api/v1/people/' . $person_id . '?' . http_build_query($params);
+
+            $cookiesIn = '';
+            $curl = curl_init();
+            $options = array(
+                CURLOPT_URL => $url,
+                CURLOPT_RETURNTRANSFER => true,     // return web page
+                // CURLOPT_HEADER         => true,     //return headers in  addition to content
+                CURLOPT_FOLLOWLOCATION => true,     // follow redirects
+                CURLOPT_ENCODING       => "",       // handle all encodings
+                CURLOPT_AUTOREFERER    => true,     // set referer on redirect
+                CURLOPT_CONNECTTIMEOUT => 120,      // timeout on connect
+                CURLOPT_TIMEOUT        => 120,      // timeout on response
+                // CURLOPT_MAXREDIRS      => 10,       // stop after 10 redirects
+                CURLINFO_HEADER_OUT    => true,
+                CURLOPT_SSL_VERIFYPEER => true,     // Validate SSL Certificates
+                CURLOPT_HTTP_VERSION   => CURL_HTTP_VERSION_1_1,
+                CURLOPT_COOKIE         => $cookiesIn
+            );
+            curl_setopt_array($curl, $options);
+            $curlResponse = curl_exec($curl);
+            if (curl_error($curl)) {
+                echo '';
+            } else {
+                $data = json_decode($curlResponse);
+                $result->bio =$data->person->bio;
+            }
+            curl_close($curl);
+        }
         return response()->json($result);
     }
 
@@ -726,7 +761,6 @@ class NationBuilderApiController extends Controller
     {
         if ($request->hasFile('logo')) {
             $path = base64_encode(file_get_contents($request->file('logo')));
-
         } else {
             $path = '';
         }
