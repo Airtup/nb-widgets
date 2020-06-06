@@ -86,7 +86,7 @@ import PageTitle from "../PageTitle";
 import swal from "sweetalert";
 
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faEdit, faEye, faTrash, faCircle, faCheckCircle } from "@fortawesome/free-solid-svg-icons";
+import { faEdit, faEye, faTrash, faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 library.add(faEdit, faEye, faTrash,faCheckCircle);
 
@@ -110,11 +110,11 @@ export default {
         sortable: true,
         sortDirection: "desc"
       },
-      { key: "slug", label: "Nation Slug" },
+      { key: "slug", label: "Nation Slug", sortable: true },
       { key: "access_token", label: "Nation API Token" },
       // { key: "hq", label: "HQ" },
-      { key: "people_count", label: "Listing Count" },
-      { key: "updated_at", label: "Last Refresh" },
+      { key: "people_count", label: "Listing Count", sortable: true},
+      { key: "updated_at", label: "Last Refresh", sortable: true},
       { key: "actions", label: "Actions" }
     ],
     currentPage: 1,

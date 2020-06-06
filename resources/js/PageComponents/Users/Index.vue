@@ -98,8 +98,8 @@ export default {
         sortable: true,
         sortDirection: "desc"
       },
-      { key: "email", label: "Email" },
-      { key: "role_name", label: "Role" },
+      { key: "email", label: "Email", sortable: true},
+      { key: "role_name", label: "Role", sortable: true},
       { key: "actions", label: "Actions" }
     ],
     currentPage: 1,

@@ -102,8 +102,8 @@ export default {
         sortDirection: "desc"
       },
       { key: "description", label: "Content" },
-      { key: "created_at", label: "Create Time" },
-      { key: "user_name", label: "User" },
+      { key: "created_at", label: "Create Time", sortable: true },
+      { key: "user_name", label: "User", sortable: true},
       { key: "actions", label: "Actions" }
     ],
     currentPage: 1,
