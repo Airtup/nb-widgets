@@ -75,18 +75,18 @@
                   <option value="1">Dark</option>
                 </select>
               </div>
-              <div class="form-group col-md-6">
+              <div class="form-group col-md-6" v-if="nation.hq != 1">
                 <label for="nation_token">Membership Sync?</label>
                 <select v-model="nation.membership_sync" class="form-control">
                   <option :value="null">Don't sync</option>
-                  <option :value="hq.id" v-for="hq in hq_nations" :key="hq.id">{{hq.name}}</option>
+                  <option :value="hq.id" v-for="hq in hqNations" :key="hq.id">{{hq.name}}</option>
                 </select>
               </div>
-              <div class="form-group col-md-6">
+              <div class="form-group col-md-6" v-if="nation.hq != 1">
                 <label for="nation_token">Profile Picture Cache Sync?</label>
                 <select v-model="nation.picture_sync" class="form-control">
                   <option :value="null">Don't sync</option>
-                  <option :value="hq.id" v-for="hq in hq_nations" :key="hq.id">{{hq.name}}</option>
+                  <option :value="hq.id" v-for="hq in hqNations" :key="hq.id">{{hq.name}}</option>
                 </select>
               </div>
               <div class="form-group col-md-4">
@@ -417,6 +417,9 @@ export default {
     VuePerfectScrollbar
   },
   computed: {
+    hqNations(){
+      return this.hq_nations.filter(nation => nation.id != this.nation.id);
+    },
     currentUser() {
       return this.$store.state.auth.user;
     },
