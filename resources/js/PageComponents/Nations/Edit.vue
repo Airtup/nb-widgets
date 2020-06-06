@@ -86,11 +86,7 @@
                 <label for="nation_token">Profile Picture Cache Sync?</label>
                 <select v-model="nation.picture_sync" class="form-control">
                   <option :value="null">Don't sync</option>
-                  <option
-                    :value="picture_sync.id"
-                    v-for="picture_sync in hq_pictures"
-                    :key="picture_sync.id"
-                  >{{picture_sync.name}}</option>
+                  <option :value="hq.id" v-for="hq in hq_nations" :key="hq.id">{{hq.name}}</option>
                 </select>
               </div>
               <div class="form-group col-md-4">
