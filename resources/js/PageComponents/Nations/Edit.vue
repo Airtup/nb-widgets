@@ -16,11 +16,19 @@
                 <font-awesome-icon icon="redo" size="2x" />
                 <br />Refresh Cache
               </button>
-              <button class="col-md-2 mb-1 offset-md-1 p-3 btn btn-success" @click="syncMembers" v-if="nation.membership_sync">
+              <button
+                class="col-md-2 mb-1 offset-md-1 p-3 btn btn-success"
+                @click="syncMembers"
+                v-if="nation.membership_sync"
+              >
                 <font-awesome-icon icon="user-cog" size="2x" />
                 <br />Sync Members
               </button>
-              <button class="col-md-2 mb-1 offset-md-1 p-3 btn btn-success"  v-if="nation.sync_picture" @click="syncPictures">
+              <button
+                class="col-md-2 mb-1 offset-md-1 p-3 btn btn-success"
+                v-if="nation.sync_picture"
+                @click="syncPictures"
+              >
                 <font-awesome-icon icon="portrait" size="2x" />
                 <br />Sync Pictures
               </button>
@@ -70,12 +78,14 @@
               <div class="form-group col-md-6">
                 <label for="nation_token">Membership Sync?</label>
                 <select v-model="nation.membership_sync" class="form-control">
+                  <option :value="null">Don't sync</option>
                   <option :value="hq.id" v-for="hq in hq_nations" :key="hq.id">{{hq.name}}</option>
                 </select>
               </div>
               <div class="form-group col-md-6">
                 <label for="nation_token">Profile Picture Cache Sync?</label>
                 <select v-model="nation.picture_sync" class="form-control">
+                  <option :value="null">Don't sync</option>
                   <option
                     :value="picture_sync.id"
                     v-for="picture_sync in hq_pictures"
@@ -236,13 +246,12 @@
                 <div class="card-body">
                   <h5 class="card-title">INSTALLATION INSTRUCTIONS</h5>
                   <div class="scroll-area-md">
-                    
-                    <VuePerfectScrollbar class="scrollbar-container text-left" >
+                    <VuePerfectScrollbar class="scrollbar-container text-left">
                       <template>
-                      <p>
-                        Tag the people in the NationBuilder database with the tag "{{nation.tag}}" in order for the app to display them in the listings.
-                        Then Add the HTML code below where you want the listing to display. Add the Script Snippet before the &lt;/body> tag.
-                      </p>
+                        <p>
+                          Tag the people in the NationBuilder database with the tag "{{nation.tag}}" in order for the app to display them in the listings.
+                          Then Add the HTML code below where you want the listing to display. Add the Script Snippet before the &lt;/body> tag.
+                        </p>
                       </template>
                     </VuePerfectScrollbar>
                   </div>
@@ -388,7 +397,7 @@ export default {
       .then(response => {
         if ((response.status = 200)) {
           this.nation = response.data.data[0][0];
-          
+
           (this.hq_nations = response.data.data[1]),
             (this.hq_pictures = response.data.data[2]);
           this.options = JSON.parse(this.nation.show_options);
