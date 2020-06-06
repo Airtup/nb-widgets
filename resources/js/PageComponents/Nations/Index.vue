@@ -112,7 +112,7 @@ export default {
       },
       { key: "slug", label: "Nation Slug" },
       { key: "access_token", label: "Nation API Token" },
-      //{ key: "hq", label: "HQ" },
+      // { key: "hq", label: "HQ" },
       { key: "people_count", label: "Listing Count" },
       { key: "updated_at", label: "Last Refresh" },
       { key: "actions", label: "Actions" }
