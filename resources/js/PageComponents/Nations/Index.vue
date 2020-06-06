@@ -42,7 +42,7 @@
         :sort-direction="sortDirection"
         @filtered="onFiltered"
       >
-        <template v-slot:cell(hq)="row">
+        <!-- <template v-slot:cell(hq)="row">
           <div class="row">
             <span v-if="row.item.hq == 1">
               <font-awesome-icon icon="check-circle" style="color:green"></font-awesome-icon>
@@ -51,8 +51,8 @@
               <font-awesome-icon icon="check-circle" style="color:red"></font-awesome-icon>
             </span>
           </div>
-        </template>
-        <!-- <template v-slot:cell(actions)="row">
+        </template> -->
+        <template v-slot:cell(actions)="row">
           <div class="row" style="align:center">
             <a :href="'/#/nations/edit/' + row.item.id">
               <font-awesome-icon size="1x" icon="edit" style="color:green" />
@@ -61,7 +61,7 @@
               <font-awesome-icon size="1x" icon="trash" />
             </a>
           </div>
-        </template> -->
+        </template>
         <template v-slot:cell(updated_at)="row">{{new Date(row.item.updated_at).toUTCString()}}</template>
         <template slot="row-details" slot-scope="row">
           <b-card class="no-shadow">
@@ -122,7 +122,7 @@ export default {
       },
       { key: "slug", label: "Nation Slug" },
       { key: "access_token", label: "Nation API Token" },
-      //{ key: "hq", label: "HQ" },
+      // { key: "hq", label: "HQ" },
       { key: "people_count", label: "Listing Count" },
       { key: "updated_at", label: "Last Refresh" },
       { key: "actions", label: "Actions" }

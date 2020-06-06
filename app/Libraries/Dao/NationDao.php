@@ -12,8 +12,8 @@ class NationDao
 {
     public function select()
     {
-        //$nations = Nation::join('nation_details','nations.id','=','nation_details.nation_id')->where('nations.status', '1')->select(DB::raw('DISTINCT(nations.slug)'),'nation_details.hq','nations.*')->get();
-        $nations = Nation::where('nations.status', '1')->get();
+        $nations = Nation::select('nation_details.hq','nations.*')->join('nation_details','nations.id','=','nation_details.nation_id')->where('nations.status', '1')->distinct()->get();
+        //$nations = Nation::where('nations.status', '1')->get();
         return $nations;
     }
     public function insert($request)
