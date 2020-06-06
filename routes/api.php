@@ -69,4 +69,4 @@ Route::post('/getPersonDetail','NationBuilderApiController@getPersonDetail');
 Route::post('/getPDFDetail','NationBuilderApiController@getPDFDetail');
 
 Route::post('/update/image', 'NationBuilderApiController@update_image');
-Route::post('/getPDFLogo/{slug}','NationBuilderApiController@getPDFLogo');
+Route::post('/getPDFLogo/','NationBuilderApiController@getPDFLogo');
