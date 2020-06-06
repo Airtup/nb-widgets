@@ -59,6 +59,18 @@ const router = new Router({
       path: "/users/create",
       name: "create-user",
       component: () => import("../PageComponents/Users/Create.vue"),
+    },
+    {
+      path: "/password/edit/:id",
+      props: true,
+      name: "change-password",
+      component: () => import("../PageComponents/Users/ChangePassword.vue"),
+    },
+    {
+      path: "/change/logo",
+      props: true,
+      name: "change-logo",
+      component: () => import("../PageComponents/Users/ChangeLogo.vue"),
     }
   ],
 });
