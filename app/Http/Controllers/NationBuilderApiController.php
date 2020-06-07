@@ -270,9 +270,10 @@ class NationBuilderApiController extends Controller
     {
         ini_set('max_execution_time', 1000);
         $this->factory = AbstractFactory::getFactory('Api');
+        $this->factoryDao = AbstractFactory::getFactory('DAO');
         $this->api = $this->factory->getDAO('NationApiConexion');
         $this->dao = AbstractFactory::getFactory('DAO')->getDAO('NationDao');
-        $this->logDao = $this->factory->getDAO('LogDao');
+        $this->logDao = $this->factoryDao->getDAO('LogDao');
     }
 
     /**
