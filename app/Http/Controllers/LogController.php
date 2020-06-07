@@ -44,6 +44,6 @@ class LogController extends Controller
     public function download($id)
     {
         $log = $this->dao->find($id);
-        return Storage::download($log->dump_file);
+        return Storage::disk('local')->download($log->dump_file);
     }
 }

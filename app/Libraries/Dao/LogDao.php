@@ -12,13 +12,16 @@ class LogDao
     public function create($user_id,$nation_id,$description)
     {
         $file = 'dumps/'.time().'.sql';
+        $filePath = Storage::disk('local')->path($file);
         Spatie\DbDumper\Databases\MySql::create()
-            ->setDbName(env('DB_DATABASE'))
+            ->setDbName(env('DB_DATABASE1'))
             ->setUserName(env('DB_USERNAME'))
             ->setPassword(env('DB_PASSWORD'))
-            ->dumpToFile($file);
+            ->dumpToFile($filePath);
+        
+       // Storage::put($file, 'select 1','private');
+        //Storage::disk('local')->move(Storage::disk('public')->path($file), $file);
 
-        //Storage::put($file, 'select 1');
         Log::create(["user_id"=>$user_id,"nation_id"=>$nation_id,'description'=>$description,'dump_file'=>$file]);
     }
 
