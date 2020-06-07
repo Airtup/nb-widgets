@@ -54,13 +54,13 @@
               class="ml-4 link"
               style="color:gray"
               v-if="currentUser.user.role === 'admin' && row.item.dump_file!==''">
-              <font-awesome-icon size="1x" icon="file" />
+              <font-awesome-icon size="1x" icon="download" />
             </a>
             <a @click="restoreDB(row.item.id)"
               class="ml-4 link"
               style="color:gray"
               v-if="currentUser.user.role === 'admin' && row.item.dump_file!==''">
-                <font-awesome-icon size="1x" icon="file" />
+                <font-awesome-icon size="1x" icon="history" />
               </a>
           </div>
         </template>
@@ -85,11 +85,10 @@
 import axios from "axios";
 import PageTitle from "../PageTitle";
 import swal from "sweetalert";
-import moment from "moment";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faEdit, faEye, faTrash,faFile } from "@fortawesome/free-solid-svg-icons";
+import { faEdit, faEye, faTrash, faDatabase, faDownload, faHistory } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-library.add(faEdit, faEye, faTrash,faFile);
+library.add(faEdit, faEye, faTrash,faDatabase, faDownload, faHistory);
 
 const items = [];
 export default {

@@ -53,10 +53,10 @@ class LogController extends Controller
     {
         $log = $this->dao->find($request['id']);
         $db = Config::get('database.connections');
-        $command='mysql -h' . $db['mysql']['host'] .' -u' . $db['mysql']['username'] .' --password="' . $db['mysql']['password'] .'" ' . $db['mysql']['database'] .' < ' . $log->dump_file;
+        $dbRoute  = Storage::disk('local')->getDriver()->getAdapter()->getPathPrefix() . $log->dump_file;
+        $command='mysql -h' . $db['mysql']['host'] .' -u' . $db['mysql']['username'] .' --password="' . $db['mysql']['password'] .'" ' . $db['mysql']['database'] .' < ' . $dbRoute;
         $output = array();
         exec($command,$output,$worked);
-        return $worked;
         if($worked === 0){
             return response()->json(['success' => true, 'data' => 'The database restore process are complete'], 200);
         } else{
