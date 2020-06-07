@@ -53,7 +53,7 @@
               <font-awesome-icon size="1x" icon="trash" />
             </a>
             <a
-              :href="'/api/logs/download/dump/'+row.item.id"
+              :href="'/logs/download/dump/'+row.item.id"
               class="ml-4 link"
               style="color:gray"
               v-if="currentUser.user.role == 'admin' && row.item.dump_file!=''">
