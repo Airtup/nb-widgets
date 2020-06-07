@@ -3,9 +3,33 @@
 namespace App\Libraries\Dao;
 
 use App\Models\Log;
+use Spatie;
+use Illuminate\Support\Facades\Storage;
 
 class LogDao
 {
+    
+    public function create($user_id,$nation_id,$description)
+    {
+        $file = 'dumps/'.time().'.sql';
+        Spatie\DbDumper\Databases\MySql::create()
+            ->setDbName(env('DB_DATABASE'))
+            ->setUserName(env('DB_USERNAME'))
+            ->setPassword(env('DB_PASSWORD'))
+            ->dumpToFile($file);
+
+        //Storage::put($file, 'select 1');
+        Log::create(["user_id"=>$user_id,"nation_id"=>$nation_id,'description'=>$description,'dump_file'=>$file]);
+    }
+
+    public function find($id)
+    {
+        $log = Log::find($id);
+
+        return $log;
+    }
+
+
     public function select()
     {
        $logs = Log::join('users','users.id','=','logs.user_id')
@@ -24,7 +48,7 @@ class LogDao
 
     public function get($id)
     {
-        $log = Log::where('id', $id)->where('status', '1')->get();
+        $log = Log::where('id', $id)->get();
 
         return $log;
     }

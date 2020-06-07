@@ -52,6 +52,13 @@
             >
               <font-awesome-icon size="1x" icon="trash" />
             </a>
+            <a
+              :href="'/api/logs/download/dump/'+row.item.id"
+              class="ml-4 link"
+              style="color:gray"
+              v-if="currentUser.user.role == 'admin' && row.item.dump_file!=''">
+              <font-awesome-icon size="1x" icon="file" />
+            </a>
           </div>
         </template>
         <template v-slot:cell(created_at)="row">{{new Date(row.item.created_at).toUTCString()}}</template>
@@ -77,9 +84,9 @@ import PageTitle from "../PageTitle";
 import swal from "sweetalert";
 
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faEdit, faEye, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faEdit, faEye, faTrash,faFile } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-library.add(faEdit, faEye, faTrash);
+library.add(faEdit, faEye, faTrash,faFile);
 
 const items = [];
 export default {

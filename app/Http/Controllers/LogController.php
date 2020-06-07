@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Libraries\Factory\AbstractFactory;
+use Illuminate\Support\Facades\Storage;
 
 class LogController extends Controller
 {
@@ -38,5 +39,11 @@ class LogController extends Controller
         $log = $this->dao->delete($id);
 
         return response()->json(['status'=>'ok','data'=>$log],200);
+    }
+
+    public function download($id)
+    {
+        $log = $this->dao->find($id);
+        return Storage::download($log->dump_file);
     }
 }

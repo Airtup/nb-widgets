@@ -45,6 +45,7 @@ Route::resource('/nation/details', 'NationDetailsController');
 
 Route::get('/logs', 'LogController@index');
 Route::delete('/logs/{log}', 'LogController@destroy');
+Route::get('/logs/download/dump/{log}', 'LogController@download');
 
 // Routes that connect with NationBuilderAPI
 

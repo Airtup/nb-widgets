@@ -12,10 +12,12 @@ class NationController extends Controller
 {
     private $factory;
     private $dao;
+    private $logDao;
     public function __construct()
     {
         $this->factory = AbstractFactory::getFactory('DAO');
         $this->dao = $this->factory->getDAO('NationDao');
+        $this->logDao = $this->factory->getDAO('LogDao');
     }
 
     /**
@@ -62,7 +64,8 @@ class NationController extends Controller
         $nation = $this->dao->insert($request->nation);
         
         if ($nation->id) {
-            Log::create(["user_id"=>$request->user_id,"nation_id"=>$nation->id,'description'=>'Add new Nation "'.$nation->name.'"']);
+            //Log::create(["user_id"=>$request->user_id,"nation_id"=>$nation->id,'description'=>'Add new Nation "'.$nation->name.'"']);
+            $this->logDao->create($request->user_id,$nation->id,'Add new Nation "'.$nation->name.'"');
             NationDetails::updateOrCreate(["nation_id" => $nation->id], ['tag' => '']);
         }
         return response()->json(['status'=>'ok','data'=>$nation],200);
@@ -122,7 +125,8 @@ class NationController extends Controller
         $nation_name = $temp_nation->name;
         $nation = $this->dao->delete($id);
 
-        Log::create(["user_id" =>$request->all()['user_id'], "nation_id" => $nation_id, 'description' => 'Nation Deleted "' . $nation_name . '"']);
+        //Log::create(["user_id" =>$request->all()['user_id'], "nation_id" => $nation_id, 'description' => 'Nation Deleted "' . $nation_name . '"']);
+        $this->logDao->create($request->all()['user_id'],$nation_id,'Nation Deleted "'.$nation_name.'"');
 
         return response()->json(['status'=>'ok','data'=>null],200);
     }
