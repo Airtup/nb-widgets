@@ -130,10 +130,10 @@
               </div>
               <div class="col-md-4">
                 <template>
-                  <img :src="`data:image/png;base64,${nation.logo}`" width="80" height="80"/>
+                  <img :src="`data:image/png;base64,${nation.logo}`"  style="max-height:80px" alt="PDF Logo to Nation"/>
                 </template>
               </div>
-              
+
               <div class="form-group col-md-12">
                 <label for="nation_token">About Document</label>
                 <textarea v-model="nation.intro" class="form-control"></textarea>
@@ -469,9 +469,9 @@ export default {
           }
         })
         .then(response => {
-          
+
           if (response.status == "200") {
-            
+
             axios
               .get(BASE_URL + "/api/nation/details/" + this.id)
               .then(response => {

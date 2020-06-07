@@ -10,10 +10,12 @@ class NationDetailsController extends Controller
 {
     private $factory;
     private $dao;
+    private $logDao;
     public function __construct()
     {
         $this->factory = AbstractFactory::getFactory('DAO');
         $this->dao = $this->factory->getDAO('NationDetailsDao');
+        $this->logDao = $this->factory->getDAO('LogDao');
     }
 
     /**
@@ -87,7 +89,8 @@ class NationDetailsController extends Controller
     {
         $nation = $this->dao->update($request->nation, $id);
         $nation = $this->dao->get($id)[0];
-        Log::create(["user_id" => $request->user_id, "nation_id" => $nation->id, 'description' => 'Update Nation "' . $nation->name . '"']);
+        //Log::create(["user_id" => $request->user_id, "nation_id" => $nation->id, 'description' => 'Update Nation "' . $nation->name . '"']);
+        $this->logDao->create($request->user_id,$nation->id,'Update Nation "'.$nation->name.'"');
 
         return response()->json(['status' => 'ok', 'data' => $nation], 200);
     }

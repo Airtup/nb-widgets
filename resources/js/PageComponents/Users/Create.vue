@@ -56,7 +56,6 @@
 
 <script>
 import axios from "axios";
-import VueNotifications from "vue-notifications";
 import swal from "sweetalert";
 
 export default {
@@ -94,7 +93,7 @@ export default {
           if (
             this.user.password &&
             this.user.password_confirmation &&
-            this.user.password_confirmation == this.user.password
+            this.user.password_confirmation === this.user.password
           ) {
             axios
               .post(

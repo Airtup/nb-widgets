@@ -17,6 +17,7 @@ class NationBuilderApiController extends Controller
     private $factory;
     private $api;
     private $dao;
+    private $logDao;
 
     public $isoCountries = array(
         'AF' => 'Afghanistan',
@@ -270,8 +271,10 @@ class NationBuilderApiController extends Controller
     {
         ini_set('max_execution_time', 1000);
         $this->factory = AbstractFactory::getFactory('Api');
+        $this->factoryDao = AbstractFactory::getFactory('DAO');
         $this->api = $this->factory->getDAO('NationApiConexion');
         $this->dao = AbstractFactory::getFactory('DAO')->getDAO('NationDao');
+        $this->logDao = $this->factoryDao->getDAO('LogDao');
     }
 
     /**
@@ -496,7 +499,8 @@ class NationBuilderApiController extends Controller
         $user_id = $request->all()['user_id'];
 
         $nation = $this->dao->get($nation_id)->first();
-        Log::create(["user_id" => $user_id, "nation_id" => $nation->id, 'description' => 'Sync Members in Nation "' . $nation->name . '"']);
+        //Log::create(["user_id" => $user_id, "nation_id" => $nation->id, 'description' => 'Sync Members in Nation "' . $nation->name . '"']);
+        $this->logDao->create($user_id,$nation->id,'Sync Members in Nation "'.$nation->name.'"');
     }
 
     public function sync_image(Request $request)
@@ -524,7 +528,8 @@ class NationBuilderApiController extends Controller
                 $next = null;
             }
         }
-        Log::create(["user_id" => $user_id, "nation_id" => $nation->id, 'description' => 'Sync Image Refreshed Nation "' . $nation->name . '"']);
+        //Log::create(["user_id" => $user_id, "nation_id" => $nation->id, 'description' => 'Sync Image Refreshed Nation "' . $nation->name . '"']);
+        $this->logDao->create($user_id,$nation->id,'Sync Image Refreshed Nation "'.$nation->name.'"');
         return response()->json(['status' => 'ok'], 200);
     }
 
@@ -614,7 +619,8 @@ class NationBuilderApiController extends Controller
             $response = $this->api->get($temp_url);
 
             $this->dao->update(['people_count' => $response->people_count], $nation_id);
-            Log::create(["user_id" => 0, "nation_id" => $nation->id, 'description' => 'Cache Refreshed by Cron Nation "' . $nation->name . '"']);
+            //Log::create(["user_id" => 0, "nation_id" => $nation->id, 'description' => 'Cache Refreshed by Cron Nation "' . $nation->name . '"']);
+            $this->logDao->create(0,$nation->id,'Cache Refreshed by Cron Nation "'.$nation->name.'"');
         }
     }
     //For cronjob end

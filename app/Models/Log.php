@@ -8,7 +8,7 @@ class Log extends Model
 {
 
     protected $table = "logs";
-    protected $fillable=['description','nation_id','user_id'];
+    protected $fillable=['description','nation_id','user_id','dump_file'];
 
     public function nation()
     {

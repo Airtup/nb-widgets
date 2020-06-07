@@ -3,9 +3,37 @@
 namespace App\Libraries\Dao;
 
 use App\Models\Log;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Storage;
+use Spatie;
 
 class LogDao
 {
+
+    public function create($user_id,$nation_id,$description)
+    {
+        $file = 'dumps/'.time().'.sql';
+        $filePath = Storage::disk('local')->path($file);
+        $db = Config::get('database.connections');
+
+        Spatie\DbDumper\Databases\MySql::create()
+            ->setDbName($db['mysql']['database'])
+            ->setUserName($db['mysql']['username'])
+            ->setPassword($db['mysql']['password'])
+            ->dumpToFile($filePath);
+
+        //Storage::put($file, 'select 1');
+        Log::create(["user_id"=>$user_id,"nation_id"=>$nation_id,'description'=>$description,'dump_file'=>$file]);
+    }
+
+    public function find($id)
+    {
+        $log = Log::find($id);
+
+        return $log;
+    }
+
+
     public function select()
     {
        $logs = Log::join('users','users.id','=','logs.user_id')
@@ -24,7 +52,7 @@ class LogDao
 
     public function get($id)
     {
-        $log = Log::where('id', $id)->where('status', '1')->get();
+        $log = Log::where('id', $id)->get();
 
         return $log;
     }
@@ -33,7 +61,7 @@ class LogDao
     public function update($request, $id)
     {
         $log = Log::find($id);
-        
+
         return $log->update($request);
     }
     public function delete($id)
