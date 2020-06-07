@@ -3,8 +3,9 @@
 namespace App\Libraries\Dao;
 
 use App\Models\Log;
-use Spatie;
 use Illuminate\Support\Facades\Storage;
+use Config;
+use Spatie;
 
 class LogDao
 {
@@ -13,15 +14,15 @@ class LogDao
     {
         $file = 'dumps/'.time().'.sql';
         $filePath = Storage::disk('local')->path($file);
+        $db = Config::get('database.connections');
+        
         Spatie\DbDumper\Databases\MySql::create()
-            ->setDbName(env('DB_DATABASE1'))
-            ->setUserName(env('DB_USERNAME'))
-            ->setPassword(env('DB_PASSWORD'))
+            ->setDbName($db['mysql']['database'])
+            ->setUserName($db['mysql']['username'])
+            ->setPassword($db['mysql']['password'])
             ->dumpToFile($filePath);
         
-       // Storage::put($file, 'select 1','private');
-        //Storage::disk('local')->move(Storage::disk('public')->path($file), $file);
-
+        //Storage::put($file, 'select 1');
         Log::create(["user_id"=>$user_id,"nation_id"=>$nation_id,'description'=>$description,'dump_file'=>$file]);
     }
 
