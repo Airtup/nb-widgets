@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
-// API Routes 
+// API Routes
 
 // Routes for Authentication trough API and JWT
 
@@ -45,6 +45,8 @@ Route::resource('/nation/details', 'NationDetailsController');
 
 Route::get('/logs', 'LogController@index');
 Route::delete('/logs/{log}', 'LogController@destroy');
+Route::get('/logs/download/dump/{log}', 'LogController@download');
+Route::post('/logs/restore', 'LogController@restore');
 
 
 // Routes that connect with NationBuilderAPI

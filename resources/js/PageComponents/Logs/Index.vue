@@ -44,21 +44,24 @@
       >
         <template v-slot:cell(actions)="row">
           <div class="row">
-            <a
-              @click="deleteLog(row.item.id)"
+            <a @click="deleteLog(row.item.id)"
               class="ml-4 link"
               style="color:red"
-              v-if="currentUser.user.role == 'admin'"
-            >
+              v-if="currentUser.user.role === 'admin'">
               <font-awesome-icon size="1x" icon="trash" />
             </a>
-            <a
-              :href="'/logs/download/dump/'+row.item.id"
+            <a :href="'/api/logs/download/dump/'+row.item.id"
               class="ml-4 link"
               style="color:gray"
-              v-if="currentUser.user.role == 'admin' && row.item.dump_file!=''">
+              v-if="currentUser.user.role === 'admin' && row.item.dump_file!==''">
               <font-awesome-icon size="1x" icon="file" />
             </a>
+            <a @click="restoreDB(row.item.id)"
+              class="ml-4 link"
+              style="color:gray"
+              v-if="currentUser.user.role === 'admin' && row.item.dump_file!==''">
+                <font-awesome-icon size="1x" icon="file" />
+              </a>
           </div>
         </template>
         <template v-slot:cell(created_at)="row">{{new Date(row.item.created_at).toUTCString()}}</template>
@@ -82,7 +85,7 @@
 import axios from "axios";
 import PageTitle from "../PageTitle";
 import swal from "sweetalert";
-
+import moment from "moment";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faEdit, faEye, faTrash,faFile } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
@@ -186,6 +189,28 @@ export default {
                   .catch(error => {
                     swal("Error", error, "error");
                   });
+              }
+            })
+            .catch(error => {
+              swal("Error", error, "error");
+            });
+        }
+      });
+    },
+    restoreDB(id) {
+      swal({
+        title: "Are you sure?",
+        text: "You will restore the entire database!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true
+      }).then(willRestore => {
+        if (willRestore) {
+          axios
+            .post(BASE_URL + "/api/logs/restore", {id})
+            .then(response => {
+              if (response.status == 200) {
+                swal("Success", response.data.data, "success");
               }
             })
             .catch(error => {

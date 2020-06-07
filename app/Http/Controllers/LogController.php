@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Libraries\Factory\AbstractFactory;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Storage;
 
 class LogController extends Controller
@@ -46,5 +47,20 @@ class LogController extends Controller
         $log = $this->dao->find($id);
         //var_dump($log->dump_file);
         return Storage::disk('local')->download($log->dump_file);
+    }
+
+    public function restore(Request $request)
+    {
+        $log = $this->dao->find($request['id']);
+        $db = Config::get('database.connections');
+        $command='mysql -h' . $db['mysql']['host'] .' -u' . $db['mysql']['username'] .' --password="' . $db['mysql']['password'] .'" ' . $db['mysql']['database'] .' < ' . $log->dump_file;
+        $output = array();
+        exec($command,$output,$worked);
+        return $worked;
+        if($worked === 0){
+            return response()->json(['success' => true, 'data' => 'The database restore process are complete'], 200);
+        } else{
+            return response()->json(['success' => false, 'data' => 'The database restore process is failed'], 500);
+        }
     }
 }
