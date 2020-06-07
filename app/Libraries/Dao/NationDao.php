@@ -29,6 +29,12 @@ class NationDao
         return $nation;
     }
 
+    public function first($id)
+    {
+        $nation = Nation::where('id', $id)->where('status', '1')->first();
+        return $nation;
+    }
+
     public function get_hq_nations()
     {
         $nations = Nation::where('status', '1')
@@ -56,8 +62,7 @@ class NationDao
         return Nation::where('slug', $slug)->exists();
     }
 
-    public function deleteCache($id)
-{
+    public function deleteCache($id){
         $nation = Nation::find($id);
         $tag = $nation->nation_details->tag;
         $people = People::where([['nation_id', $nation->id], ['nation_tag', $tag],['actual',0]]);

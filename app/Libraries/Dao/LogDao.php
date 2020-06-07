@@ -56,6 +56,8 @@ class LogDao
 
         return $log;
     }
+
+
     public function update($request, $id)
     {
         $log = Log::find($id);
