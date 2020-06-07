@@ -13,7 +13,8 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        Commands\CheckAllTime::class,
+        Commands\CheckManual::class,
     ];
 
     /**
@@ -26,6 +27,8 @@ class Kernel extends ConsoleKernel
     {
         $schedule->call('App\Http\Controllers\NationBuilderApiController@refreshAllNation')->daily();
         //$schedule->call('App\Http\Controllers\NationBuilderApiController@syncAllNation')->daily();
+        $schedule->command('check:time')->daily(); 
+        $schedule->command('check:manual')->everyMinute();  
     }
 
     /**
