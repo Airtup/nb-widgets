@@ -20,3 +20,4 @@ Route::get('/', 'HomeController@index')->name('home');
 Auth::routes();
 
 Route::get('/nbcallback', 'HomeController@authcode_callback');
+Route::get('/logs/download/dump/{log}', 'LogController@download');

@@ -41,9 +41,10 @@ class LogController extends Controller
         return response()->json(['status'=>'ok','data'=>$log],200);
     }
 
-    public function download($id)
+    public function download(Request $request,$id)
     {
         $log = $this->dao->find($id);
+        //var_dump($log->dump_file);
         return Storage::disk('local')->download($log->dump_file);
     }
 }
