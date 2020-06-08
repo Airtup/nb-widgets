@@ -93,7 +93,8 @@ class MembersSync extends Command
         $curlResponse = curl_exec($curl);
         $responses = json_decode($curlResponse);
 
-        $url_next = 'https://'.$slug.'.nationbuilder.com'.$responses->next;
+
+        $url_next = 'https://'.$slug.'.nationbuilder.com'.$responses->next.'&access_token='.$renovate->access_token;
         $renovate->url = $url_next;
 
 
