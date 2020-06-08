@@ -289,7 +289,7 @@ class NationBuilderApiController extends Controller
     {
         $params = array(
             'code' => $request->code,
-            'redirect_uri' => 'https://stage.nbwidgets.com/nbcallback',
+            'redirect_uri' => env('REDIRECT_URL_WIDGET').'nbcallback',
             'client_id' => $request->client["id"],
             'client_secret' => $request->client["secret"],
             'grant_type' => 'authorization_code'
