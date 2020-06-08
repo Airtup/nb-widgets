@@ -10,7 +10,7 @@
             <div class="row">
               <button class="col-md-2 mb-1 p-3 btn btn-success" @click="updateNation">
                 <font-awesome-icon icon="sync" size="2x" />
-                <br />Update Nation
+                <br />Update Settings
               </button>
               <button class="col-md-2 mb-1 offset-md-1 p-3 btn btn-success" @click="refreshCache">
                 <font-awesome-icon icon="redo" size="2x" />
@@ -456,8 +456,7 @@ export default {
           user_id: this.currentUser.user.id
         })
         .then(response => {
-          if (response.status == 200) {
-            swal("Success", "Nation Updated Successfully", "success");
+          if (response.status === 200) {
             window.location.reload();
           }
         })
