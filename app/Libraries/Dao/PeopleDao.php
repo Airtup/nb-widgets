@@ -58,7 +58,7 @@ class PeopleDao
 
     public function getPersonDetail($person_id)
     {
-        $people = People::where([['person_id',$person_id]])
+        $people = People::where([['person_id',$person_id],['actual',1]])
         ->join('nations','nations.id','=','people.nation_id')
         ->select('people.secondary_address as address2', 'people.tertiary_address as address3', 'people.city as city',
                 'people.country as country','people.country_code as country_code','people.email','people.employer','people.facebook',

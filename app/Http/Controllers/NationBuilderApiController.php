@@ -684,7 +684,7 @@ class NationBuilderApiController extends Controller
                 $result->industry = $data->person->industry;
                 $result->assistant_name = $data->person->assistant_name;
                 $result->assistant_phone_number = $data->person->assistant_phone_number;
-                $result->ssistant_email = $data->person->ssistant_email;
+                $result->ssistant_email = $data->person->assistant_email;
                 if (!empty($data->person->facebook_username)){
                     $result->facebook = $data->person->facebook_username;
                 } else{
