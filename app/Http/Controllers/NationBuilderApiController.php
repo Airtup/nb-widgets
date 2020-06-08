@@ -12,6 +12,7 @@ use App\Models\Sender;
 use App\Models\Renovate;
 use Exception;
 use Auth;
+use Config;
 use Illuminate\Support\Facades\Storage;
 
 class NationBuilderApiController extends Controller
@@ -289,7 +290,7 @@ class NationBuilderApiController extends Controller
     {
         $params = array(
             'code' => $request->code,
-            'redirect_uri' => env('REDIRECT_URL_WIDGET').'nbcallback',
+            'redirect_uri' => Config::get('app.url').'/nbcallback',
             'client_id' => $request->client["id"],
             'client_secret' => $request->client["secret"],
             'grant_type' => 'authorization_code'
