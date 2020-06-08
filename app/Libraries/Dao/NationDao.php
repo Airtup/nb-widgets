@@ -42,7 +42,7 @@ class NationDao
             ->where('hq', 1)
             ->get();
 
-        return $nations;    
+        return $nations;
     }
     public function update($request, $id)
     {
@@ -77,7 +77,7 @@ class NationDao
             ->where('membership_sync','!=','')
             ->get();
 
-        return $nations; 
+        return $nations;
     }
 
     public function getNationBySlug($slug){
@@ -86,7 +86,7 @@ class NationDao
             ->get()
             ->first();
 
-        return $nation;    
+        return $nation;
     }
 
     public function getAllNationCache($slug,$tag,$forum){
@@ -107,14 +107,16 @@ class NationDao
     public function getAllNationCacheByPage($slug,$tag,$page){
 
         $nations = People::where(
-                        [['nation_id',$slug],['nation_tag',$tag],['number_page',$page]])
+                        [['nation_id',$slug],['nation_tag',$tag]])
                     ->orderBy('last_name', 'ASC')
+                    ->limit(50*$page)
                     ->get();
         return $nations;
+
     }
 
     // public function deactivatePeople($nation_id,$nation_tag){
     //     return People::where([['nation_id',$nation_id],['nation_tag',$nation_tag]])
-    //                 ->update(['actual' => 0]);     
+    //                 ->update(['actual' => 0]);
     // }
 }
