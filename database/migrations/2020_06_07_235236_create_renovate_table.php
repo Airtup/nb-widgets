@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSenderTable extends Migration
+class CreateRenovateTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,18 @@ class CreateSenderTable extends Migration
      */
     public function up()
     {
-        Schema::create('senders', function (Blueprint $table) {
+        Schema::create('renovates', function (Blueprint $table) {
             $table->id();
             $table->integer('nation_id')->nullable();
             $table->integer('user_id')->nullable();
-            $table->integer('manual')->nullable();
             $table->integer('execute')->nullable();
-            $table->integer('current')->nullable();
-            $table->integer('page')->nullable();
-            $table->text('tag')->nullable();
+            $table->integer('no_members')->nullable();
+            $table->integer('no_nomembers')->nullable();
+            
+            $table->text('next_url')->nullable();
             $table->text('slug')->nullable();
             $table->text('access_token')->nullable();
+            $table->text('url')->nullable();
             $table->timestamps();
         });
     }
@@ -35,6 +36,6 @@ class CreateSenderTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('senders');
+        Schema::dropIfExists('renovates');
     }
 }
