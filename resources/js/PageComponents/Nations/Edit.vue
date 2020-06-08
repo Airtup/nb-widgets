@@ -329,7 +329,7 @@
                       <p>Synchronized members</p>
                       <ul>
                         <li>Members: {{members}}</li>
-                        <li>No Members: {{noMembers}}</li>
+                        <li>Non Members: {{noMembers}}</li>
                       </ul>
                   </div>
                 </div>
