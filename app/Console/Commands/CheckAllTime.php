@@ -121,8 +121,8 @@ class CheckAllTime extends Command
                                 $country = $this->isoCountries[$country];
 
                                 $insertData = [
-                                    'nation_id'         => $nation->id,
-                                    'nation_tag'        => $nation->nation_details->tag,
+                                    'nation_id'         => $s->nation_id,
+                                    'nation_tag'        => $s->tag,
                                     'number_page'       => $page,
                                     'first_name'        => $person->first_name,
                                     'last_name'         => $person->last_name,
@@ -149,7 +149,7 @@ class CheckAllTime extends Command
                                     'tags'              => json_encode($person->tags)
                                 ];
 
-                                $daoPeople->insert($insertData);
+                                People::updateOrCreate(['person_id' => $person->id],$insertData);
                         }
 
                         $next = $response->next;
@@ -161,7 +161,7 @@ class CheckAllTime extends Command
                     $page++;
                 }
                 
-                $this->dao->deleteCache($nation->id);
+                //$this->dao->deleteCache($nation->id);
                 $temp_url = 'https://'.$nation->slug.'.nationbuilder.com/api/v1/people/count?access_token='.$nation->access_token;
 
                 $response = $this->api->get($temp_url);
@@ -176,10 +176,6 @@ class CheckAllTime extends Command
                 ];
 
                 Log::create($dataLog);
-
-                sleep(10);
-                People::where('nation_id','=',$s->nation_id)->where('created_at','<',$today)->delete();
-
 
             } catch (Exception $e) {
                 People::where('actual',0)->update(['actual' => 1]);
