@@ -25,6 +25,14 @@ class PeopleDao
 
         return $person;
     }
+
+    public function first($id)
+    {
+        $person = People::where('person_id', $id)->first();
+
+        return $person;
+    }
+
     public function update($request, $id)
     {
         $person = People::find($id);

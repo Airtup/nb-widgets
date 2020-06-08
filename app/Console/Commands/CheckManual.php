@@ -149,7 +149,7 @@ class CheckManual extends Command
                                         'tags'              => json_encode($person->tags)
                                     ];
 
-                                    $daoPeople->insert($insertData);
+                                    People::updateOrCreate(['person_id' => $person->id],$insertData);
                             }
 
                             $next = $response->next;
@@ -164,7 +164,7 @@ class CheckManual extends Command
                         $s->page = $page;
                     }
                     
-                    $this->dao->deleteCache($s->nation_id);
+                    //$this->dao->deleteCache($s->nation_id);
                     $temp_url = 'https://'.$s->slug.'.nationbuilder.com/api/v1/people/count?access_token='.$s->access_token;
 
                     $response = $this->api->get($temp_url);
@@ -182,9 +182,6 @@ class CheckManual extends Command
 
                     $s->execute = 1;
                     $s->save();
-
-                    sleep(10);
-                    People::where('nation_id','=',$s->nation_id)->where('created_at','<',$today)->delete();
 
                 } catch (Exception $e) {
                     People::where('actual',0)->update(['actual' => 1]);
