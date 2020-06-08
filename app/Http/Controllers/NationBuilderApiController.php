@@ -9,7 +9,10 @@ use App\Models\Nation;
 use App\Models\NationPages;
 use App\Models\People;
 use App\Models\Sender;
+use App\Models\Renovate;
 use Exception;
+use Auth;
+use Config;
 use Illuminate\Support\Facades\Storage;
 
 class NationBuilderApiController extends Controller
@@ -287,7 +290,7 @@ class NationBuilderApiController extends Controller
     {
         $params = array(
             'code' => $request->code,
-            'redirect_uri' => 'https://stage.nbwidgets.com/nbcallback',
+            'redirect_uri' => Config::get('app.url').'/nbcallback',
             'client_id' => $request->client["id"],
             'client_secret' => $request->client["secret"],
             'grant_type' => 'authorization_code'
@@ -327,40 +330,30 @@ class NationBuilderApiController extends Controller
 
     public function update_sync_members(Request $request)
     {
-        $next_url = $request['next_url'];
-        $nation_id = $request['nation_id'];
-        $result = $this->dao->get($nation_id)->first();
+        $next_url = $request->input('next_url');
+        $nation_id = $request->input('nation_id');
+        $result = $this->dao->first($nation_id);
 
-        $url = 'https://' . $result->slug . '.nationbuilder.com' . $next_url . '&access_token=' . $result->access_token;
+        $url = 'https://'.$result->slug.'.nationbuilder.com'.$next_url.'&access_token='.$result->access_token;
 
-        $cookiesIn = '';
-        $curl = curl_init();
-        $options = array(
-            CURLOPT_URL => $url,
-            CURLOPT_RETURNTRANSFER => true,     // return web page
-            // CURLOPT_HEADER         => true,     //return headers in  addition to content
-            CURLOPT_FOLLOWLOCATION => true,     // follow redirects
-            CURLOPT_ENCODING       => "",       // handle all encodings
-            CURLOPT_AUTOREFERER    => true,     // set referer on redirect
-            CURLOPT_CONNECTTIMEOUT => 120,      // timeout on connect
-            CURLOPT_TIMEOUT        => 120,      // timeout on response
-            // CURLOPT_MAXREDIRS      => 10,       // stop after 10 redirects
-            CURLINFO_HEADER_OUT    => true,
-            CURLOPT_SSL_VERIFYPEER => true,     // Validate SSL Certificates
-            CURLOPT_HTTP_VERSION   => CURL_HTTP_VERSION_1_1,
-            CURLOPT_COOKIE         => $cookiesIn
-        );
-        curl_setopt_array($curl, $options);
-        $curlResponse = curl_exec($curl);
-        if (curl_error($curl)) {
-            return response()->json(['status' => 'error', 'data' => $curlResponse], 500);
-        } else {
-            return response()->json(['status' => 'ok', 'data' => $curlResponse], 200);
+        if(!$exist = Renovate::where('nation_id','=',$nation_id)->where('execute','=',0)->first()){
+            $renovate = new Renovate();
+            $renovate->nation_id     = $nation_id;
+            $renovate->execute       = 0;
+            $renovate->no_members    = 0;    
+            $renovate->next_url      = $next_url; 
+            $renovate->slug          = $result->slug;
+            $renovate->access_token  = $result->access_token;
+            $renovate->url           = $url;   
+            $renovate->save();  
+
+            return response()->json(['status' => 'ok'], 200);
+        }else{
+            return response()->json(['status' => 'ok','data' => $exist], 200);
         }
     }
 
-    public function update_match_person(Request $request)
-    {
+    public function update_match_person(Request $request){
         $nation_id = $request->all()['nation_id'];
         $person_info = $request->all()['person_info'];
         $nation_hq_id = $request->all()['nation_hq_id'];

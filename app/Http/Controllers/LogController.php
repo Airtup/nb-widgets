@@ -58,7 +58,7 @@ class LogController extends Controller
         $output = array();
         exec($command,$output,$worked);
         if($worked === 0){
-            return response()->json(['success' => true, 'data' => 'The database restore process are complete'], 200);
+            return response()->json(['success' => true, 'data' => 'The database restore process is complete'], 200);
         } else{
             return response()->json(['success' => false, 'data' => 'The database restore process is failed'], 500);
         }

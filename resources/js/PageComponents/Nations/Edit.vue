@@ -324,7 +324,14 @@
                       <span class="sr-only">Loading...</span>
                     </div>
                   </div>
-                  <div v-if="syncPicture!=1">Members synchronized: {{syncCount}}</div>
+                  <div v-if="syncPicture!=1">Members are getting synchronized</div>
+                  <div v-if="syncPicture == 2">
+                      <p>Synchronized members</p>
+                      <ul>
+                        <li>Members: {{members}}</li>
+                        <li>Non Members: {{noMembers}}</li>
+                      </ul>
+                  </div>
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" @click="reload">Cancel</button>
@@ -385,6 +392,8 @@ export default {
       syncStatus: 0,
       syncCount: 0,
       syncPicture: 0,
+      members: 0,
+      noMembers: 0,
       tag_count: 0,
       hq_nations: [],
       hq_pictures: [],
@@ -531,19 +540,18 @@ export default {
         })
         .then(response => {
           if (response.status == 200) {
-            var jsonData = JSON.parse(response.data.data);
-            this.findMatchPersonAndUpdate(
-              jsonData["results"],
-              0,
-              jsonData["next"]
-            );
+            this.members = response.data.data.no_members;
+            this.noMembers = response.data.data.no_nomembers;
+            this.syncPicture = 2;
+            // var jsonData = JSON.parse(response.data.data);
+            // this.findMatchPersonAndUpdate(jsonData["results"],0,jsonData["next"]);
           } else {
-            this.updateSyncMembers(url);
+            //this.updateSyncMembers(url);
             return;
           }
         })
         .catch(error => {
-          this.updateSyncMembers(url);
+          //this.updateSyncMembers(url);
         });
     },
     findMatchPersonAndUpdate: function(results, index, next_url) {
