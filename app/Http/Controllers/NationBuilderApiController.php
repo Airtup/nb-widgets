@@ -345,8 +345,8 @@ class NationBuilderApiController extends Controller
             $renovate->next_url      = $next_url; 
             $renovate->slug          = $result->slug;
             $renovate->access_token  = $result->access_token;
-            $renovate->url           = $url;   
-            $renovate->save();  
+            $renovate->url           = $url;
+            $renovate->save();
 
             return response()->json(['status' => 'ok'], 200);
         }else{
@@ -681,11 +681,16 @@ class NationBuilderApiController extends Controller
                 $data = json_decode($curlResponse);
                 $result->bio = $data->person->bio;
                 $result->twitter = $data->person->twitter_login;
+                $result->occupation = $data->person->occupation;
+                $result->industry = $data->person->industry;
+                $result->assistant_name = $data->person->assistant_name;
+                $result->assistant_phone_number = $data->person->assistant_phone_number;
+                $result->ssistant_email = $data->person->assistant_email;
                 if (!empty($data->person->facebook_username)){
                     $result->facebook = $data->person->facebook_username;
                 } else{
                     $result->facebook = $data->person->facebook_profile_url;
-                }   
+                }
             }
             curl_close($curl);
         }
@@ -727,7 +732,7 @@ class NationBuilderApiController extends Controller
             Storage::delete('/images/logo.png');
             //Guardar Imagen
             $path = $request->file('logo')->storeAs('/images', 'logo.'.$request->file('logo')->getClientOriginalExtension());
-            
+
         } else {
             $path = '';
             return response()->json(['status' => 'fail'], 500);
