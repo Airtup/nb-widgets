@@ -106,8 +106,9 @@ class NationDao
 
     public function getAllNationCacheByPage($slug,$tag,$page){
 
-        $nations = People::where([['nation_id',$slug],['nation_tag',$tag],['number_page',$page]])
-                    ->orderBy('last_name', 'asc')
+        $nations = People::where(
+                        [['nation_id',$slug],['nation_tag',$tag],['number_page',$page]])
+                    ->orderBy('last_name', 'ASC')
                     ->get();
         return $nations;
     }
