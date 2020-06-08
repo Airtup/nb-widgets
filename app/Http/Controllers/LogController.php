@@ -57,6 +57,7 @@ class LogController extends Controller
         $command='mysql -h' . $db['mysql']['host'] .' -u' . $db['mysql']['username'] .' --password="' . $db['mysql']['password'] .'" ' . $db['mysql']['database'] .' < ' . $dbRoute;
         $output = array();
         exec($command,$output,$worked);
+        
         if($worked === 0){
             return response()->json(['success' => true, 'data' => 'The database restore process is complete'], 200);
         } else{

@@ -58,7 +58,7 @@ class CheckAllTime extends Command
         $nations = Nation::where('status','=',1)->get();
 
         foreach($nations as $nation){
-            $this->dao->deactivatePeople($nation->id, $nation->nation_details->tag);
+            //$this->dao->deactivatePeople($nation->id, $nation->nation_details->tag);
 
             $page = 1;
             $count = 0;
@@ -178,8 +178,7 @@ class CheckAllTime extends Command
                 Log::create($dataLog);
 
             } catch (Exception $e) {
-                People::where('actual',0)->update(['actual' => 1]);
-                NationPages::where('actual',0)->update(['actual' => 1]);
+                
             }
         }   
     }

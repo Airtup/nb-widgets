@@ -21,7 +21,7 @@ class PeopleDao
 
     public function get($id)
     {
-        $person = People::where('id', $id)->where('status', '1')->get();
+        $person = People::where('id', $id)->get();
 
         return $person;
     }
@@ -53,12 +53,12 @@ class PeopleDao
     {
         $person = People::find($id);
 
-        return $person->update(['status' => 0]);
+        return $person->delete();
     }
 
     public function getPersonDetail($person_id)
     {
-        $people = People::where([['person_id',$person_id],['actual',1]])
+        $people = People::where([['person_id',$person_id]])
         ->join('nations','nations.id','=','people.nation_id')
         ->select('people.secondary_address as address2', 'people.tertiary_address as address3', 'people.city as city',
                 'people.country as country','people.country_code as country_code','people.email','people.employer','people.facebook',

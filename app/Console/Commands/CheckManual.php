@@ -58,7 +58,7 @@ class CheckManual extends Command
         $senders = Sender::where('manual','=',1)->where('execute','=',0)->orderBy('created_at','DESC')->chunk(100, function ($sender) use ($today) {
 
             foreach ($sender as $s) {
-                $this->dao->deactivatePeople($s->nation_id, $s->tag);
+                //$this->dao->deactivatePeople($s->nation_id, $s->tag);
 
                 $page = 1;
                 $count = 0;
@@ -184,8 +184,7 @@ class CheckManual extends Command
                     $s->save();
 
                 } catch (Exception $e) {
-                    People::where('actual',0)->update(['actual' => 1]);
-                    NationPages::where('actual',0)->update(['actual' => 1]);
+                    
                 }
             }
         });
