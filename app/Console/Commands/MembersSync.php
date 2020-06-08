@@ -95,6 +95,9 @@ class MembersSync extends Command
 
 
         $url_next = 'https://'.$slug.'.nationbuilder.com'.$responses->next.'&access_token='.$renovate->access_token;
+
+        $url_next = str_replace('limit=50', 'limit=200', $url_next);
+
         $renovate->url = $url_next;
 
 
@@ -118,7 +121,7 @@ class MembersSync extends Command
         $sub_nation = $this->dao->first($nation_id);
 
 
-        $org_membership_url = 'https://'.$sub_nation->slug.'.nationbuilder.com/api/v1/people/'.$org_person_id.'/memberships?limit=50&access_token='.$sub_nation->access_token;
+        $org_membership_url = 'https://'.$sub_nation->slug.'.nationbuilder.com/api/v1/people/'.$org_person_id.'/memberships?limit=200&access_token='.$sub_nation->access_token;
 
         $cookiesIn = '';
         $curl = curl_init();

@@ -529,7 +529,7 @@ export default {
         }
         this.syncStatus = 1;
         this.syncCount = 0;
-        this.updateSyncMembers("/api/v1/people?limit=50");
+        this.updateSyncMembers("/api/v1/people?limit=200");
       } else swal("Error", "Select a membership to sync", "warning");
     },
     updateSyncMembers: function(url) {
