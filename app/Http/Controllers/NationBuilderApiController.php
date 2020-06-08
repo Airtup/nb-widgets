@@ -340,8 +340,9 @@ class NationBuilderApiController extends Controller
             $renovate = new Renovate();
             $renovate->nation_id     = $nation_id;
             $renovate->execute       = 0;
-            $renovate->no_members    = 0;
-            $renovate->next_url      = $next_url;
+            $renovate->no_members    = 0;   
+            $renovate->no_nomembers  = 0;    
+            $renovate->next_url      = $next_url; 
             $renovate->slug          = $result->slug;
             $renovate->access_token  = $result->access_token;
             $renovate->url           = $url;
