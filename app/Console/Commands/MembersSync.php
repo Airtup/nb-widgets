@@ -9,6 +9,7 @@ use App\Models\Renovate;
 //use App\Models\Log;
 use App\Models\People;
 use App\Models\NationDetails;
+use App\Models\Nation;
 
 class MembersSync extends Command
 {
@@ -69,6 +70,7 @@ class MembersSync extends Command
 
     public function getPersonSync($url,$nation_id,$membership,$slug,$id){
         $renovate = Renovate::find($id);
+        $nation = Nation::find($nation_id);
 
         $count = 0;
 
@@ -105,6 +107,7 @@ class MembersSync extends Command
             $member = $this->updateMatchPerson($nation_id,$response,$membership);
             if($member){
                 $renovate->no_members +=1;
+
             }else{
                 $renovate->no_nomembers +=1;
             }
@@ -112,6 +115,9 @@ class MembersSync extends Command
 
             $count++;
         }
+
+        $nation->people_count = $renovate->no_members;
+        $nation->save();
     }
 
 
