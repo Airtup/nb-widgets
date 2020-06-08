@@ -32,5 +32,6 @@ class People extends Model
         'tertiary_address',
         'zip',
         'country_code',
-        'tags'];
+        'tags'
+    ];
 }

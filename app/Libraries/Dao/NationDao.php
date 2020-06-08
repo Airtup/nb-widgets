@@ -62,14 +62,14 @@ class NationDao
         return Nation::where('slug', $slug)->exists();
     }
 
-    public function deleteCache($id){
-        $nation = Nation::find($id);
-        $tag = $nation->nation_details->tag;
-        $people = People::where([['nation_id', $nation->id], ['nation_tag', $tag],['actual',0]]);
-        $pages = NationPages::where([['nation_id', $nation->id], ['nation_tag', $tag],['actual',0]]);
-        $people->delete();
-        $pages->delete();
-    }
+    // public function deleteCache($id){
+    //     $nation = Nation::find($id);
+    //     $tag = $nation->nation_details->tag;
+    //     $people = People::where([['nation_id', $nation->id], ['nation_tag', $tag],['actual',0]]);
+    //     $pages = NationPages::where([['nation_id', $nation->id], ['nation_tag', $tag],['actual',0]]);
+    //     $people->delete();
+    //     $pages->delete();
+    // }
 
     public function syncNations(){
         $nations = Nation::where('status', '1')
@@ -112,8 +112,8 @@ class NationDao
         return $nations;
     }
 
-    public function deactivatePeople($nation_id,$nation_tag){
-        return People::where([['nation_id',$nation_id],['nation_tag',$nation_tag]])
-                    ->update(['actual' => 0]);     
-    }
+    // public function deactivatePeople($nation_id,$nation_tag){
+    //     return People::where([['nation_id',$nation_id],['nation_tag',$nation_tag]])
+    //                 ->update(['actual' => 0]);     
+    // }
 }
