@@ -130,7 +130,7 @@
               </div>
               <div class="col-md-4">
                 <template>
-                  <img :src="`data:image/png;base64,${nation.logo}`"  style="max-height:80px" alt="PDF Logo to Nation"/>
+                  <img :src="`data:image/png;base64,${nation.logo}`"  v-if="nation.logo" style="max-height:80px" alt="PDF Logo to Nation"/>
                 </template>
               </div>
 
