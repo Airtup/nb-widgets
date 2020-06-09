@@ -384,7 +384,7 @@ export default {
         slug: "",
         access_token: "",
         logo: "",
-        people_count: 3,
+        people_count: 0,
         status: 1
       },
       options: {},
