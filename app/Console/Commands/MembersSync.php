@@ -116,13 +116,13 @@ class MembersSync extends Command
             $count++;
         }
 
-        $nation->people_count = $renovate->no_members;
+//        $nation->people_count = $renovate->no_members;
         $nation->save();
     }
 
 
     public function updateMatchPerson($nation_id,$person_info,$nation_hq_id){
-        
+
         $org_person_id = $person_info->id;
         $sub_nation = $this->dao->first($nation_id);
 
@@ -191,7 +191,7 @@ class MembersSync extends Command
                 );
                 curl_setopt_array($curl, $options);
                 $peopleCurl = curl_exec($curl);
-                
+
                 $people = json_decode($peopleCurl);
                 $person_hq_id = 0;
                 if (count($people->results) == 1) {
