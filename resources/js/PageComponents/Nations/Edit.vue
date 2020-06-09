@@ -130,7 +130,7 @@
               </div>
               <div class="col-md-4">
                 <template>
-                  <img :src="`data:image/png;base64,${nation.logo}`"  style="max-height:80px" alt="PDF Logo to Nation"/>
+                  <img :src="`data:image/png;base64,${nation.logo}`"  v-if="nation.logo" style="max-height:80px" alt="PDF Logo to Nation"/>
                 </template>
               </div>
 
@@ -384,7 +384,7 @@ export default {
         slug: "",
         access_token: "",
         logo: "",
-        people_count: 3,
+        people_count: 0,
         status: 1
       },
       options: {},

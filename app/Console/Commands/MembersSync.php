@@ -116,13 +116,13 @@ class MembersSync extends Command
             $count++;
         }
 
-        $nation->people_count = $renovate->no_members;
+//        $nation->people_count = $renovate->no_members;
         $nation->save();
     }
 
 
     public function updateMatchPerson($nation_id,$person_info,$nation_hq_id){
-        
+
         $org_person_id = $person_info->id;
         $sub_nation = $this->dao->first($nation_id);
 
@@ -154,92 +154,85 @@ class MembersSync extends Command
 
 
         if (count($memberships) != 0) {
-            $nation_hq_id_array = json_decode($nation_hq_id);
 
-            foreach ($nation_hq_id_array as $hq_id) {
-                $hq_nation = $this->dao->get($hq_id)->first();
+            $hq_nation = $this->dao->get($nation_hq_id)->first();
 
-                $url = 'https://'.$hq_nation->slug.'.nationbuilder.com/api/v1/people/search?access_token='.$hq_nation->access_token;
+            $url = 'https://'.$hq_nation->slug.'.nationbuilder.com/api/v1/people/search?access_token='.$hq_nation->access_token;
 
-                if ($person_info->first_name != null && $person_info->first_name != '') {
-                    $url.='&first_name='.$person_info->first_name;
-                }
-                if ($person_info->last_name != null && $person_info->last_name != '') {
-                    $url.='&last_name='.$person_info->last_name;
-                }
-                if ($person_info->email != null && $person_info->email != '') {
-                    $url.='&email='.$person_info->email;
-                }
+            if ($person_info->first_name != null && $person_info->first_name != '') {
+                $url.='&first_name='.$person_info->first_name;
+            }
+            if ($person_info->last_name != null && $person_info->last_name != '') {
+                $url.='&last_name='.$person_info->last_name;
+            }
+            if ($person_info->email != null && $person_info->email != '') {
+                $url.='&email='.$person_info->email;
+            }
 
-                $url = $this->encodeURI($url);
+            $url = $this->encodeURI($url);
 
-                $curl = curl_init();
-                $options = array(
-                    CURLOPT_URL => $url,
-                    CURLOPT_RETURNTRANSFER => true,     // return web page
-                    // CURLOPT_HEADER         => true,     //return headers in  addition to content
-                    CURLOPT_FOLLOWLOCATION => true,     // follow redirects
-                    CURLOPT_ENCODING       => "",       // handle all encodings
-                    CURLOPT_AUTOREFERER    => true,     // set referer on redirect
-                    CURLOPT_CONNECTTIMEOUT => 120,      // timeout on connect
-                    CURLOPT_TIMEOUT        => 120,      // timeout on response
-                    // CURLOPT_MAXREDIRS      => 10,       // stop after 10 redirects
-                    CURLINFO_HEADER_OUT    => true,
-                    CURLOPT_SSL_VERIFYPEER => true,     // Validate SSL Certificates
-                    CURLOPT_HTTP_VERSION   => CURL_HTTP_VERSION_1_1,
-                    CURLOPT_COOKIE         => $cookiesIn
-                );
-                curl_setopt_array($curl, $options);
-                $peopleCurl = curl_exec($curl);
-                
-                $people = json_decode($peopleCurl);
-                $person_hq_id = 0;
-                if (count($people->results) == 1) {
-                    $person_hq_id = $people->results[0]->id;
-                } else {
-                    foreach ($people->results as $person) {
-                        if ($person->phone == $person_info->phone && $person->mobile == $person_info->mobile) {
-                            $person_hq_id = $person->id;
-                            break;
-                        }
+            $curl = curl_init();
+            $options = array(
+                CURLOPT_URL => $url,
+                CURLOPT_RETURNTRANSFER => true,     // return web page
+                // CURLOPT_HEADER         => true,     //return headers in  addition to content
+                CURLOPT_FOLLOWLOCATION => true,     // follow redirects
+                CURLOPT_ENCODING       => "",       // handle all encodings
+                CURLOPT_AUTOREFERER    => true,     // set referer on redirect
+                CURLOPT_CONNECTTIMEOUT => 120,      // timeout on connect
+                CURLOPT_TIMEOUT        => 120,      // timeout on response
+                // CURLOPT_MAXREDIRS      => 10,       // stop after 10 redirects
+                CURLINFO_HEADER_OUT    => true,
+                CURLOPT_SSL_VERIFYPEER => true,     // Validate SSL Certificates
+                CURLOPT_HTTP_VERSION   => CURL_HTTP_VERSION_1_1,
+                CURLOPT_COOKIE         => $cookiesIn
+            );
+            curl_setopt_array($curl, $options);
+            $peopleCurl = curl_exec($curl);
+
+            $people = json_decode($peopleCurl);
+            $person_hq_id = 0;
+            if (count($people->results) == 1) {
+                $person_hq_id = $people->results[0]->id;
+            } else {
+                foreach ($people->results as $person) {
+                    if ($person->phone == $person_info->phone && $person->mobile == $person_info->mobile) {
+                        $person_hq_id = $person->id;
+                        break;
                     }
                 }
+            }
 
-                if ($person_hq_id == 0) {
-                    continue;
-                }
+            foreach ($memberships as $org_membership) {
 
-                foreach ($memberships as $org_membership) {
+                $params['membership']['name'] = $org_membership->name;
+                $params['membership']['status'] = $org_membership->status;
+                $params['membership']['status_reason'] = $org_membership->status_reason;
+                $params['membership']['started_at'] = $org_membership->started_at;
+                $params['membership']['expires_on'] = $org_membership->expires_on;
 
-                    $params['membership']['name'] = $org_membership->name;
-                    $params['membership']['status'] = $org_membership->status;
-                    $params['membership']['status_reason'] = $org_membership->status_reason;
-                    $params['membership']['started_at'] = $org_membership->started_at;
-                    $params['membership']['expires_on'] = $org_membership->expires_on;
+                $url = 'https://'.$hq_nation['nation_slug']. '.nationbuilder.com/api/v1/people/'.$person_hq_id.'/memberships?access_token='.$hq_nation['nation_auth'];
 
-                    $url = 'https://'.$hq_nation['nation_slug']. '.nationbuilder.com/api/v1/people/'.$person_hq_id.'/memberships?access_token='.$hq_nation['nation_auth'];
+                $curl = curl_init();
 
-                    $curl = curl_init();
+                curl_setopt_array($curl, array(
+                    CURLOPT_URL => $url,
+                    CURLOPT_RETURNTRANSFER => true,
+                    CURLOPT_ENCODING => "",
+                    CURLOPT_MAXREDIRS => 10,
+                    CURLOPT_TIMEOUT => 0,
+                    CURLOPT_FOLLOWLOCATION => true,
+                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                    CURLOPT_CUSTOMREQUEST => "PUT",
+                    CURLOPT_POSTFIELDS => json_encode($params),
+                    CURLOPT_HTTPHEADER => array(
+                        "x-rapidapi-host: google-translate1.p.rapidapi.com",
+                        "x-rapidapi-key: d1ec636ac5msh35885a399298175p14f2e4jsn92997c76c589",
+                        "Content-Type: application/json"
+                    ),
+                ));
 
-                    curl_setopt_array($curl, array(
-                        CURLOPT_URL => $url,
-                        CURLOPT_RETURNTRANSFER => true,
-                        CURLOPT_ENCODING => "",
-                        CURLOPT_MAXREDIRS => 10,
-                        CURLOPT_TIMEOUT => 0,
-                        CURLOPT_FOLLOWLOCATION => true,
-                        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                        CURLOPT_CUSTOMREQUEST => "PUT",
-                        CURLOPT_POSTFIELDS => json_encode($params),
-                        CURLOPT_HTTPHEADER => array(
-                            "x-rapidapi-host: google-translate1.p.rapidapi.com",
-                            "x-rapidapi-key: d1ec636ac5msh35885a399298175p14f2e4jsn92997c76c589",
-                            "Content-Type: application/json"
-                        ),
-                    ));
-
-                    $memberCurl = curl_exec($curl);
-                }
+                $memberCurl = curl_exec($curl);
             }
 
             return true;
