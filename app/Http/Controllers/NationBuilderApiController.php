@@ -679,13 +679,27 @@ class NationBuilderApiController extends Controller
                 echo '';
             } else {
                 $data = json_decode($curlResponse);
-                $result->bio = $data->person->bio;
+                if(isset($data->person->bio)){
+                    $result->bio = $data->person->bio;
+                }
+                if(isset($data->person->twitter_login)){
                 $result->twitter = $data->person->twitter_login;
+                }
+                if(isset($data->person->occupation)){
                 $result->occupation = $data->person->occupation;
+                }
+                if(isset($data->person->industry)){
                 $result->industry = $data->person->industry;
+                }
+                if(isset($data->person->assistant_name)){
                 $result->assistant_name = $data->person->assistant_name;
+                }
+                if(isset($data->person->assistant_phone_number)){
                 $result->assistant_phone_number = $data->person->assistant_phone_number;
+                }
+                if(isset($data->person->assistant_email)){
                 $result->assistant_email = $data->person->assistant_email;
+                }
                 if (!empty($data->person->facebook_username)){
                     $result->facebook = $data->person->facebook_username;
                 } else{
