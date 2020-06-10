@@ -26,7 +26,7 @@ class CreatePeopleTable extends Migration
             $table->string('country')->nullable();
             $table->string('state')->nullable();
             $table->string('profile_image')->nullable();
-            $table->string('occupation')->nullable();
+            $table->text('occupation')->nullable();
             $table->string('employer')->nullable();
             $table->string('email')->nullable();
             $table->string('twitter')->nullable();

@@ -19,8 +19,8 @@ class CreateNationDetailsTable extends Migration
             $table->string('tag',100);
             $table->integer('nation_id');
             $table->string('show_options')->default('{"first_name": 1,"last_name": 1,"city": 1,"country": 1,"address": 1,"email": 1,"phone": 1,"assist_name": 0,"assist_email": 0,"assist_phone": 0}');
-            $table->string('intro')->nullable();
-            $table->string('disclaimer')->nullable();
+            $table->text('intro')->nullable();
+            $table->text('disclaimer')->nullable();
             $table->string('report_color')->nullable();
             $table->integer('hq')->default(0);
             $table->string('membership_sync')->nullable();
