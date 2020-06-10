@@ -625,7 +625,7 @@ class NationBuilderApiController extends Controller
         $forum =  $request->forum;
         $result = $this->dao->getNationBySlug($nation_slug);
         if ($result != null) {
-            $result =  $this->dao->getAllNationCache($result->id, $result->tag, $forum);
+            $result =  $this->dao->getAllNationCache($result->id, $result->tag, $forum,$request->industry ?? '');
             return response()->json(['status' => 'ok', 'data' => $result], 200);
         } else
             echo '';
