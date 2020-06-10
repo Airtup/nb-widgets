@@ -117,7 +117,7 @@ class MembersSync extends Command
             $count++;
         }
 
-//        $nation->people_count = $renovate->no_members;
+        $nation->member_count = $renovate->no_members;
         $nation->save();
     }
 

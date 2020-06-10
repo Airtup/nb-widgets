@@ -91,7 +91,15 @@
               </div>
               <div class="form-group col-md-4">
                 <label for="nation_token">Members Count</label>
-                <input type="number" disabled v-model="nation.people_count" class="form-control" />
+
+                <div class="input-group mb-3">
+                  <input type="number" disabled v-model="nation.member_count" class="form-control" />
+                  <div class="input-group-append">
+                    <span class="input-group-text" id="basic-addon2">Sync</span>
+                  </div>
+                </div>
+
+                
               </div>
               <div class="form-group col-md-4">
                 <label for="nation_token">Directory Tag</label>
@@ -99,7 +107,7 @@
               </div>
               <div class="form-group col-md-4">
                 <label for="nation_token">Directory Tag Count</label>
-                <input type="number" disabled v-model="tag_count" class="form-control" />
+                <input type="number" disabled v-model="nation.people_count" class="form-control" />
               </div>
               <div class="col-md-4">
                 <div class="custom-checkbox custom-control">
@@ -385,7 +393,8 @@ export default {
         access_token: "",
         logo: "",
         people_count: 0,
-        status: 1
+        status: 1,
+        member_count:0
       },
       options: {},
       menu: 0,
@@ -425,6 +434,19 @@ export default {
         }
       })
       .catch(error => swal("Error!", error, "error"));
+  },
+  mounted(){
+    let id = this.id;
+    setInterval(function(){ 
+        axios
+          .get(BASE_URL + "/api/nation/details/" +id)
+          .then(response => {
+            if ((response.status = 200)) {
+              this.nation = response.data.data[0][0];
+            }
+          })
+          .catch(error => swal("Error!", error, "error"));
+    }, 3000);
   },
   components: {
     "font-awesome-icon": FontAwesomeIcon,
