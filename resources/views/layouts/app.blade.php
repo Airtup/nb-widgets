@@ -22,7 +22,7 @@
 <body>
     <div id="app">
     </div>
-    <script src="{{ mix('js/app.js') }}"> </script>
+    <script src="{{ mix('js/main.js') }}"> </script>
     <script type="text/javascript">
         var BASE_URL = "{{URL::to('/')}}";
     </script>
