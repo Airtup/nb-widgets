@@ -103,7 +103,10 @@ class CheckManual extends Command
                                 $zip = null;
                                 $state = '';
                                 $country_code = null;
-                                $industry = $person->industry;
+                                $industry = null;
+                                if(isset($person->industry)){
+                                    $industry = $person->industry;
+                                }
 
                                 if ($person->primary_address != null) {
 
