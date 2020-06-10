@@ -9,21 +9,21 @@
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/styles/default.min.css">
     <title>NB Widgets</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900">
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/styles/default.min.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/highlight.min.js"></script>
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'ArchitectUI - Vuejs & Bootstrap 4 & Vuetify Admin UI Dashboard Template') }}</title>
+    <title>{{ config('app.name', 'NB Widgets') }}</title>
 
-    <link href=css/app.css rel=stylesheet>
+    <link href="{{ mix('css/app.css') }}" rel=stylesheet>
 </head>
 
 <body>
     <div id="app">
     </div>
-    <script src=js/main.js> </script> <script type="text/javascript">
+    <script src="{{ mix('js/app.js') }}"> </script>
+    <script type="text/javascript">
         var BASE_URL = "{{URL::to('/')}}";
     </script>
     <script>
