@@ -110,6 +110,7 @@ class NationDao
                         [['nation_id',$slug],['nation_tag',$tag],['number_page',$page]])
                     ->orderBy('last_name', 'ASC')
                     ->get();
+                    
         return $nations;
     }
 
