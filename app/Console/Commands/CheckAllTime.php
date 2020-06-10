@@ -73,16 +73,16 @@ class CheckAllTime extends Command
                 $temp_url = 'https://'.$nation->slug.'.nationbuilder.com';
                 $next = '/api/v1/tags/'.$mytag.'/people?limit=50';
 
-                
+
                 $daoPage = AbstractFactory::getFactory('DAO')->getDAO('NationPagesDao');
                 $daoPeople = AbstractFactory::getFactory('DAO')->getDAO('PeopleDao');
 
                 while ($next != null) {
 
                     $data = [
-                        'nation_id' => $nation->id, 
-                        'nation_tag' => $nation->nation_details->tag, 
-                        'number_page' => $page, 
+                        'nation_id' => $nation->id,
+                        'nation_tag' => $nation->nation_details->tag,
+                        'number_page' => $page,
                         'page_url' => $next
                     ];
 
@@ -103,7 +103,7 @@ class CheckAllTime extends Command
                             $zip = null;
                             $state = '';
                             $country_code = null;
-                            $industry = null;
+                            $industry = $person->industry;
 
                             if ($person->primary_address != null) {
 
@@ -121,8 +121,8 @@ class CheckAllTime extends Command
                                 $country = $this->isoCountries[$country];
 
                                 $insertData = [
-                                    'nation_id'         => $s->nation_id,
-                                    'nation_tag'        => $s->tag,
+                                    'nation_id'         => $nation->nation_id,
+                                    'nation_tag'        => $nation->tag,
                                     'number_page'       => $page,
                                     'first_name'        => $person->first_name,
                                     'last_name'         => $person->last_name,
@@ -160,7 +160,7 @@ class CheckAllTime extends Command
 
                     $page++;
                 }
-                
+
                 //$this->dao->deleteCache($nation->id);
                 $temp_url = 'https://'.$nation->slug.'.nationbuilder.com/api/v1/people/count?access_token='.$nation->access_token;
 
@@ -170,16 +170,16 @@ class CheckAllTime extends Command
                 $details_dao = AbstractFactory::getFactory('DAO')->getDAO('NationDetailsDao');
 
                 $dataLog = [
-                    'user_id' => 1, 
-                    'nation_id' => $nation->id, 
+                    'user_id' => 1,
+                    'nation_id' => $nation->id,
                     'description' => 'Cache Refreshed Nation "'.$nation->name.'"'
                 ];
 
                 Log::create($dataLog);
 
             } catch (Exception $e) {
-                
+
             }
-        }   
+        }
     }
 }

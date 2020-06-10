@@ -73,16 +73,16 @@ class CheckManual extends Command
                     $temp_url = 'https://'.$s->slug.'.nationbuilder.com';
                     $next = '/api/v1/tags/'.$mytag.'/people?limit=50';
 
-                    
+
                     $daoPage = AbstractFactory::getFactory('DAO')->getDAO('NationPagesDao');
                     $daoPeople = AbstractFactory::getFactory('DAO')->getDAO('PeopleDao');
 
                     while ($next != null) {
 
                         $data = [
-                            'nation_id' => $s->nation_id, 
-                            'nation_tag' => $s->tag, 
-                            'number_page' => $page, 
+                            'nation_id' => $s->nation_id,
+                            'nation_tag' => $s->tag,
+                            'number_page' => $page,
                             'page_url' => $next
                         ];
 
@@ -103,7 +103,7 @@ class CheckManual extends Command
                                 $zip = null;
                                 $state = '';
                                 $country_code = null;
-                                $industry = null;
+                                $industry = $person->industry;
 
                                 if ($person->primary_address != null) {
 
@@ -163,7 +163,7 @@ class CheckManual extends Command
                         $s->current = $count;
                         $s->page = $page;
                     }
-                    
+
                     //$this->dao->deleteCache($s->nation_id);
                     $temp_url = 'https://'.$s->slug.'.nationbuilder.com/api/v1/people/count?access_token='.$s->access_token;
 
@@ -173,8 +173,8 @@ class CheckManual extends Command
                     $details_dao = AbstractFactory::getFactory('DAO')->getDAO('NationDetailsDao');
 
                     $dataLog = [
-                        'user_id' => $s->user_id, 
-                        'nation_id' => $s->nation_id, 
+                        'user_id' => $s->user_id,
+                        'nation_id' => $s->nation_id,
                         'description' => 'Cache Refreshed Nation "'.$s->slug.'"'
                     ];
 
@@ -184,7 +184,7 @@ class CheckManual extends Command
                     $s->save();
 
                 } catch (Exception $e) {
-                    
+
                 }
             }
         });
