@@ -340,9 +340,9 @@ class NationBuilderApiController extends Controller
             $renovate = new Renovate();
             $renovate->nation_id     = $nation_id;
             $renovate->execute       = 0;
-            $renovate->no_members    = 0;   
-            $renovate->no_nomembers  = 0;    
-            $renovate->next_url      = $next_url; 
+            $renovate->no_members    = 0;
+            $renovate->no_nomembers  = 0;
+            $renovate->next_url      = $next_url;
             $renovate->slug          = $result->slug;
             $renovate->access_token  = $result->access_token;
             $renovate->url           = $url;
@@ -638,8 +638,8 @@ class NationBuilderApiController extends Controller
         $result = $this->dao->getNationBySlug($nation_slug);
         
         if ($result != null) {
-            $result =  $this->dao->getAllNationCacheByPage($result->id, $result->tag, $page);
-            return response()->json(['status' => 'ok', 'data' => $result], 200);
+            $peopleList =  $this->dao->getAllNationCacheByPage($result->id, $result->tag, $page);
+            return response()->json(['status' => 'ok', 'data' => $peopleList], 200);
         } else
             echo '';
     }
@@ -686,7 +686,7 @@ class NationBuilderApiController extends Controller
                 $result->industry = $data->person->industry;
                 $result->assistant_name = $data->person->assistant_name;
                 $result->assistant_phone_number = $data->person->assistant_phone_number;
-                $result->ssistant_email = $data->person->assistant_email;
+                $result->assistant_email = $data->person->assistant_email;
                 if (!empty($data->person->facebook_username)){
                     $result->facebook = $data->person->facebook_username;
                 } else{

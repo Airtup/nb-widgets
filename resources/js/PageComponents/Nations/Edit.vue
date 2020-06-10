@@ -10,7 +10,7 @@
             <div class="row">
               <button class="col-md-2 mb-1 p-3 btn btn-success" @click="updateNation">
                 <font-awesome-icon icon="sync" size="2x" />
-                <br />Update Nation
+                <br />Update Settings
               </button>
               <button class="col-md-2 mb-1 offset-md-1 p-3 btn btn-success" @click="refreshCache">
                 <font-awesome-icon icon="redo" size="2x" />
@@ -130,7 +130,7 @@
               </div>
               <div class="col-md-4">
                 <template>
-                  <img :src="`data:image/png;base64,${nation.logo}`"  style="max-height:80px" alt="PDF Logo to Nation"/>
+                  <img :src="`data:image/png;base64,${nation.logo}`"  v-if="nation.logo" style="max-height:80px" alt="PDF Logo to Nation"/>
                 </template>
               </div>
 
@@ -384,7 +384,7 @@ export default {
         slug: "",
         access_token: "",
         logo: "",
-        people_count: 3,
+        people_count: 0,
         status: 1
       },
       options: {},
@@ -456,8 +456,7 @@ export default {
           user_id: this.currentUser.user.id
         })
         .then(response => {
-          if (response.status == 200) {
-            swal("Success", "Nation Updated Successfully", "success");
+          if (response.status === 200) {
             window.location.reload();
           }
         })
@@ -479,12 +478,12 @@ export default {
         })
         .then(response => {
 
-          if (response.status == "200") {
+          if (response.status === 200) {
 
             axios
               .get(BASE_URL + "/api/nation/details/" + this.id)
               .then(response => {
-                if ((response.status = 200)) {
+                if (response.status === 200) {
                   this.nation = response.data.data[0][0];
                   (this.hq_nations = response.data.data[1]),
                     (this.hq_pictures = response.data.data[2]);
