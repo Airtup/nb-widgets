@@ -95,7 +95,7 @@
                 <div class="input-group mb-3">
                   <input type="number" disabled v-model="nation.member_count" class="form-control" />
                   <div class="input-group-append">
-                    <span class="input-group-text" id="basic-addon2">Sync</span>
+                    <span class="input-group-text" id="basic-addon2">Syncing</span>
                   </div>
                 </div>
 
@@ -342,7 +342,7 @@
                   </div>
                 </div>
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" @click="reload">Cancel</button>
+                  <button type="button" class="btn btn-secondary" @click="reload">Close</button>
                 </div>
               </div>
             </div>
@@ -516,7 +516,7 @@ export default {
         });
     },
     reload() {
-      window.location.reload();
+      this.syncStatus = 0;
     },
     refreshCache: function() {
       this.syncStatus = 1;
