@@ -221,8 +221,3 @@ export default {
   }
 };
 </script>
-<style scoped>
-.link:hover {
-  cursor: pointer;
-}
-</style>

@@ -33,15 +33,6 @@
         });
     });
     </script>
-    <script src="https://browser.sentry-cdn.com/5.17.0/bundle.min.js" integrity="sha384-lowBFC6YTkvMIWPORr7+TERnCkZdo5ab00oH5NkFLeQUAmBTLGwJpFjF6djuxJ/5" crossorigin="anonymous"></script>
-    <!-- If you include the integration it will be available under Sentry.Integrations.Vue -->
-    <script src="https://browser.sentry-cdn.com/5.17.0/vue.min.js" crossorigin="anonymous"></script>
-    <script>
-      Sentry.init({
-        dsn: 'https://c879329a48764d1484fdb458015f0715@o404846.ingest.sentry.io/5271087',
-        integrations: [new Sentry.Integrations.Vue({Vue, attachProps: true})],
-      });
-    </script>
 </body>
 
 </html>
