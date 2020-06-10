@@ -203,8 +203,3 @@ export default {
   }
 };
 </script>
-<style scoped>
-.logo-src:hover {
-  cursor: pointer;
-}
-</style>
