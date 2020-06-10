@@ -111,6 +111,7 @@ class NationDao
                     ->orderBy('last_name', 'ASC')
                     ->limit(50*$page)
                     ->get();
+                    
         return $nations;
 
     }
