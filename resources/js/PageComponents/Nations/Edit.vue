@@ -99,7 +99,7 @@
                   </div>
                 </div>
 
-                
+
               </div>
               <div class="form-group col-md-4">
                 <label for="nation_token">Directory Tag</label>
@@ -332,7 +332,7 @@
                       <span class="sr-only">Loading...</span>
                     </div>
                   </div>
-                  <div v-if="syncPicture!=1">Members are getting synchronized</div>
+                  <div v-if="syncPicture!=1">Member Sync request submitted! Check back in a few minutes.</div>
                   <div v-if="syncPicture == 2">
                       <p>Synchronized members</p>
                       <ul>
@@ -437,7 +437,7 @@ export default {
   },
   mounted(){
     let id = this.id;
-    setInterval(function(){ 
+    setInterval(function(){
         axios
           .get(BASE_URL + "/api/nation/details/" +id)
           .then(response => {
