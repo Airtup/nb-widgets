@@ -10,6 +10,7 @@ use App\Models\Renovate;
 use App\Models\People;
 use App\Models\NationDetails;
 use App\Models\Nation;
+use Log;
 
 class MembersSync extends Command
 {
@@ -116,7 +117,7 @@ class MembersSync extends Command
             $count++;
         }
 
-//        $nation->people_count = $renovate->no_members;
+        $nation->member_count = $renovate->no_members;
         $nation->save();
     }
 
@@ -155,7 +156,7 @@ class MembersSync extends Command
 
         if (count($memberships) != 0) {
 
-            $hq_nation = $this->dao->get($nation_hq_id)->first();
+            $hq_nation = $this->dao->first($nation_hq_id);
 
             $url = 'https://'.$hq_nation->slug.'.nationbuilder.com/api/v1/people/search?access_token='.$hq_nation->access_token;
 
@@ -191,6 +192,7 @@ class MembersSync extends Command
             $peopleCurl = curl_exec($curl);
 
             $people = json_decode($peopleCurl);
+
             $person_hq_id = 0;
             if (count($people->results) == 1) {
                 $person_hq_id = $people->results[0]->id;
@@ -204,14 +206,20 @@ class MembersSync extends Command
             }
 
             foreach ($memberships as $org_membership) {
+                $name           = isset($org_membership->name) ? $org_membership->name : '';
+                $status         = isset($org_membership->status) ? $org_membership->status : '';
+                $status_reason  = isset($org_membership->status_reason) ? $org_membership->status_reason : '';
+                $started_at     = isset($org_membership->started_at) ? $org_membership->started_at : '';
+                $expires_on     = isset($org_membership->expires_on) ? $org_membership->expires_on : '';
 
-                $params['membership']['name'] = $org_membership->name;
-                $params['membership']['status'] = $org_membership->status;
-                $params['membership']['status_reason'] = $org_membership->status_reason;
-                $params['membership']['started_at'] = $org_membership->started_at;
-                $params['membership']['expires_on'] = $org_membership->expires_on;
+                $params['membership']['name'] = $name; 
+                $params['membership']['status'] = $status; 
+                $params['membership']['status_reason'] = $status_reason; 
+                $params['membership']['started_at'] = $started_at; 
+                $params['membership']['expires_on'] = $expires_on; 
 
-                $url = 'https://'.$hq_nation['nation_slug']. '.nationbuilder.com/api/v1/people/'.$person_hq_id.'/memberships?access_token='.$hq_nation['nation_auth'];
+
+                $url = 'https://'.$hq_nation->nation_slug.'.nationbuilder.com/api/v1/people/'.$person_hq_id.'/memberships?access_token='.$hq_nation->nation_auth;
 
                 $curl = curl_init();
 
@@ -233,6 +241,8 @@ class MembersSync extends Command
                 ));
 
                 $memberCurl = curl_exec($curl);
+
+                Log::info(json_decode($memberCurl));
             }
 
             return true;

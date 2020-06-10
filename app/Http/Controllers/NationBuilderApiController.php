@@ -636,6 +636,7 @@ class NationBuilderApiController extends Controller
         $nation_slug = $request->nation_slug;
         $page = $request->page;
         $result = $this->dao->getNationBySlug($nation_slug);
+        
         if ($result != null) {
             $peopleList =  $this->dao->getAllNationCacheByPage($result->id, $result->tag, $page);
             return response()->json(['status' => 'ok', 'data' => $peopleList], 200);
