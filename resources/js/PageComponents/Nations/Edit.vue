@@ -530,7 +530,7 @@ export default {
           if (response.status == 200) {
             this.syncStatus = 0;
             this.syncPicture = 0;
-            swal("Success", "Cache Refresed successfully", "success");
+            swal("Success", "Cache Refresh request submitted! Check back in a few minutes.", "success");
             axios
               .get(BASE_URL + "/api/nation/details/" + this.id)
               .then(response => {
@@ -560,7 +560,7 @@ export default {
           next_url: url
         })
         .then(response => {
-          if (response.status == 200) {
+          if (response.status === 200) {
             this.members = response.data.data.no_members;
             this.noMembers = response.data.data.no_nomembers;
             this.syncPicture = 2;
