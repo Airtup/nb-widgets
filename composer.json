@@ -17,6 +17,7 @@
         "laravel/ui": "^2.0",
         "sentry/sentry-laravel": "1.8.0",
         "spatie/db-dumper": "^2.16",
+        "doctrine/dbal": "~2.3",
         "tymon/jwt-auth": "dev-develop"
     },
     "require-dev": {

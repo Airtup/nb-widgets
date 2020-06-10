@@ -95,11 +95,11 @@
                 <div class="input-group mb-3">
                   <input type="number" disabled v-model="nation.member_count" class="form-control" />
                   <div class="input-group-append">
-                    <span class="input-group-text" id="basic-addon2">Sync</span>
+                    <span class="input-group-text" id="basic-addon2">Syncing</span>
                   </div>
                 </div>
 
-                
+
               </div>
               <div class="form-group col-md-4">
                 <label for="nation_token">Directory Tag</label>
@@ -332,7 +332,7 @@
                       <span class="sr-only">Loading...</span>
                     </div>
                   </div>
-                  <div v-if="syncPicture!=1">Members are getting synchronized</div>
+                  <div v-if="syncPicture!=1">Member Sync request submitted! Check back in a few minutes.</div>
                   <div v-if="syncPicture == 2">
                       <p>Synchronized members</p>
                       <ul>
@@ -342,7 +342,7 @@
                   </div>
                 </div>
                 <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" @click="reload">Cancel</button>
+                  <button type="button" class="btn btn-secondary" @click="reload">Close</button>
                 </div>
               </div>
             </div>
@@ -437,7 +437,7 @@ export default {
   },
   mounted(){
     let id = this.id;
-    setInterval(function(){ 
+    setInterval(function(){
         axios
           .get(BASE_URL + "/api/nation/details/" +id)
           .then(response => {
@@ -516,7 +516,7 @@ export default {
         });
     },
     reload() {
-      window.location.reload();
+      this.syncStatus = 0;
     },
     refreshCache: function() {
       this.syncStatus = 1;
