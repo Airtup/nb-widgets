@@ -89,9 +89,9 @@ class NationDao
         return $nation;
     }
 
-    public function getAllNationCache($slug,$tag,$forum,$industry){
+    public function getAllNationCache($nation_id,$tag,$forum,$industry){
         $nations = [];
-        $where[] = ['nation_id',$slug];
+        $where[] = ['nation_id',$nation_id];
         $where[] = ['nation_tag',$tag];
         if($forum) $where[] = ['tags','like','%'.json_encode($forum).'%'];
         if($industry) $where[] = ['tags','industry','%'.json_encode($industry).'%'];
@@ -118,7 +118,7 @@ class NationDao
                     ->orderBy('last_name', 'ASC')
                     ->limit(50*$page)
                     ->get();
-                    
+
         return $nations;
 
     }

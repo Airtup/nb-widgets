@@ -21,6 +21,7 @@ class NationBuilderApiController extends Controller
     private $api;
     private $dao;
     private $logDao;
+    private $nation_details_dao;
 
     public $isoCountries = array(
         'AF' => 'Afghanistan',
@@ -278,6 +279,7 @@ class NationBuilderApiController extends Controller
         $this->api = $this->factory->getDAO('NationApiConexion');
         $this->dao = AbstractFactory::getFactory('DAO')->getDAO('NationDao');
         $this->logDao = $this->factoryDao->getDAO('LogDao');
+        $this->nation_details_dao  = AbstractFactory::getFactory('DAO')->getDAO('NationDetailsDao');
     }
 
     /**
@@ -621,11 +623,11 @@ class NationBuilderApiController extends Controller
 
     public function getAllPeopleList(Request $request)
     {
-        $nation_slug =  $request->nation_slug;
+        $nation_id = $request->nation_id;
         $forum =  $request->forum;
-        $result = $this->dao->getNationBySlug($nation_slug);
+        $result = $this->nation_details_dao->get($nation_id)[0];
         if ($result != null) {
-            $result =  $this->dao->getAllNationCache($result->id, $result->tag, $forum,$request->industry ?? '');
+            $result =  $this->dao->getAllNationCache($nation_id, $result->nation_details->tag, $forum,$request->industry ?? '');
             return response()->json(['status' => 'ok', 'data' => $result], 200);
         } else
             echo '';
@@ -633,29 +635,30 @@ class NationBuilderApiController extends Controller
 
     public function getPeopleList(Request $request)
     {
-        $nation_slug = $request->nation_slug;
+        $nation_id = $request->nation_id;
         $page = $request->page;
-        $result = $this->dao->getNationBySlug($nation_slug);
-        
-        if ($result != null) {
-            $peopleList =  $this->dao->getAllNationCacheByPage($result->id, $result->tag, $page);
+        $nation = $this->nation_details_dao->get($nation_id)[0];
+
+        if ($nation != null) {
+            $peopleList =  $this->dao->getAllNationCacheByPage($nation_id, $nation->nation_details->tag, $page);
             return response()->json(['status' => 'ok', 'data' => $peopleList], 200);
         } else
             echo '';
     }
+
     public function getPersonDetail(Request $request)
     {
-        $nation_slug = $request->nation_slug;
+        $nation_id = $request->nation_id;
+        $nation = $this->dao->get($nation_id)[0];
         $person_id = $request->person_id;
-        $nation =  $this->dao->getNationBySlug($nation_slug);
 
-        $result = AbstractFactory::getFactory('DAO')->getDAO('PeopleDao')->getPersonDetail($person_id);
+        $result = AbstractFactory::getFactory('DAO')->getDAO('PeopleDao')->getPersonDetail($person_id, $nation_id);
         if ($nation != null) {
             $params = array(
                 'access_token' =>  $nation->access_token
             );
 
-            $url = 'https://' . $nation_slug . '.nationbuilder.com/api/v1/people/' . $person_id . '?' . http_build_query($params);
+            $url = 'https://' . $nation->slug . '.nationbuilder.com/api/v1/people/' . $person_id . '?' . http_build_query($params);
 
             $cookiesIn = '';
             $curl = curl_init();
@@ -714,9 +717,9 @@ class NationBuilderApiController extends Controller
 
     public function getPDFDetail(Request $request)
     {
-        $nation_slug = $request->all()['nation_slug'];
-        $result = $this->dao->getNationBySlug($nation_slug);
-        return response()->json(['status' => 'ok', 'data' => $result], 200);
+        $nation_id = $request->nation_id;
+        $nation = $this->nation_details_dao->get($nation_id);
+        return response()->json(['status' => 'ok', 'data' => $nation[0]], 200);
     }
 
     public function update_image(Request $request)
@@ -731,8 +734,8 @@ class NationBuilderApiController extends Controller
 
     public function getPDFLogo(Request $request)
     {
-        $nation_slug = $request->all()['nation_slug'];
-        $result = $this->dao->getNationBySlug($nation_slug);
+        $nation_id = $request->nation_id;
+        $result = $this->dao->first($nation_id);
         return response()->json(['status' => 'ok', 'data' => $result->logo], 200);
     }
 
