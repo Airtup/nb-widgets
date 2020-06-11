@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'HomeController@index')->name('home');
 
-
+Route::get('/widget/{id}/{theme}/{show}', 'HomeController@widget');
 
 Auth::routes();
 

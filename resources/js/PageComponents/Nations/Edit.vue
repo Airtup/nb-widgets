@@ -278,7 +278,7 @@
                   </div>
                 </div>
               </div>
-              <div class="main-card mb-3 card col-md-12">
+              <div class="main-card mb-3 card col-md-12" style="max-height: 150px">
                 <div class="card-body">
                   <h5 class="card-title">Add Script Snippet</h5>
                   <div class="scroll-area-md">
@@ -407,8 +407,7 @@ export default {
       hq_nations: [],
       hq_pictures: [],
       htmlSource: `<div class="directory-listing"></div>`,
-      bootstrapSource: `<script src=\"https:\/\/ajax.googleapis.com\/ajax\/libs\/jquery\/3.4.1\/jquery.min.js\"><\/script>\r\n<script src=\"https:\/\/maxcdn.bootstrapcdn.com\/bootstrap\/3.4.0\/js\/bootstrap.min.js\"><\/script>\r\n<link href=\"https:\/\/fonts.googleapis.com\/css?family=PT+Serif:400,700|Roboto+Slab:300,400,700\" rel=\"stylesheet\">`
-    };
+      };
   },
   created() {
     axios
@@ -460,13 +459,10 @@ export default {
       return this.$store.state.auth.user;
     },
     sourcecode() {
-      return `<script type=\"text\/javascript\">\r\n  var dominolink = {\r\n    container: \'.directory-listing\',\r\n    nationSlug : \'${
-        this.nation.slug
-      }\',\r\n    showSearchForm: \'true\',\r\n    theme: \'${
-        this.nation.theme == 0 ? "light" : "dark"
-      }\'\r\n  };\r\n<\/script>\r\n<script type=\"text\/javascript\" src=\"${BASE_URL}/widgets/${
-        this.nation.slug
-      }.min.js\" charset=\"utf-8\"><\/script>\r\n`;
+      const showSearch = 'true';
+      const theme = this.nation.theme ? 'dark' : 'light';
+      return `<script type=\"text\/javascript\" src=\"${BASE_URL}/widget/${
+        this.nation.id}/${theme}/${showSearch}\" charset=\"utf-8\"><\/script>\r\n`;
     }
   },
   methods: {

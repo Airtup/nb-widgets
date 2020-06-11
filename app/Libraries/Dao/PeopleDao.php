@@ -56,9 +56,11 @@ class PeopleDao
         return $person->delete();
     }
 
-    public function getPersonDetail($person_id)
+    public function getPersonDetail($person_id, $nation_id = null)
     {
-        $people = People::where([['person_id',$person_id]])
+        $where[] = ['nation_id',$nation_id];
+        if($nation_id) $where[] = ['person_id',$person_id];
+        $people = People::where($where)
         ->join('nations','nations.id','=','people.nation_id')
         ->select('people.secondary_address as address2', 'people.tertiary_address as address3', 'people.city as city',
                 'people.country as country','people.country_code as country_code','people.email','people.employer','people.facebook',
