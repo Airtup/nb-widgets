@@ -278,7 +278,7 @@
                   </div>
                 </div>
               </div>
-              <div class="main-card mb-3 card col-md-12">
+              <div class="main-card mb-3 card col-md-12" style="max-height: 150px">
                 <div class="card-body">
                   <h5 class="card-title">Add Script Snippet</h5>
                   <div class="scroll-area-md">
