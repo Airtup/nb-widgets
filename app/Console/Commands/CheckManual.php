@@ -149,7 +149,7 @@ class CheckManual extends Command
                                         'tags'              => json_encode($person->tags)
                                     ];
 
-                                    People::updateOrCreate(['person_id' => $person->id],$insertData);
+                                     People::updateOrCreate(['person_id' => $person->id,'nation_id' => $s->nation_id],$insertData);
                             }
 
                             $next = $response->next;
