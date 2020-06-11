@@ -42,7 +42,7 @@ class NationController extends Controller
     }
 
     /**
-     * 
+     *
      * Returns true if the nation with the received slug exists.
      *
      * @return \Illuminate\Http\Response
@@ -62,11 +62,11 @@ class NationController extends Controller
     public function store(Request $request)
     {
         $nation = $this->dao->insert($request->nation);
-        
+
         if ($nation->id) {
             //Log::create(["user_id"=>$request->user_id,"nation_id"=>$nation->id,'description'=>'Add new Nation "'.$nation->name.'"']);
             $this->logDao->create($request->user_id,$nation->id,'Add new Nation "'.$nation->name.'"');
-            NationDetails::updateOrCreate(["nation_id" => $nation->id], ['tag' => '']);
+            NationDetails::create(['tag' => '']);
         }
         return response()->json(['status'=>'ok','data'=>$nation],200);
     }
@@ -80,10 +80,10 @@ class NationController extends Controller
     public function show($id)
     {
 		$hq_nations = $this->dao->get_hq_nations();
-        
+
         $nation = $this->dao->get($id);
 
-        
+
         return response()->json(['status'=>'ok','data'=>['nation' => $nation,'hq_nations' => $hq_nations]],200);
     }
 
