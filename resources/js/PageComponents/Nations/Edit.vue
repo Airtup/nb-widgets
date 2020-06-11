@@ -459,13 +459,10 @@ export default {
       return this.$store.state.auth.user;
     },
     sourcecode() {
-      return `<script type=\"text\/javascript\">\r\n  var dominolink = {\r\n    nationId : \'${
-        this.nation.id
-      }\',\r\n    showSearchForm: \'true\',\r\n    theme: \'${
-        this.nation.theme == 0 ? "light" : "dark"
-      }\'\r\n  };\r\n<\/script>\r\n<script type=\"text\/javascript\" src=\"${BASE_URL}/widgets/${
-        this.nation.slug
-      }.min.js\" charset=\"utf-8\"><\/script>\r\n`;
+      const showSearch = 'true';
+      const theme = this.nation.theme ? 'dark' : 'light';
+      return `<script type=\"text\/javascript\" src=\"${BASE_URL}/widget/${
+        this.nation.id}/${theme}/${showSearch}\" charset=\"utf-8\"><\/script>\r\n`;
     }
   },
   methods: {
