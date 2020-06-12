@@ -97,8 +97,7 @@ class MembersSync extends Command
         $curlResponse = curl_exec($curl);
         $responses = json_decode($curlResponse);
 
-
-        $url_next = 'https://'.$slug.'.nationbuilder.com'.$responses->next.'&access_token='.$renovate->access_token;
+        $url_next = 'https://'.$slug.'.nationbuilder.com'.$renovate->next_url.'&access_token='.$renovate->access_token;
 
         $url_next = str_replace('limit=50', 'limit=200', $url_next);
 
@@ -213,14 +212,13 @@ class MembersSync extends Command
                     $started_at     = isset($org_membership->started_at) ? $org_membership->started_at : '';
                     $expires_on     = isset($org_membership->expires_on) ? $org_membership->expires_on : '';
 
-                    $params['membership']['name'] = $name; 
-                    $params['membership']['status'] = $status; 
-                    $params['membership']['status_reason'] = $status_reason; 
-                    $params['membership']['started_at'] = $started_at; 
-                    $params['membership']['expires_on'] = $expires_on; 
+                    $params['membership']['name'] = $name;
+                    $params['membership']['status'] = $status;
+                    $params['membership']['status_reason'] = $status_reason;
+                    $params['membership']['started_at'] = $started_at;
+                    $params['membership']['expires_on'] = $expires_on;
 
-
-                    $url = 'https://'.$hq_nation->nation_slug.'.nationbuilder.com/api/v1/people/'.$person_hq_id.'/memberships?access_token='.$hq_nation->nation_auth;
+                    $url = 'https://'.$hq_nation->slug.'.nationbuilder.com/api/v1/people/'.$person_hq_id.'/memberships?access_token='.$hq_nation->access_token;
 
                     $curl = curl_init();
 
@@ -242,10 +240,6 @@ class MembersSync extends Command
                     ));
 
                     $memberCurl = curl_exec($curl);
-
-                    Log::info('--Log CURL Begin--');
-                    Log::info(json_decode($memberCurl));
-                    Log::info('--Log CURL End--');
                 }
 
                 return true;
@@ -253,9 +247,9 @@ class MembersSync extends Command
                 return false;
             }
         }catch(Exception $e){
-            Log::info('--Log Error Begin--');
+            Log::info('--Log Sync Error Begin--');
             Log::info($e->getMessage());
-            Log::info('--Log Error End--');
+            Log::info('--Log Sync Error End--');
         }
     }
 
