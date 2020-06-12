@@ -97,12 +97,12 @@ class MembersSync extends Command
         $curlResponse = curl_exec($curl);
         $responses = json_decode($curlResponse);
 
-        $url_next = 'https://'.$slug.'.nationbuilder.com'.$renovate->next_url.'&access_token='.$renovate->access_token;
-
-        $url_next = str_replace('limit=50', 'limit=200', $url_next);
-
-        $renovate->url = $url_next;
-
+        $url_next = 'https://'.$slug.'.nationbuilder.com'.$responses->next.'&access_token='.$renovate->access_token;
+        if(!isset($responses->next)){
+            $renovate->execute = true;
+        } else{
+            $renovate->url = $url_next;
+        }
 
         foreach($responses->results as $key => $response){
             $member = $this->updateMatchPerson($nation_id,$response,$membership);
@@ -152,7 +152,6 @@ class MembersSync extends Command
 
             $membership_results = json_decode($curlResponse);
             $memberships = $membership_results->results;
-
 
             if (count($memberships) != 0) {
 
@@ -240,8 +239,9 @@ class MembersSync extends Command
                     ));
 
                     $memberCurl = curl_exec($curl);
+                    Log::info($memberCurl);
                 }
-
+                Log::info('=== Membership sync successful ===');
                 return true;
             }else{
                 return false;
