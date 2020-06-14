@@ -743,6 +743,7 @@ class NationBuilderApiController extends Controller
     {
         Nation::find($id)->update(["status" => 1]);
     }
+
     public function update_logo(Request $request)
     {
         if ($request->hasFile('logo')) {
