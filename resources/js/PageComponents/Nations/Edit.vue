@@ -614,7 +614,7 @@ export default {
           if (response.status === 200) {
             // this.syncStatus = 0;
             // this.syncPicture = 0;
-            swal("Success", "Image Sync successfully", "success");
+            swal("Success", "Images updated successfully", "success");
           }
         })
         .catch(error => swal("Error", error, "error"));
