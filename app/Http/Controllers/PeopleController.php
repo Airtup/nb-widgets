@@ -26,19 +26,28 @@ class PeopleController extends Controller
         $nation_hq_id = $nation->nation_details->picture_sync;
 
         $people =  $this->dao->getAllNationCache($nation_id, $nation->nation_details->tag, null, null);
+        Log::info('=== PEOPLE ====');
+        Log::info($people);
 
         foreach ($people as $person){
-            $where[] = ['first_name', $person->first_name];
-            $where[] = ['last_name', $person->last_name];
-            $where[] = ['email', $person->email];
-            $where[] = ['nation_id', $nation_hq_id];
-            $person_hq = People::where($where)->first();
+            Log::info('=== PERSON LOG ===');
+            Log::info($person->first_name);
+            Log::info($person->last_name);
+            Log::info($person->email);
+            $person_hq = People::where('first_name', $person->first_name)
+                ->where('last_name', $person->last_name)
+                ->where('email', $person->email)
+                ->where('nation_id', $nation_hq_id)
+                ->first();
+            Log::info('=== PERSON HQ ===');
+            Log::info($person_hq);
             if($person_hq){
-                Log::info('Se actualizo perfil');
+                Log::info('=== PERSON NATION ====');
+                Log::info($person);
+                Log::info('=== PERSON HQ NATION ====');
+                Log::info($person_hq);
                 $person_hq->profile_image = $person->profile_image;
                 $person_hq->save();
-            } else{
-                Log::info('No se encontro perfil');
             }
         }
 
