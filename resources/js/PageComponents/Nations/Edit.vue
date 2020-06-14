@@ -26,7 +26,7 @@
               </button>
               <button
                 class="col-md-2 mb-1 offset-md-1 p-3 btn btn-success"
-                v-if="nation.sync_picture"
+                v-if="nation.picture_sync"
                 @click="syncPictures"
               >
                 <font-awesome-icon icon="portrait" size="2x" />
@@ -440,7 +440,7 @@ export default {
         axios
           .get(BASE_URL + "/api/nation/details/" +id)
           .then(response => {
-            if ((response.status = 200)) {
+            if (response.status === 200) {
               this.nation = response.data.data[0][0];
             }
           })
@@ -603,17 +603,17 @@ export default {
         );
     },
     syncPictures: function() {
-      this.syncStatus = 1;
-      this.syncPicture = 1;
+      // this.syncStatus = 1;
+      // this.syncPicture = 1;
       axios
         .post(BASE_URL + "/api/nation/sync/imagen", {
           nation_id: this.id,
           user_id: this.currentUser.user.id
         })
         .then(response => {
-          if (response.status == 200) {
-            this.syncStatus = 0;
-            this.syncPicture = 0;
+          if (response.status === 200) {
+            // this.syncStatus = 0;
+            // this.syncPicture = 0;
             swal("Success", "Image Sync successfully", "success");
           }
         })

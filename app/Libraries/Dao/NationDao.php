@@ -90,7 +90,6 @@ class NationDao
     }
 
     public function getAllNationCache($nation_id,$tag,$forum,$industry){
-        $nations = [];
         $where[] = ['nation_id',$nation_id];
         $where[] = ['nation_tag',$tag];
         if($forum) $where[] = ['tags','like','%'.json_encode($forum).'%'];
@@ -105,10 +104,10 @@ class NationDao
             ->orderBy('last_name', 'asc')
             ->get();
         }*/
-        $nations = People::where($where)
+        $people = People::where($where)
             ->orderBy('last_name', 'asc')
             ->get();
-        return $nations;
+        return $people;
     }
 
     public function getAllNationCacheByPage($slug,$tag,$page){
