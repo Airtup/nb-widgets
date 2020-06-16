@@ -66,7 +66,7 @@ class NationController extends Controller
         if ($nation->id) {
             //Log::create(["user_id"=>$request->user_id,"nation_id"=>$nation->id,'description'=>'Add new Nation "'.$nation->name.'"']);
             $this->logDao->create($request->user_id,$nation->id,'Add new Nation "'.$nation->name.'"');
-            NationDetails::create(['tag' => '']);
+            NationDetails::create(['tag' => '', 'nation_id' => $nation->id]);
         }
         return response()->json(['status'=>'ok','data'=>$nation],200);
     }
