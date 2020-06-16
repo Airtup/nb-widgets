@@ -19,9 +19,13 @@
             </div>
         </div>
         <div class="app-header__menu">
-            <button type="button" class="btn btn-icon btn-icon-only btn-outline-link" @click.prevent="logOut">
-                <font-awesome-icon icon="sign-out-alt" size="2x" color="#FFFFFF" />
-            </button>
+            <span>
+                <b-button class="btn-icon btn-icon-only" variant="primary" size="sm" v-bind:class="{ 'active' : isOpenMobileMenu }" @click="toggleMobile2('header-menu-open')">
+                    <div class="btn-icon-wrapper">
+                        <font-awesome-icon icon="ellipsis-v"/>
+                    </div>
+                </b-button>
+            </span>
         </div>
     </div>
 </template>
@@ -43,6 +47,7 @@
     export default {
         name: "Header",
         components: {
+            SearchBox,
             UserArea,
             'font-awesome-icon': FontAwesomeIcon,
         },
@@ -58,10 +63,6 @@
 
         },
         methods: {
-          logOut() {
-            this.$store.dispatch("auth/logout");
-            this.$router.push("/login");
-          },
             toggleMobile(className) {
                 const el = document.body;
                 this.isOpen = !this.isOpen;
