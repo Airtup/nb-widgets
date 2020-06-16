@@ -691,79 +691,169 @@ window.onload = async function() {
 }
 var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
-function viewPersonDetail(o) {
-    let a = document.querySelector("#viewDetail_" + o).getAttribute("data-picture");
+function viewPersonDetail(id) {
+    let a = document.querySelector("#viewDetail_" + id).getAttribute("data-picture");
     document.querySelector("#loaderModal").style.display = "block";
     fetch("%%%URL_SITE%%%/api/getPersonDetail", {
         method: 'POST',
         headers: myHeaders,
         body: JSON.stringify({
             "nation_id": %%%NATION_ID%%%,
-            "person_id": o
-        }),
-    }).then(response => response.json()).then(response => {
+            "person_id": id
+})
+}).then(response => response.json()).then(response => {
         document.querySelector("#loaderModal").style.display = "none";
-        var e = response;
-        document.querySelector("#person_image").setAttribute("src", a), document.querySelector("#person_name").innerHTML = canShow('first_name',e.first_name) + " " + canShow('last_name',e.last_name);
-        var t = "";
-        if (canShow("email","ok") != '' && "" != e.email && (t += '<a class="icon-orange" href="mailto:' + e.email + '"><i class="fa fa-envelope"></i> </a>'),
-        canShow("twitter_id","ok") != '' && null != e.twitter_id && (t += '<a class="icon-orange" target="_blank" href="https://twitter.com/intent/user?screen_name=' + e.twitter_login + '"><i class="fa fa-twitter"></i></a> '),
-        canShow("has_facebook","ok") != '' && 1 == e.has_facebook && (t += '<a class="icon-orange" target="_blank" href="' + e.facebook_profile_url + '"><i class="fa fa-facebook-f"></i></a> '),
-        canShow("linkedin_id","ok") != '' && null != e.linkedin_id && (t += '<a class="icon-orange" target="_blank" href="' + e.linkedin_profile + '"><i class="fa fa-linkedin"></i></a>'),
-            document.querySelector("#person_icon").innerHTML = t,
-        "" != e.occupation && null != e.occupation
-        ) {
-            var i = "fa fa-male";
-            null != e.sex && "F" != e.sex || (i = "fa fa-female");
-            var n = "";
-            canShow("ocupation","ok") != '' && null != e.employer && "" != e.employer && null != e.employer && (n = ", " + e.employer), document.querySelector("#person_occupation").innerHTML = '<p style="color:grey;font-size:14px;text-transform:capitalize"><i class="' + i + '"></i> ' + e.occupation + n + "</p>";
-        } else document.querySelector("#person_occupation").innerHTML = "";
-        var s = "",
-            r = "";
-        if (null != e) {
-            var l = 0;
-            canShow("state","ok") != '' && null != e.state && "" != e.state && (isoStates.hasOwnProperty(e.state) ? r += isoStates[e.state] : r += e.state, l = 1),
-            canShow("country","ok") != '' && isoCountries.hasOwnProperty(e.country_code) && (s = isoCountries[e.country_code]), "" != s && null != s && (r += 0 == l ? s : ", " + s),
-                canShow("city","ok") != '' && "" != e.city && null != e.city ? document.querySelector("#person_city").innerHTML = '<i class="fa fa-send"></i> City: ' + e.city : document.querySelector("#person_city").innerHTML = ""
+        const person = response;
+        document.querySelector("#person_image").setAttribute("src", a);
+        document.querySelector("#person_name").innerHTML = canShow('first_name',person.first_name) + " " + canShow('last_name',person.last_name);
+        let person_icon = "";
+        canShow("email") && "" !== person.email && (person_icon += '<a class="icon-orange" href="mailto:' + person.email + '"><i class="fa fa-envelope"></i> </a>');
+        canShow("twitter_id") && null !== person.twitter_id && (person_icon += '<a class="icon-orange" target="_blank" href="https://twitter.com/intent/user?screen_name=' + person.twitter_login + '"><i class="fa fa-twitter"></i></a> ');
+        canShow("has_facebook") && 1 === person.has_facebook && (person_icon += '<a class="icon-orange" target="_blank" href="' + person.facebook_profile_url + '"><i class="fa fa-facebook-f"></i></a> ');
+        canShow("linkedin_id") && null != person.linkedin_id && (person_icon += '<a class="icon-orange" target="_blank" href="' + person.linkedin_profile + '"><i class="fa fa-linkedin"></i></a>');
+        document.querySelector("#person_icon").innerHTML = person_icon;
+        if (canShow("occupation") && person.occupation !== '' && person.occupation != null){
+            let personIcon = 'fa fa-male';
+            if (person['sex'] == null || person['sex'] === 'F')
+                personIcon = 'fa fa-female';
+            let employer = '';
+            if (person.employer != null && person.employer !== '' && person.employer !== undefined)
+                employer = ', ' + person.employer;
+            document.querySelector("#person_occupation").innerHTML = '<p style="color:grey;font-size:14px;text-transform:capitalize"><i class="' + personIcon + '"></i> ' + person.occupation + employer + "</p>";
         }
-        if ("" != r ? document.querySelector("#person_country").innerHTML = '<i class="fa fa-map-marker"></i> ' + r : document.querySelector("#person_country").innerHTML = "",
-            "" != e.industry && null != e.industry && null != e.industry ? document.querySelector("#person_industry").innerHTML = '<i class="fa fa-list"></i> ' + e.industry : document.querySelector("#person_industry").innerHTML = "",
-            "" != e.boards && null != e.boards && null != e.boards ? document.querySelector("#person_boards").innerHTML = "Boards:<br/>" + e.boards : document.querySelector("#person_boards").innerHTML = "",
-            canShow("email","ok") != '' && "" != e.email && null != e.email ? document.querySelector("#person_email").innerHTML = '<i class="fa fa-envelope"></i> Email: <b onclick="sendEmail(\'' + e.email + '\')" class="text-blue">' + e.email + "</b>" : document.querySelector("#person_email").innerHTML = "",
-            canShow("phone","ok") != '' && "" != e.phone && null != e.phone ? document.querySelector("#person_phone").innerHTML = '<i class="fa fa-phone"></i> Phone: ' + e.phone + " " : document.querySelector("#person_phone").innerHTML = "",
-            "" != e.work_phone_number && null != e.work_phone_number ? document.querySelector("#person_work_phone").innerHTML = '<i class="fa fa-phone"></i> Work: ' + e.work_phone_number + " " : document.querySelector("#person_work_phone").innerHTML = "",
-            "" != e.mobile && null != e.mobile ? document.querySelector("#person_mobile").innerHTML = '<i class="fa fa-mobile"></i> Mobile: ' + e.mobile + " " : document.querySelector("#person_mobile").innerHTML = "",
-        null != e.home_address) {
-            var d = "",
-                c = 0;
-            "" != e.home_address.address1 && null != e.home_address.address1 && (d += 0 == c ? e.home_address.address1 : ", " + e.home_address.address1, c = 1), "" != e.home_address.address2 && null != e.home_address.address2 && (d += 0 == c ? e.home_address.address2 : ", " + e.home_address.address2, c = 1), "" != e.home_address.address3 && null != e.home_address.address3 && (d += 0 == c ? e.home_address.address3 : ", " + e.home_address.address3, c = 1), "" != e.home_address.city && null != e.home_address.city && (d += 0 == c ? e.home_address.city : ", " + e.home_address.city, c = 1), "" != e.home_address.state && null != e.home_address.state && (d += 0 == c ? e.home_address.state : ", " + e.home_address.state, c = 1), "" != e.home_address.zip && null != e.home_address.zip && (d += 0 == c ? e.home_address.zip : ", " + e.home_address.zip, c = 1), "" != e.home_address.country_code && null != e.home_address.country_code && (d += 0 == c ? e.home_address.country_code : ", " + e.home_address.country_code, c = 1), "" != d ? document.querySelector("#person_home_address").innerHTML = '<i class="fa fa-send"></i> Home address: ' + d : document.querySelector("#person_home_address").innerHTML = ""
-        } else document.querySelector("#person_home_address").innerHTML = "";
-        if ("" != e.work_address && null != e.work_address) {
-            var p = "";
-            c = 0;
-            "" != e.work_address.address1 && null != e.work_address.address1 && (p += 0 == c ? e.work_address.address1 : ", " + e.work_address.address1, c = 1), "" != e.work_address.address2 && null != e.work_address.address2 && (p += 0 == c ? e.work_address.address2 : ", " + e.work_address.address2, c = 1), "" != e.work_address.address3 && null != e.work_address.address3 && (p += 0 == c ? e.work_address.address3 : ", " + e.work_address.address3, c = 1), "" != e.work_address.city && null != e.work_address.city && (p += 0 == c ? e.work_address.city : ", " + e.work_address.city, c = 1), "" != e.work_address.state && null != e.work_address.state && (p += 0 == c ? e.work_address.state : ", " + e.work_address.state, c = 1), "" != e.work_address.zip && null != e.work_address.zip && (p += 0 == c ? e.work_address.zip : ", " + e.work_address.zip, c = 1), "" != e.work_address.country_code && null != e.work_address.country_code && (p += 0 == c ? e.work_address.country_code : ", " + e.work_address.country_code, c = 1), "" != p ? document.querySelector("#person_work_address").innerHTML = '<i class="fa fa-send"></i> Work address: ' + p : document.querySelector("#person_work_address").innerHTML = ""
-        } else document.querySelector("#person_work_address").innerHTML = "";
-        "" != e.assistant_name && null != e.assistant_name ? document.querySelector("#person_assist_name").html = '<i class="fa fa-user"></i> Assistant Name: ' + e.assistant_name : document.querySelector("#person_assist_name").innerHTML = "", "" != e.assistant_phone_number && null != e.assistant_phone_number ? document.querySelector("#person_assist_phone").innerHTML = '<i class="fa fa-phone"></i> Assistant Phone: ' + e.assistant_phone_number : document.querySelector("#person_assist_phone").innerHTML = "", "" != e.assistant_email && null != e.assistant_email ? document.querySelector("#person_assist_email").innerHTML = '<i class="fa fa-envelope"></i> Assistant Email: <b onclick="sendEmail(\'' + e.assistant_email + '\')" class="text-blue">' + e.assistant_email + "</b>" : document.querySelector("#person_assist_email").innerHTML = "";
+        let country = "";
+        let total_country = "";
+        let country_index = 0;
+        canShow("state") && null != person.state && "" !== person.state && (isoStates.hasOwnProperty(person.state) ? total_country += isoStates[person.state] : total_country += person.state, country_index = 1);
+        canShow("country") && isoCountries.hasOwnProperty(person.country_code) && (country = isoCountries[person.country_code]), "" !== country && null != country && (total_country += 0 === country_index ? country : ", " + country);
+        canShow("city") && "" !== person.city && null != person.city ? document.querySelector("#person_city").innerHTML = '<i class="fa fa-send"></i> City: ' + person.city : document.querySelector("#person_city").innerHTML = "";
+        "" !== total_country ? document.querySelector("#person_country").innerHTML = '<i class="fa fa-map-marker"></i> ' + total_country : document.querySelector("#person_country").innerHTML = "";
+        "" !== person.industry && null != person.industry && null != person.industry ? document.querySelector("#person_industry").innerHTML = '<i class="fa fa-list"></i> ' + person.industry : document.querySelector("#person_industry").innerHTML = "";
+        "" !== person.boards && null != person.boards && null != person.boards ? document.querySelector("#person_boards").innerHTML = "Boards:<br/>" + person.boards : document.querySelector("#person_boards").innerHTML = "";
+        canShow("email") && "" !== person.email && null != person.email ? document.querySelector("#person_email").innerHTML = '<i class="fa fa-envelope"></i> Email: <b onclick="sendEmail(\'' + person.email + '\')" class="text-blue">' + person.email + "</b>" : document.querySelector("#person_email").innerHTML = "";
+        canShow("phone") && "" !== person.phone && null != person.phone ? document.querySelector("#person_phone").innerHTML = '<i class="fa fa-phone"></i> Phone: ' + person.phone + " " : document.querySelector("#person_phone").innerHTML = "";
+        "" !== person.work_phone_number && null != person.work_phone_number ? document.querySelector("#person_work_phone").innerHTML = '<i class="fa fa-phone"></i> Work: ' + person.work_phone_number + " " : document.querySelector("#person_work_phone").innerHTML = "";
+        "" !== person.mobile && null != person.mobile ? document.querySelector("#person_mobile").innerHTML = '<i class="fa fa-mobile"></i> Mobile: ' + person.mobile + " " : document.querySelector("#person_mobile").innerHTML = "";
+        
+        if (person['home_address'] != null){
+            let home_address = '';
+            let myindex = 0;
+            if (person['home_address']['address1'] != '' && person['home_address']['address1'] != null){
+                home_address += (myindex == 0 ? person['home_address']['address1'] : ', ' + person['home_address']['address1']);
+                myindex = 1;
+            }
+            if (person['home_address']['address2'] != '' && person['home_address']['address2'] != null){
+                home_address += (myindex == 0 ? person['home_address']['address2'] : ', ' + person['home_address']['address2']);
+                myindex = 1;
+            }
+            if (person['home_address']['address3'] != '' && person['home_address']['address3'] != null){
+                home_address += (myindex == 0 ? person['home_address']['address3'] : ', ' + person['home_address']['address3']);
+                myindex = 1;
+            }
+            if (person['home_address']['city'] != '' && person['home_address']['city'] != null){
+                home_address += (myindex == 0 ? person['home_address']['city'] : ', ' + person['home_address']['city']);
+                myindex = 1;
+            }
+            if (person['home_address']['state'] != '' && person['home_address']['state'] != null){
+                home_address += (myindex == 0 ? person['home_address']['state'] : ', ' + person['home_address']['state']);
+                myindex = 1;
+            }
+            if (person['home_address']['zip'] != '' && person['home_address']['zip'] != null){
+                home_address += (myindex == 0 ? person['home_address']['zip'] : ', ' + person['home_address']['zip']);
+                myindex = 1;
+            }
+            if (person['home_address']['country_code'] != '' && person['home_address']['country_code'] != null){
+                home_address += (myindex == 0 ? person['home_address']['country_code'] : ', ' + person['home_address']['country_code']);
+                myindex = 1;
+            }
 
-        if(canShow("twitter","ok") != '' &&  "" != e.twitter && null != e.twitter){
-            document.querySelector("#person_twitter").innerHTML = '<a target="_blank" class="icon-orange" href="https://www.twitter.com/@'+e.twitter+'"><i class="fa fa-twitter"></i> </a>';
+            if (home_address != ''){
+                document.querySelector('#person_home_address').innerHTML = '<i class="fa fa-send"></i> Home address: ' + home_address;
+            }
+                
+        }
+
+        if (person['work_address'] != '' && person['work_address'] != null){            
+            let work_address = '';
+            let myindex = 0;
+            if (person['work_address']['address1'] != '' && person['work_address']['address1'] != null){
+                work_address += (myindex == 0 ? person['work_address']['address1'] : ', ' + person['work_address']['address1']);
+                myindex = 1;
+            }
+            if (person['work_address']['address2'] != '' && person['work_address']['address2'] != null){
+                work_address += (myindex == 0 ? person['work_address']['address2'] : ', ' + person['work_address']['address2']);
+                myindex = 1;
+            }
+            if (person['work_address']['address3'] != '' && person['work_address']['address3'] != null){
+                work_address += (myindex == 0 ? person['work_address']['address3'] : ', ' + person['work_address']['address3']);
+                myindex = 1;
+            }
+            if (person['work_address']['city'] != '' && person['work_address']['city'] != null){
+                work_address += (myindex == 0 ? person['work_address']['city'] : ', ' + person['work_address']['city']);
+                myindex = 1;
+            }
+            if (person['work_address']['state'] != '' && person['work_address']['state'] != null){
+                work_address += (myindex == 0 ? person['work_address']['state'] : ', ' + person['work_address']['state']);
+                myindex = 1;
+            }
+            if (person['work_address']['zip'] != '' && person['work_address']['zip'] != null){
+                work_address += (myindex == 0 ? person['work_address']['zip'] : ', ' + person['work_address']['zip']);
+                myindex = 1;
+            }
+            if (person['work_address']['country_code'] != '' && person['work_address']['country_code'] != null){
+                work_address += (myindex == 0 ? person['work_address']['country_code'] : ', ' + person['work_address']['country_code']);
+                myindex = 1;
+            }
+
+            if (work_address != ''){
+                document.querySelector('#person_work_address').innerHTML = '<i class="fa fa-send"></i> Work address: ' + work_address
+            }
+        }    
+
+        if (canShow('assistant_name') && person['assistant_name'] != '' && person['assistant_name'] != null){
+            document.querySelector('#person_assist_name').innerHTML = '<i class="fa fa-user"></i> Assistant Name: ' + person['assistant_name']
+        }
+
+        if (canShow('assistant_phone_number') && person['assistant_phone_number'] != '' && person['assistant_phone_number'] != null){
+            document.querySelector('#person_assist_phone').innerHTML = '<i class="fa fa-phone"></i> Assistant Phone: ' + person['assistant_phone_number']
+        }
+
+        if (canShow('assistant_email') && person['assistant_email'] != '' && person['assistant_email'] != null){
+            document.querySelector('#person_assist_phone').innerHTML = '<i class="fa fa-envelope"></i> Assistant Email: <b onclick="sendEmail(' + "'" + person['assistant_email'] + "'" + ')" class="text-blue">' + person['assistant_email'] + '</b>'
+        }
+
+        if(canShow("twitter") &&  "" !== person.twitter && null != person.twitter){
+            document.querySelector("#person_twitter").innerHTML = '<a target="_blank" class="icon-orange" href="https://www.twitter.com/@'+person.twitter+'"><i class="fa fa-twitter"></i> </a>';
         }else{
             document.querySelector("#person_twitter").innerHTML = "";
         }
-        if(canShow("facebook","ok") != '' &&  "" != e.facebook && null != e.facebook){
-            var urlF = "https://www.facebook.com/"+e.facebook;
-            if(e.facebook.startsWith('http')) urlF = e.facebook;
+        if(canShow("facebook") &&  "" !== person.facebook && null != person.facebook){
+            var urlF = "https://www.facebook.com/"+person.facebook;
+            if(person.facebook.startsWith('http')) urlF = person.facebook;
             document.querySelector("#person_facebook").innerHTML = '<a target="_blank" class="icon-orange" href="'+urlF+'"><i class="fa fa-facebook"></i> </a>';
         }else{
             document.querySelector("#person_facebook").innerHTML = ""
         }
 
+        let bio = '';
+        let bio_index = 0;
+        if (person['bio'] != '' && person['bio'] != null){
+            bio += person['bio'];
+            bio_index = 1;
+        }
+        if (person['profile_content'] != '' && person['profile_content'] != null)
+            bio += (bio_index == 0 ? person['profile_content'] : '<br/>' + person['profile_content']);
 
-        var u = "",
-            m = 0;
-        "" != e.bio && null != e.bio && (u += e.bio, m = 1), "" != e.profile_content && null != e.profile_content && (u += 0 == m ? e.profile_content : "<br/>" + e.profile_content), "" == u ? document.querySelector(".mybio").style.display = "none" : document.querySelector(".mybio").style.display = "block", document.querySelector("#person_bio").innerHTML = u, document.querySelector("#personDetail").classList.remove("fade"), document.querySelector("#personDetail").style.display = "block";
+        if (bio == ''){
+            document.querySelector(".mybio").style.display = "none"
+        } else{
+            document.querySelector(".mybio").style.display = "block"
+        }
+        document.querySelector("#personDetail").classList.remove("fade"), 
+        document.querySelector("#personDetail").style.display = "block";
+
     }).catch(error => {
-        console.log(error);
+
     });
 }
 
