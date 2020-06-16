@@ -111,7 +111,7 @@ export default {
         sortDirection: "desc"
       },
       { key: "slug", label: "Nation Slug", sortable: true },
-      { key: "access_token", label: "Nation API Token" },
+      // { key: "access_token", label: "Nation API Token" },
       // { key: "hq", label: "HQ" },
       { key: "people_count", label: "Listing Count", sortable: true},
       { key: "updated_at", label: "Last Refresh", sortable: true},
