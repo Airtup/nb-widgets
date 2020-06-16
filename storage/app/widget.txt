@@ -796,10 +796,10 @@ function exportToPDF(){
         var c = d.occupation;
         null == c && (c = "N/A"), a.text(48, 60 + s, c);
         var p = d.country;
-        a.text(48, 75 + s, "Location: " + isoCountries[p]);
+        a.text(48, 75 + s, "Forum: " + isoCountries[p]);
         var u = "",
             m = 0;
-        "" != d.home_address && null != d.home_address && (u += 0 == m ? d.home_address : ", " + d.home_address, m = 1), "" != d.address2 && null != d.address2 && (u += 0 == m ? d.address2 : ", " + d.address2, m = 1), "" != d.address3 && null != d.address3 && (u += 0 == m ? d.address3 : ", " + d.address3, m = 1), "" != d.city && null != d.city && (u += 0 == m ? d.city : ", " + d.city, m = 1), "" != d.state && null != d.state && (u += 0 == m ? d.state : ", " + d.state, m = 1), "" != d.zip && null != d.zip && (u += 0 == m ? d.zip : ", " + d.zip, m = 1), "" != d.country_code && null != d.country_code && (u += 0 == m ? isoCountries[d.country_code] : ", " + isoCountries[d.country_code], m = 1), "" == u && (u = "N/A"), a.text(48, 164 + s, "Home address: " + u), null == d.industry ? a.text(48, 89 + s, "Industry: N/A") : a.text(48, 89 + s, "Industry: " + d.industry), a.text(48, 104 + s, "Email: " + d.email);
+        "" != d.home_address && null != d.home_address && (u += 0 == m ? d.home_address : ", " + d.home_address, m = 1), "" != d.address2 && null != d.address2 && (u += 0 == m ? d.address2 : ", " + d.address2, m = 1), "" != d.address3 && null != d.address3 && (u += 0 == m ? d.address3 : ", " + d.address3, m = 1), "" != d.city && null != d.city && (u += 0 == m ? d.city : ", " + d.city, m = 1), "" != d.state && null != d.state && (u += 0 == m ? d.state : ", " + d.state, m = 1), "" != d.zip && null != d.zip && (u += 0 == m ? d.zip : ", " + d.zip, m = 1), "" != d.country_code && null != d.country_code && (u += 0 == m ? isoCountries[d.country_code] : ", " + isoCountries[d.country_code], m = 1), "" == u && (u = "N/A"), a.text(48, 164 + s, "Location: " + u), null == d.industry ? a.text(48, 89 + s, "Industry: N/A") : a.text(48, 89 + s, "Industry: " + d.industry), a.text(48, 104 + s, "Email: " + d.email);
         var g = "N/A";
         null != d.phone && (g = d.phone), a.text(48, 119 + s, "Phone: " + g);
         var h = "N/A";
