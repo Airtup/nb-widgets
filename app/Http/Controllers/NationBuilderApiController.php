@@ -683,8 +683,19 @@ class NationBuilderApiController extends Controller
                 echo '';
             } else {
                 $data = json_decode($curlResponse);
+                if(isset($data->person->home_address->address1)){
+                    $result->home_address = $data->person->home_address;
+                }
+                if(isset($data->person->work_address->address1)){
+                    $result->work_address = $data->person->work_address;
+                }
                 if(isset($data->person->bio)){
                     $result->bio = $data->person->bio;
+                }
+                if (isset($data->person->profile_content)){
+                    $result->profile_content = $data->person->profile_content;
+                } else{
+                    $result->profile_content = null;
                 }
                 if(isset($data->person->twitter_login)){
                 $result->twitter = $data->person->twitter_login;
