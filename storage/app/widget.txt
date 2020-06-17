@@ -861,19 +861,19 @@ function viewPersonDetail(id) {
             document.querySelector('#person_work_address').innerHTML =  '';
         }   
 
-        if (canShow('assistant_name') && person['assistant_name'] != '' && person['assistant_name'] != null){
+        if (canShow('assist_name') && person['assistant_name'] != '' && person['assistant_name'] != null){
             document.querySelector('#person_assist_name').innerHTML = '<i class="fa fa-user"></i> Assistant Name: ' + person['assistant_name']
         } else{
             document.querySelector('#person_assist_name').innerHTML = '';
         }
 
-        if (canShow('assistant_phone_number') && person['assistant_phone_number'] != '' && person['assistant_phone_number'] != null){
+        if (canShow('assist_phone') && person['assistant_phone_number'] != '' && person['assistant_phone_number'] != null){
             document.querySelector('#person_assist_phone').innerHTML = '<i class="fa fa-phone"></i> Assistant Phone: ' + person['assistant_phone_number']
         } else{
             document.querySelector('#person_assist_phone').innerHTML = '';
         }
 
-        if (canShow('assistant_email') && person['assistant_email'] != '' && person['assistant_email'] != null){
+        if (canShow('assist_email') && person['assistant_email'] != '' && person['assistant_email'] != null){
             document.querySelector('#person_assist_phone').innerHTML = '<i class="fa fa-envelope"></i> Assistant Email: <b onclick="sendEmail(' + "'" + person['assistant_email'] + "'" + ')" class="text-blue">' + person['assistant_email'] + '</b>'
         }else {
             document.querySelector('#person_assist_phone').innerHTML = '';
