@@ -874,9 +874,9 @@ function viewPersonDetail(id) {
         }
 
         if (canShow('assist_email') && person['assistant_email'] != '' && person['assistant_email'] != null){
-            document.querySelector('#person_assist_phone').innerHTML = '<i class="fa fa-envelope"></i> Assistant Email: <b onclick="sendEmail(' + "'" + person['assistant_email'] + "'" + ')" class="text-blue">' + person['assistant_email'] + '</b>'
+            document.querySelector('#person_assist_email').innerHTML = '<i class="fa fa-envelope"></i> Assistant Email: <b onclick="sendEmail(' + "'" + person['assistant_email'] + "'" + ')" class="text-blue">' + person['assistant_email'] + '</b>'
         }else {
-            document.querySelector('#person_assist_phone').innerHTML = '';
+            document.querySelector('#person_assist_email').innerHTML = '';
         }
 
         if("" !== person['twitter'] && null != person['twitter']){
