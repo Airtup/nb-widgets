@@ -568,10 +568,13 @@ function addSearchPersonContent(person, index) {
 
     if (total_country != '')
         content += '<p style="color:grey;"><i class="fa fa-map-marker"></i> ' + total_country + '</p>';
-    if (person['industry'] != null && person['industry'] != '' && person['industry'] != undefined)
+    if (person['industry'] != null && person['industry'] != '' && person['industry'] != undefined){
         content += '<p style="color:grey;"><i class="fa fa-list"></i> ' + person['industry'] + '</p>';
-    if(canShow('email') && person['email'] != null && person['email'] != '' && person['email'] != undefined)
-        content += '<p style="color:grey;"><i class="fa fa-envelope"></i>';
+    }
+    content += '<p style="color:grey;">'    
+    if(canShow('email') && person['email'] != null && person['email'] != '' && person['email'] != undefined){
+        content += '<i class="fa fa-envelope"></i>';
+    }
     if (person['twitter'] != null)
         content += '<i class="fa fa-twitter"></i> ';
     if (person['facebook'] == true)
