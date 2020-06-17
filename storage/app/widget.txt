@@ -534,36 +534,57 @@ function setCallPeopleUrl_New() {
     });
 }
 
-function addSearchPersonContent(o, a) {
-    console.log(o.last_name);
-    if(o == null) return;
-    var e = "";
-    if (e += '<div class="person_' + a + ' row" style="margin-top:20px;border-bottom: 1px solid lightgrey;padding:10px;margin-left: 5px;margin-right: 5px;">',
-        e += '<div class="col-md-2 col-sm-2 col-xs-4">',
-        e += '<img id="perImg_' + a + '" src="' + o.profile_image + '" width="80%;" />',
-        e += "</div>", e += '<div id="person_simple_' + a + '" class="col-md-7 col-sm-7 col-xs-8">',
-        e+= '<p style="font-size:14px;"><b>',
-        e+= canShow('first_name') ? `${o.first_name} `: '',
-        e+= canShow('last_name') ? o.last_name : '',
-        e+= '</b></p>',
-        null != o.occupation && "" != o.occupation) {
-        var t = "";
-        null != o.employer && "" != o.employer && null != o.employer && (t = ", " + o.employer), 
-        e += '<p style="color:grey;text-transform:capitalize"><i class="fa fa-male"></i> ' + o.occupation + t + "</p>"
+function addSearchPersonContent(person, index) {
+
+    var personIcon = 'fa fa-male';
+
+    var content = '';
+    content += '<div class="person_' + index + ' row" style="margin-top:20px;border-bottom: 1px solid lightgrey;padding:10px;margin-left: 5px;margin-right: 5px;">';
+    content += '<div class="col-md-2 col-sm-2 col-xs-4">';
+    content += '<img id="perImg_' + index + '" src="' + person['profile_image'] + '" width="80%;" />';
+    content += '</div>';
+    content += '<div id="person_simple_' + index + '" class="col-md-7 col-sm-7 col-xs-8">';
+    content+= '<p style="font-size:14px;"><b>',
+    content+= canShow('first_name') ? `${person.first_name} `: '',
+    content+= canShow('last_name') ? person.last_name : '',
+    content+= '</b></p>';
+    if (person['occupation'] != null && person['occupation'] != ''){
+        var employer = '';
+        if (person['employer'] != null && person['employer'] != '' && person['employer'] != undefined)
+            employer = ', ' + person['employer'];
+        content += '<p style="color:grey;text-transform:capitalize"><i class="' + personIcon + '"></i> ' + person['occupation'] + employer + '</p>';
     }
-    var i = 0,
-        n = "";
-    null != o.state && "" != o.state && (isoStates.hasOwnProperty(o.state) ? n = isoStates[o.state] : n += o.state, i = 1),
-    canShow('country')  && "" != o.country && null != o.country && (n += 0 == i ? isoCountries[o.country_code] : ", " + isoCountries[o.country_code]),
-    "" != n && (e += '<p style="color:grey;"><i class="fa fa-map-marker"></i> ' + n + "</p>"),
-    null != o.industry && "" != o.industry && null != o.industry && (e += '<p style="color:grey;"><i class="fa fa-list"></i> ' + o.industry + "</p>"),
-    (e += '<p style="color:grey;"><i class="fa fa-envelope"></i> '),
-    null != o.twitter && (e += '<i class="fa fa-twitter"></i> '),
-    1 == o.facebook && (e += '<i class="fa fa-facebook-f"></i> '),
-    null != o.linked_in && (e += '<i class="fa fa-linkedin"></i>'),
-        e += "</p>", e += "</div>", e += '<div class="col-md-3 col-sm-3">',
-        e += '<button class="btn btn-myblue" style="font-weight: bold;float: right;" id="viewDetail_' + o.person_id + '" data-picture="' + o.profile_image + '" onclick="viewPersonDetail(' + o.person_id + ')">View profile</button>',
-        e += "</div>", e += "</div>", document.querySelector("#personList").innerHTML += e;
+    var country_index = 0;
+    var total_country = '';
+    if (person['state'] != null && person['state'] != ''){
+        if (isoStates.hasOwnProperty(person['state']))
+            total_country = isoStates[person['state']];
+        else
+            total_country += person['state'];
+        country_index = 1;
+    }
+    if (canShow('country') && person['country'] != '' && person['country'] != null)
+        total_country += (country_index == 0 ? person['country'] : ', ' + person['country']);
+
+    if (total_country != '')
+        content += '<p style="color:grey;"><i class="fa fa-map-marker"></i> ' + total_country + '</p>';
+    if (person['industry'] != null && person['industry'] != '' && person['industry'] != undefined)
+        content += '<p style="color:grey;"><i class="fa fa-list"></i> ' + person['industry'] + '</p>';
+    if(canShow('email') && person['email'] != null && person['email'] != '' && person['email'] != undefined)
+        content += '<p style="color:grey;"><i class="fa fa-envelope"></i>';
+    if (person['twitter'] != null)
+        content += '<i class="fa fa-twitter"></i> ';
+    if (person['facebook'] == true)
+        content += '<i class="fa fa-facebook-f"></i> ';
+    if (person['linked_in'] != null)
+        content += '<i class="fa fa-linkedin"></i>';
+    content += '</p>';
+    content += '</div>';
+    content += '<div class="col-md-3 col-sm-3">';
+    content += '<button class="btn btn-myblue" style="font-weight: bold;float: right;" id="viewDetail_' + person['person_id'] + '" data-picture="' + person['profile_image'] + '" onclick="viewPersonDetail(' + person['person_id'] + ')">View profile</button>';
+    content += '</div>';
+    content += '</div>';
+    document.querySelector("#personList").innerHTML += content;
 }
 window.onload = async function() {
     addStyle(styles);
@@ -854,14 +875,16 @@ function viewPersonDetail(id) {
         }
 
         let bio = '';
-        let bio_index = 0;
+        //let bio_index = 0;
         if (person['bio'] != '' && person['bio'] != null){
             bio += person['bio'];
-            bio_index = 1;
+            //bio_index = 1;
         }
-        if (person['profile_content'] != '' && person['profile_content'] != null)
-            bio += (bio_index == 0 ? person['profile_content'] : '<br/>' + person['profile_content']);
-
+        if (person['profile_content'] != '' && person['profile_content'] != null){
+            bio = '';
+            bio = person['profile_content'];
+            //bio += (bio_index == 0 ? person['profile_content'] : '<br/>' + person['profile_content']);
+        }
         if (bio == ''){
             document.querySelector(".mybio").style.display = "none"
         } else{
