@@ -441,7 +441,6 @@ function searchPerson() {
         for (var l = 0; l < dominolink.itemsPerPage; l++) addSearchPersonContent(a[l], l)
 
     }).catch(error => {
-        console.log(error);
         document.querySelector("#loaderModal").style.display = "none";
     });
 }
@@ -536,9 +535,9 @@ function setCallPeopleUrl_New() {
 
 function addSearchPersonContent(person, index) {
 
-    var personIcon = 'fa fa-male';
+    let personIcon = 'fa fa-male';
 
-    var content = '';
+    let content = '';
     content += '<div class="person_' + index + ' row" style="margin-top:20px;border-bottom: 1px solid lightgrey;padding:10px;margin-left: 5px;margin-right: 5px;">';
     content += '<div class="col-md-2 col-sm-2 col-xs-4">';
     content += '<img id="perImg_' + index + '" src="' + person['profile_image'] + '" width="80%;" />';
@@ -799,7 +798,6 @@ function viewPersonDetail(id) {
                     }
                 } else{
                     if(isoStates.hasOwnProperty(person['home_address']['state'])) {
-                        console.log('entra');
                         home_address += ', '+isoStates[person['home_address']['state']]
                     } else{
                         home_address += ', '+person['home_address']['state']
@@ -820,6 +818,8 @@ function viewPersonDetail(id) {
                 document.querySelector('#person_home_address').innerHTML = '<i class="fa fa-send"></i> Home address: ' + home_address;
             }
                 
+        } else {
+            document.querySelector('#person_home_address').innerHTML =  '';
         }
 
         if (person['work_address'] != '' && person['work_address'] != null){            
@@ -857,22 +857,32 @@ function viewPersonDetail(id) {
             if (work_address != ''){
                 document.querySelector('#person_work_address').innerHTML = '<i class="fa fa-send"></i> Work address: ' + work_address
             }
-        }    
+        } else{
+            document.querySelector('#person_work_address').innerHTML =  '';
+        }   
 
         if (canShow('assistant_name') && person['assistant_name'] != '' && person['assistant_name'] != null){
             document.querySelector('#person_assist_name').innerHTML = '<i class="fa fa-user"></i> Assistant Name: ' + person['assistant_name']
+        } else{
+            document.querySelector('#person_assist_name').innerHTML = '';
         }
 
         if (canShow('assistant_phone_number') && person['assistant_phone_number'] != '' && person['assistant_phone_number'] != null){
             document.querySelector('#person_assist_phone').innerHTML = '<i class="fa fa-phone"></i> Assistant Phone: ' + person['assistant_phone_number']
+        } else{
+            document.querySelector('#person_assist_phone').innerHTML = '';
         }
 
         if (canShow('assistant_email') && person['assistant_email'] != '' && person['assistant_email'] != null){
             document.querySelector('#person_assist_phone').innerHTML = '<i class="fa fa-envelope"></i> Assistant Email: <b onclick="sendEmail(' + "'" + person['assistant_email'] + "'" + ')" class="text-blue">' + person['assistant_email'] + '</b>'
+        }else {
+            document.querySelector('#person_assist_phone').innerHTML = '';
         }
 
         if("" !== person['twitter'] && null != person['twitter']){
             document.querySelector("#person_twitter").innerHTML = '<a target="_blank" class="icon-orange" href="https://www.twitter.com/@'+person["twitter"]+'"><i class="fa fa-twitter"></i> </a>';
+        }else{
+            document.querySelector("#person_twitter").innerHTML = '';
         }
         if("" !== person.facebook && null != person.facebook){
             var urlF = "https://www.facebook.com/"+person.facebook;
@@ -894,7 +904,7 @@ function viewPersonDetail(id) {
             //bio += (bio_index == 0 ? person['profile_content'] : '<br/>' + person['profile_content']);
         }
         if (bio == ''){
-            document.querySelector(".mybio").style.display = "none"
+            document.querySelector(".mybio").style.display = "none";
         } else{
             document.querySelector('#person_bio').innerHTML = bio;
             document.querySelector(".mybio").style.display = "block"
