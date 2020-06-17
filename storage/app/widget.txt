@@ -563,11 +563,12 @@ function addSearchPersonContent(person, index) {
             total_country += person['state'];
         country_index = 1;
     }
-    if (canShow('country') && person['country'] != '' && person['country'] != null)
+    if (canShow('country') && person['country'] != '' && person['country'] != null){
         total_country += (country_index == 0 ? isoCountries[person['country']] : ', ' + isoCountries[person['country']]);
-
-    if (total_country != '')
+    }
+    if (total_country != ''){
         content += '<p style="color:grey;"><i class="fa fa-map-marker"></i> ' + total_country + '</p>';
+    }
     if (person['industry'] != null && person['industry'] != '' && person['industry'] != undefined){
         content += '<p style="color:grey;"><i class="fa fa-list"></i> ' + person['industry'] + '</p>';
     }
@@ -575,12 +576,16 @@ function addSearchPersonContent(person, index) {
     if(canShow('email') && person['email'] != null && person['email'] != '' && person['email'] != undefined){
         content += '<i class="fa fa-envelope" style="padding-right: 4px;"></i>';
     }
-    if (person['twitter'] != null && person['twitter'] !== '' && person['twitter'] != undefined)
+    if (person['twitter'] != null && person['twitter'] !== '' && person['twitter'] != undefined){
         content += '<i class="fa fa-twitter"></i> ';
-    if (person['facebook'] == true)
+    }
+    if (person['facebook'] == true){
         content += '<i class="fa fa-facebook-f"></i> ';
-    if (person['linked_in'] != null)
+    }
+        
+    if (person['linked_in'] != null){
         content += '<i class="fa fa-linkedin"></i>';
+    }
     content += '</p>';
     content += '</div>';
     content += '<div class="col-md-3 col-sm-3">';
