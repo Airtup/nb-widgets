@@ -535,13 +535,17 @@ function setCallPeopleUrl_New() {
 }
 
 function addSearchPersonContent(o, a) {
+    console.log(o.last_name);
     if(o == null) return;
     var e = "";
     if (e += '<div class="person_' + a + ' row" style="margin-top:20px;border-bottom: 1px solid lightgrey;padding:10px;margin-left: 5px;margin-right: 5px;">',
         e += '<div class="col-md-2 col-sm-2 col-xs-4">',
         e += '<img id="perImg_' + a + '" src="' + o.profile_image + '" width="80%;" />',
         e += "</div>", e += '<div id="person_simple_' + a + '" class="col-md-7 col-sm-7 col-xs-8">',
-        e += '<p style="font-size:14px;"><b>' + canShow('first_name') ? `${o.first_name}` : ''  + " " + canShow('last_name') ? `${o.last_name}` : '' + "</b></p>",
+        e+= '<p style="font-size:14px;"><b>',
+        e+=  canShow('first_name') ? o.first_name : '',
+        e+= '" "'+canShow('last_name') ? o.last_name : '',
+        e+= '</b></p>',
     
         null != o.occupation && "" != o.occupation) {
         var t = "";
