@@ -573,7 +573,7 @@ function addSearchPersonContent(person, index) {
     }
     content += '<p style="color:grey;">'    
     if(canShow('email') && person['email'] != null && person['email'] != '' && person['email'] != undefined){
-        content += '<i class="fa fa-envelope"></i>';
+        content += '<i class="fa fa-envelope" style="padding-right: 4px;"></i>';
     }
     if (person['twitter'] != null)
         content += '<i class="fa fa-twitter"></i> ';
