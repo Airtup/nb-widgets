@@ -543,13 +543,13 @@ function addSearchPersonContent(o, a) {
         e += '<img id="perImg_' + a + '" src="' + o.profile_image + '" width="80%;" />',
         e += "</div>", e += '<div id="person_simple_' + a + '" class="col-md-7 col-sm-7 col-xs-8">',
         e+= '<p style="font-size:14px;"><b>',
-        e+=  canShow('first_name') ? o.first_name : '',
-        e+= '" "'+canShow('last_name') ? o.last_name : '',
+        e+= canShow('first_name') ? `${o.first_name} `: '',
+        e+= canShow('last_name') ? o.last_name : '',
         e+= '</b></p>',
-    
         null != o.occupation && "" != o.occupation) {
         var t = "";
-        null != o.employer && "" != o.employer && null != o.employer && (t = ", " + o.employer), e += canShow('occupation','<p style="color:grey;text-transform:capitalize"><i class="fa fa-male"></i> ' + o.occupation + t + "</p>")
+        null != o.employer && "" != o.employer && null != o.employer && (t = ", " + o.employer), 
+        e += '<p style="color:grey;text-transform:capitalize"><i class="fa fa-male"></i> ' + o.occupation + t + "</p>"
     }
     var i = 0,
         n = "";
