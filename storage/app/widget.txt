@@ -748,8 +748,9 @@ function viewPersonDetail(id) {
         document.querySelector("#person_icon").innerHTML = person_icon;
         if (person.occupation !== '' && person.occupation != null){
             let personIcon = 'fa fa-female';
-            if (person['sex'] == null || person['sex'] === 'M')
-            personIcon = 'fa fa-male';
+            if (person['sex'] === 'M'){
+                personIcon = 'fa fa-male';
+            }
             let employer = '';
             if (person.employer != null && person.employer !== '' && person.employer !== undefined)
                 employer = ', ' + person.employer;
