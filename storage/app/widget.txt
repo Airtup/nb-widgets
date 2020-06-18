@@ -772,8 +772,7 @@ function viewPersonDetail(id) {
             let home_address = '';
             let myindex = 0;
 
-            console.log(person['home_adress'].hasOwnProperty('address1'));
-            if(person['home_adress'].hasOwnProperty('address1')){
+            if(person['home_address'].hasOwnProperty('address1')){
                 if (person['home_address']['address1'] != '' && person['home_address']['address1'] != null){
                     home_address += (myindex == 0 ? person['home_address']['address1'] : ', ' + person['home_address']['address1']);
                     myindex = 1;
@@ -794,7 +793,7 @@ function viewPersonDetail(id) {
     
                     if(myindex === 0){
                         if(isoStates.hasOwnProperty(person['home_address']['state'])) {
-                            home_adress += isoStates[person['home_address']['state']]
+                            home_address += isoStates[person['home_address']['state']]
                         } else{
                             home_address += person['home_address']['state']
                         }
@@ -840,7 +839,7 @@ function viewPersonDetail(id) {
     
                     if(myindex === 0){
                         if(isoStates.hasOwnProperty(person['state'])) {
-                            home_adress += isoStates[person['state']]
+                            home_address += isoStates[person['state']]
                         } else{
                             home_address += person['state']
                         }
