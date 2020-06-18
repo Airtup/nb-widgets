@@ -747,9 +747,9 @@ function viewPersonDetail(id) {
         null != person.linkedin_id && (person_icon += '<a class="icon-orange" target="_blank" href="' + person.linkedin_profile + '"><i class="fa fa-linkedin"></i></a>');
         document.querySelector("#person_icon").innerHTML = person_icon;
         if (person.occupation !== '' && person.occupation != null){
+            personIcon = 'fa fa-female';
+            if (person['sex'] == null || person['sex'] === 'M')
             let personIcon = 'fa fa-male';
-            if (person['sex'] == null || person['sex'] === 'F')
-                personIcon = 'fa fa-female';
             let employer = '';
             if (person.employer != null && person.employer !== '' && person.employer !== undefined)
                 employer = ', ' + person.employer;
