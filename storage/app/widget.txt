@@ -746,7 +746,7 @@ function viewPersonDetail(id) {
         canShow("email") && "" !== person.email && (person_icon += '<a class="icon-orange" href="mailto:' + person.email + '"><i class="fa fa-envelope"></i> </a>');
         null != person.linkedin_id && (person_icon += '<a class="icon-orange" target="_blank" href="' + person.linkedin_profile + '"><i class="fa fa-linkedin"></i></a>');
         document.querySelector("#person_icon").innerHTML = person_icon;
-        if (canShow("occupation") && person.occupation !== '' && person.occupation != null){
+        if (person.occupation !== '' && person.occupation != null){
             let personIcon = 'fa fa-male';
             if (person['sex'] == null || person['sex'] === 'F')
                 personIcon = 'fa fa-female';
@@ -760,7 +760,6 @@ function viewPersonDetail(id) {
         let country_index = 0;
         null != person.state && "" !== person.state && (isoStates.hasOwnProperty(person.state) ? total_country += isoStates[person.state] : total_country += person.state, country_index = 1);
         canShow("country") && isoCountries.hasOwnProperty(person.country_code) && (country = isoCountries[person.country_code]), "" !== country && null != country && (total_country += 0 === country_index ? country : ", " + country);
-        canShow("city") && "" !== person.city && null != person.city ? document.querySelector("#person_city").innerHTML = '<i class="fa fa-send"></i> City: ' + person.city : document.querySelector("#person_city").innerHTML = "";
         "" !== total_country ? document.querySelector("#person_country").innerHTML = '<i class="fa fa-map-marker"></i> ' + total_country : document.querySelector("#person_country").innerHTML = "";
         "" !== person.industry && null != person.industry && null != person.industry ? document.querySelector("#person_industry").innerHTML = '<i class="fa fa-list"></i> ' + person.industry : document.querySelector("#person_industry").innerHTML = "";
         "" !== person.boards && null != person.boards && null != person.boards ? document.querySelector("#person_boards").innerHTML = "Boards:<br/>" + person.boards : document.querySelector("#person_boards").innerHTML = "";
