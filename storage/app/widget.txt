@@ -772,7 +772,8 @@ function viewPersonDetail(id) {
             let home_address = '';
             let myindex = 0;
 
-            if(person['home_adress'] != null && person['home_adress'].hasOwnProperty('address1')){
+            console.log(person['home_adress'].hasOwnProperty('address1'));
+            if(person['home_adress'].hasOwnProperty('address1')){
                 if (person['home_address']['address1'] != '' && person['home_address']['address1'] != null){
                     home_address += (myindex == 0 ? person['home_address']['address1'] : ', ' + person['home_address']['address1']);
                     myindex = 1;
