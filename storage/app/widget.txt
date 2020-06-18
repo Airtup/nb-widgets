@@ -771,52 +771,101 @@ function viewPersonDetail(id) {
         if (person['home_address'] != null){
             let home_address = '';
             let myindex = 0;
-            if (person['home_address']['address1'] != '' && person['home_address']['address1'] != null){
-                home_address += (myindex == 0 ? person['home_address']['address1'] : ', ' + person['home_address']['address1']);
-                myindex = 1;
-            }
-            if (person['home_address']['address2'] != '' && person['home_address']['address2'] != null){
-                home_address += (myindex == 0 ? person['home_address']['address2'] : ', ' + person['home_address']['address2']);
-                myindex = 1;
-            }
-            if (person['home_address']['address3'] != '' && person['home_address']['address3'] != null){
-                home_address += (myindex == 0 ? person['home_address']['address3'] : ', ' + person['home_address']['address3']);
-                myindex = 1;
-            }
-            if (person['home_address']['city'] != '' && person['home_address']['city'] != null){
-                home_address += (myindex == 0 ? person['home_address']['city'] : ', ' + person['home_address']['city']);
-                myindex = 1;
-            }
-            if (person['home_address']['state'] != '' && person['home_address']['state'] != null){
 
-                if(myindex === 0){
-                    if(isoStates.hasOwnProperty(person['home_address']['state'])) {
-                        home_adress += isoStates[person['home_address']['state']]
-                    } else{
-                        home_address += person['home_address']['state']
-                    }
-                } else{
-                    if(isoStates.hasOwnProperty(person['home_address']['state'])) {
-                        home_address += ', '+isoStates[person['home_address']['state']]
-                    } else{
-                        home_address += ', '+person['home_address']['state']
-                    }
+            if(person['home_adress']['address1'] != null ){
+                if (person['home_address']['address1'] != '' && person['home_address']['address1'] != null){
+                    home_address += (myindex == 0 ? person['home_address']['address1'] : ', ' + person['home_address']['address1']);
+                    myindex = 1;
                 }
-                myindex = 1;
-            }
-            if (person['home_address']['zip'] != '' && person['home_address']['zip'] != null){
-                home_address += (myindex == 0 ? person['home_address']['zip'] : ', ' + person['home_address']['zip']);
-                myindex = 1;
-            }
-            if (person['home_address']['country_code'] != '' && person['home_address']['country_code'] != null){
-                home_address += (myindex == 0 ? person['home_address']['country_code'] : ', ' + isoCountries[person['home_address']['country_code']]);
-                myindex = 1;
+                if (person['home_address']['address2'] != '' && person['home_address']['address2'] != null){
+                    home_address += (myindex == 0 ? person['home_address']['address2'] : ', ' + person['home_address']['address2']);
+                    myindex = 1;
+                }
+                if (person['home_address']['address3'] != '' && person['home_address']['address3'] != null){
+                    home_address += (myindex == 0 ? person['home_address']['address3'] : ', ' + person['home_address']['address3']);
+                    myindex = 1;
+                }
+                if (person['home_address']['city'] != '' && person['home_address']['city'] != null){
+                    home_address += (myindex == 0 ? person['home_address']['city'] : ', ' + person['home_address']['city']);
+                    myindex = 1;
+                }
+                if (person['home_address']['state'] != '' && person['home_address']['state'] != null){
+    
+                    if(myindex === 0){
+                        if(isoStates.hasOwnProperty(person['home_address']['state'])) {
+                            home_adress += isoStates[person['home_address']['state']]
+                        } else{
+                            home_address += person['home_address']['state']
+                        }
+                    } else{
+                        if(isoStates.hasOwnProperty(person['home_address']['state'])) {
+                            home_address += ', '+isoStates[person['home_address']['state']]
+                        } else{
+                            home_address += ', '+person['home_address']['state']
+                        }
+                    }
+                    myindex = 1;
+                }
+                if (person['home_address']['zip'] != '' && person['home_address']['zip'] != null){
+                    home_address += (myindex == 0 ? person['home_address']['zip'] : ', ' + person['home_address']['zip']);
+                    myindex = 1;
+                }
+                if (person['home_address']['country_code'] != '' && person['home_address']['country_code'] != null){
+                    home_address += (myindex == 0 ? person['home_address']['country_code'] : ', ' + isoCountries[person['home_address']['country_code']]);
+                    myindex = 1;
+                }
+    
+                if (home_address != ''){
+                    document.querySelector('#person_home_address').innerHTML = '<i class="fa fa-send"></i> Home address: ' + home_address;
+                }
+            } else {
+                if (person['home_address'] != '' && person['home_address'] != null){
+                    home_address += (myindex == 0 ? person['home_address'] : ', ' + person['home_address']);
+                    myindex = 1;
+                }
+                if (person['address2'] != '' && person['address2'] != null){
+                    home_address += (myindex == 0 ? person['address2'] : ', ' + person['address2']);
+                    myindex = 1;
+                }
+                if (person['address3'] != '' && person['address3'] != null){
+                    home_address += (myindex == 0 ? person['address3'] : ', ' + person['address3']);
+                    myindex = 1;
+                }
+                if (person['city'] != '' && person['city'] != null){
+                    home_address += (myindex == 0 ? person['city'] : ', ' + person['city']);
+                    myindex = 1;
+                }
+                if (person['state'] != '' && person['state'] != null){
+    
+                    if(myindex === 0){
+                        if(isoStates.hasOwnProperty(person['state'])) {
+                            home_adress += isoStates[person['state']]
+                        } else{
+                            home_address += person['state']
+                        }
+                    } else{
+                        if(isoStates.hasOwnProperty(person['state'])) {
+                            home_address += ', '+isoStates[person['state']]
+                        } else{
+                            home_address += ', '+person['state']
+                        }
+                    }
+                    myindex = 1;
+                }
+                if (person['zip'] != '' && person['zip'] != null){
+                    home_address += (myindex == 0 ? person['zip'] : ', ' + person['zip']);
+                    myindex = 1;
+                }
+                if (person['country_code'] != '' && person['country_code'] != null){
+                    home_address += (myindex == 0 ? person['country_code'] : ', ' + isoCountries[person['country_code']]);
+                    myindex = 1;
+                }
+    
+                if (home_address != ''){
+                    document.querySelector('#person_home_address').innerHTML = '<i class="fa fa-send"></i> Home address: ' + home_address;
+                }
             }
 
-            if (home_address != ''){
-                document.querySelector('#person_home_address').innerHTML = '<i class="fa fa-send"></i> Home address: ' + home_address;
-            }
-                
         } else {
             document.querySelector('#person_home_address').innerHTML =  '';
         }
@@ -883,7 +932,7 @@ function viewPersonDetail(id) {
         }else{
             document.querySelector("#person_twitter").innerHTML = '';
         }
-        if("" !== person.facebook && null != person.facebook){
+        if("" !== person['facebook'] && null != person['facebook'] && person['facebook'] != 0){
             var urlF = "https://www.facebook.com/"+person.facebook;
             if(person.facebook.startsWith('http')) urlF = person.facebook;
             document.querySelector("#person_facebook").innerHTML = '<a target="_blank" class="icon-orange" href="'+urlF+'"><i class="fa fa-facebook"></i> </a>';
