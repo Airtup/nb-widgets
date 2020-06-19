@@ -152,7 +152,7 @@
               </div>
               <div class="main-card mb-3 card col-md-12">
                 <div class="card-body">
-                  <h5 class="card-title">Select Profile Fields to Display :</h5>
+                  <h5 class="card-title">Select Personal Profile Fields to Display :</h5>
                   <div class="scroll-area-md">
                     <VuePerfectScrollbar class="scrollbar-container text-left">
                       <div class="form-group">
