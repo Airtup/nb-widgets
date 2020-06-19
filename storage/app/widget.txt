@@ -562,7 +562,10 @@ function setCallPeopleUrl_New() {
 
 function addSearchPersonContent(person, index) {
 
-    let personIcon = 'fa fa-male';
+    let personIcon = 'fa fa-female';
+    if (person['sex'] === 'M'){
+        personIcon = 'fa fa-male';
+    }
 
     let content = '';
     content += '<div class="person_' + index + ' row" style="margin-top:20px;border-bottom: 1px solid lightgrey;padding:10px;margin-left: 5px;margin-right: 5px;">';
