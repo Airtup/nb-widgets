@@ -3,7 +3,9 @@
     <div class="h-100 bg-plum-plate bg-animation">
         <div class="d-flex vh-100 justify-content-center align-items-center">
             <b-col md="8" class="mx-auto app-login-box">
-                <div class="logo-src mx-auto mb-3"/>
+                <div class="logo-src mx-auto mb-3">
+                    <img src="/storage/logo.png" alt="Logo NB Widgets" title="Logo" />
+                </div>
 
                 <div class="modal-dialog w-100 mx-auto">
                     <div class="modal-content">
