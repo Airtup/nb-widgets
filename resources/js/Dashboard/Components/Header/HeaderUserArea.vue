@@ -8,7 +8,7 @@
             <div class="widget-subheading">{{currentUser.user.email}}</div>
           </div>
           <div class="widget-content-right header-user-info ml-3">
-            <button type="button" class="btn btn-icon btn-icon-only btn-outline-link" @click.prevent="toggleMobile2_logout('header-menu-open')">
+            <button type="button" class="btn btn-icon btn-icon-only btn-outline-link" @click.prevent="logOut">
               <font-awesome-icon icon="sign-out-alt" size="2x" color="#FFFFFF" />
             </button>
           </div>
@@ -67,22 +67,10 @@ export default {
     }
   },
   methods: {
-    /*logOut() {
+    logOut() {
       this.$store.dispatch("auth/logout");
       this.$router.push("/login");
-    },*/
-    toggleMobile2_logout(className) {
-      const el = document.body;
-      this.isOpenMobileMenu = this.isOpenMobileMenu;
-
-      if (this.isOpenMobileMenu) {
-          el.classList.add(className);
-      } else {
-          el.classList.remove(className);
-      }
-      this.$store.dispatch("auth/logout");
-      this.$router.push("/login");
-    },
+    }
   }
 };
 </script>
