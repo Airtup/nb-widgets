@@ -79,6 +79,38 @@
         padding-right: 0;
       }
 
+      /*added by john*/
+      @media (max-width: 991px) {
+        .app-header-right{
+          display: flex;
+          width: 100%;
+          height: 60px;
+          .d-flex{
+            width: 100%;
+            .header-btn-lg::before{
+              display: none;
+            }
+            .header-btn-lg{
+              .widget-content.p-0{
+                width: 100%;
+                .widget-content-wrapper{
+                  width: 100%;
+                  .widget-content-left.header-user-info{
+                    display: flex;
+                    color: white;
+                    flex: 1;
+                    justify-content: space-between;
+                  }
+                  .widget-content-right.header-user-info{
+                    display: block;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+
       .header-btn-lg {
         margin-left: .5rem;
         padding: 0 .5rem;
