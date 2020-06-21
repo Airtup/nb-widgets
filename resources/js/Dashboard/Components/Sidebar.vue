@@ -6,7 +6,9 @@
     @mouseleave="toggleSidebarHover('remove','closed-sidebar-open')"
   >
     <div class="app-header__logo">
-      <div class="logo-src" @click="$router.push('/nations')" />
+        <div class="logo-src" @click="$router.push('/nations')">
+            <img src="/storage/logo.png" alt="Logo NB Widgets" title="Logo" />
+        </div>
       <div class="header__pane ml-auto">
         <button
           type="button"
