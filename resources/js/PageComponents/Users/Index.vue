@@ -31,7 +31,7 @@
       <!-- Main table element -->
       <b-table
         show-empty
-        responsive
+        stacked="md"
         :items="items"
         :fields="fields"
         :current-page="currentPage"
