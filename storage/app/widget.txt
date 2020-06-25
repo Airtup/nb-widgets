@@ -423,12 +423,11 @@ function searchPerson() {
 
           if (document.querySelector('#search_city').value != ''){
             const search = capitalize(document.querySelector('#search_city').value);
-            let key = getKeyByValue(isoStates, search);
             options['keys'][0]="city";
             options['keys'][0]="state"
             var fuse = new Fuse(list, options);
             //list = fuse.search(document.querySelector('#search_city').value);
-            list = fuse.search(key);
+            list = fuse.search(search);
           }
 
           if (document.querySelector('#search_country').value != ''){
