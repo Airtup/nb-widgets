@@ -422,15 +422,19 @@ function searchPerson() {
           }
 
           if (document.querySelector('#search_city').value != ''){
+              const key = getKeyByValue(isoStates, document.querySelector('#search_city').value)
               options['keys'][0]="city";
+              options['keys'][0]="state"
               var fuse = new Fuse(list, options);
-              list = fuse.search(document.querySelector('#search_city').value);    
+              //list = fuse.search(document.querySelector('#search_city').value); 
+              list = fuse.search(key);
           }
 
           if (document.querySelector('#search_country').value != ''){
-              options['keys'][0]="country";
+            const key = getKeyByValue(isoCountries, document.querySelector('#search_country').value)
+              options['keys'][0]="country_code";
               var fuse = new Fuse(list, options);
-              list = fuse.search(document.querySelector('#search_country').value); 
+              list = fuse.search(key); 
           }
           searchjsonData = list;
           searchcurPage = 1;
@@ -1054,3 +1058,7 @@ function canShow(field){
     if(!dominolink.show_options.hasOwnProperty(field)) return false;
     return dominolink.show_options[field];
 }
+
+function getKeyByValue(object, value) {
+    return Object.keys(object).find(key => object[key] === value);
+  }
