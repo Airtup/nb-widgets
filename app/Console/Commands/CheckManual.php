@@ -58,6 +58,8 @@ class CheckManual extends Command
         $senders = Sender::where('manual','=',1)->where('execute','=',0)->orderBy('created_at','DESC')->chunk(100, function ($sender) use ($today) {
 
             foreach ($sender as $s) {
+                People::where('nation_id',$s->nation_id)->where('nation_tag',$s->tag)->delete();
+
                 //$this->dao->deactivatePeople($s->nation_id, $s->tag);
 
                 $page = 1;

@@ -14,6 +14,7 @@ use Exception;
 use Auth;
 use Config;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Controllers\NationDetailsController;
 
 class NationBuilderApiController extends Controller
 {
@@ -335,6 +336,10 @@ class NationBuilderApiController extends Controller
         $next_url = $request->input('next_url');
         $nation_id = $request->input('nation_id');
         $result = $this->dao->first($nation_id);
+        $nation = $this->nation_details_dao->update($request->nation, $nation_id);
+        $nation = $this->nation_details_dao->get($nation_id)[0];
+        //Log::create(["user_id" => $request->user_id, "nation_id" => $nation->id, 'description' => 'Update Nation "' . $nation->name . '"']);
+        $this->logDao->create($request->user_id,$nation_id,'Update Nation "'.$nation->name.'"');
 
         $url = 'https://'.$result->slug.'.nationbuilder.com'.$next_url.'&access_token='.$result->access_token;
 
@@ -762,9 +767,9 @@ class NationBuilderApiController extends Controller
     {
         if ($request->hasFile('logo')) {
             //Eliminar Anterior
-            Storage::delete('/images/logo.png');
+            Storage::delete('/storage/logo.png');
             //Guardar Imagen
-            $path = $request->file('logo')->storeAs('/images', 'logo.'.$request->file('logo')->getClientOriginalExtension());
+            $path = $request->file('logo')->storeAs('/storage', 'logo.'.$request->file('logo')->getClientOriginalExtension());
 
         } else {
             $path = '';

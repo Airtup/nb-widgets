@@ -1,5 +1,5 @@
 <template>
-  <v-app id="benesApp">
+  <v-app id="App">
     <div class="app-container app-theme-white">
       <transition name="fade" mode="out-in" appear>
         <Header :headerbg="headercolor" />

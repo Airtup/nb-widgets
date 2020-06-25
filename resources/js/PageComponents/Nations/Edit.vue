@@ -32,7 +32,6 @@
                 <font-awesome-icon icon="portrait" size="2x" />
                 <br />Sync Pictures
               </button>
-              <!-- <button class="btn btn-primary text-right" @click="createNation()">Connect Nation</button> -->
             </div>
             <div class="row mt-5" v-if="menu==0">
               <div class="form-group col-md-6">
@@ -553,7 +552,9 @@ export default {
       axios
         .post(BASE_URL + "/api/nation/update/members", {
           nation_id: this.nation.id,
-          next_url: url
+          next_url: url,
+          nation: this.nation,
+          user_id: this.currentUser.user.id
         })
         .then(response => {
           if (response.status === 200) {

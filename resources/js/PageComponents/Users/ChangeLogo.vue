@@ -65,10 +65,12 @@ export default {
         })
         .then(response => {
           if (response.status == "200") {
-              swal("Success", "New Image Updated Successfully", "success");
+              swal("Success", "New Image Updated Successfully", "success").then(
+                () => window.location.reload()
+              );
           }
         }).catch(error => {
-            console.log(error);
+
         });
     },
   }
