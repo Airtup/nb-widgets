@@ -422,20 +422,21 @@ function searchPerson() {
           }
 
           if (document.querySelector('#search_city').value != ''){
-              const key = getKeyByValue(isoStates, document.querySelector('#search_city').value);
-
-              options['keys'][0]="city";
-              options['keys'][0]="state"
-              var fuse = new Fuse(list, options);
-              //list = fuse.search(document.querySelector('#search_city').value);
-              list = fuse.search(capitalize(key));
+            const search = capitalize(document.querySelector('#search_city').value);
+            let key = getKeyByValue(isoStates, search);
+            options['keys'][0]="city";
+            options['keys'][0]="state"
+            var fuse = new Fuse(list, options);
+            //list = fuse.search(document.querySelector('#search_city').value);
+            list = fuse.search(key);
           }
 
           if (document.querySelector('#search_country').value != ''){
-            const key = getKeyByValue(isoCountries, document.querySelector('#search_country').value)
-              options['keys'][0]="country_code";
-              var fuse = new Fuse(list, options);
-              list = fuse.search(capitalize(key));
+						const search = capitalize(document.querySelector('#search_country').value);
+            let key = getKeyByValue(isoCountries, search);
+            options['keys'][0]="country_code";
+            var fuse = new Fuse(list, options);
+            list = fuse.search(key);
           }
           searchjsonData = list;
           searchcurPage = 1;
