@@ -400,41 +400,42 @@ function searchPerson() {
           if (document.querySelector('#search_first_name').value != ''){
               options['keys'][0]="first_name";
               var fuse = new Fuse(list, options);
-              list = fuse.search(document.querySelector('#search_first_name').value);  
+              list = fuse.search(document.querySelector('#search_first_name').value);
           }
 
           if (document.querySelector('#search_last_name').value != ''){
               options['keys'][0]="last_name";
               var fuse = new Fuse(list, options);
-              list = fuse.search(document.querySelector('#search_last_name').value);   
+              list = fuse.search(document.querySelector('#search_last_name').value);
           }
-          
+
           if (document.querySelector('#search_industry').value != ''){
               options['keys'][0]="industry";
               var fuse = new Fuse(list, options);
-              list = fuse.search(document.querySelector('#search_industry').value);    
+              list = fuse.search(document.querySelector('#search_industry').value);
           }
 
           if (document.querySelector('#search_keyword').value != ''){
               options['keys'][0]="occupation";
               var fuse = new Fuse(list, options);
-              list = fuse.search(document.querySelector('#search_keyword').value); 
+              list = fuse.search(document.querySelector('#search_keyword').value);
           }
 
           if (document.querySelector('#search_city').value != ''){
-              const key = getKeyByValue(isoStates, document.querySelector('#search_city').value)
-              options['keys'][0]="city";
-              options['keys'][0]="state"
-              var fuse = new Fuse(list, options);
-              //list = fuse.search(document.querySelector('#search_city').value); 
-              list = fuse.search(key);
+            const search = capitalize(document.querySelector('#search_city').value);
+            options['keys'][0]="city";
+            options['keys'][0]="state"
+            var fuse = new Fuse(list, options);
+            //list = fuse.search(document.querySelector('#search_city').value);
+            list = fuse.search(search);
           }
 
           if (document.querySelector('#search_country').value != ''){
-            const key = getKeyByValue(isoCountries, document.querySelector('#search_country').value)
-              options['keys'][0]="country_code";
-              var fuse = new Fuse(list, options);
-              list = fuse.search(key); 
+						const search = capitalize(document.querySelector('#search_country').value);
+            let key = getKeyByValue(isoCountries, search);
+            options['keys'][0]="country_code";
+            var fuse = new Fuse(list, options);
+            list = fuse.search(key);
           }
           searchjsonData = list;
           searchcurPage = 1;
@@ -605,7 +606,7 @@ function addSearchPersonContent(person, index) {
     if (person['industry'] != null && person['industry'] != '' && person['industry'] != undefined){
         content += '<p style="color:grey;"><i class="fa fa-list"></i> ' + person['industry'] + '</p>';
     }
-    content += '<p style="color:grey;">'    
+    content += '<p style="color:grey;">'
     if(canShow('email') && person['email'] != null && person['email'] != '' && person['email'] != undefined){
         content += '<i class="fa fa-envelope" style="padding-right: 4px;"></i>';
     }
@@ -615,7 +616,7 @@ function addSearchPersonContent(person, index) {
     if (person['facebook'] == true){
         content += '<i class="fa fa-facebook-f"></i> ';
     }
-        
+
     if (person['linked_in'] != null){
         content += '<i class="fa fa-linkedin"></i>';
     }
@@ -802,7 +803,7 @@ function viewPersonDetail(id) {
         canShow("phone") && "" !== person.phone && null != person.phone ? document.querySelector("#person_phone").innerHTML = '<i class="fa fa-phone"></i> Phone: ' + person.phone + " " : document.querySelector("#person_phone").innerHTML = "";
         "" !== person.work_phone_number && null != person.work_phone_number ? document.querySelector("#person_work_phone").innerHTML = '<i class="fa fa-phone"></i> Work: ' + person.work_phone_number + " " : document.querySelector("#person_work_phone").innerHTML = "";
         "" !== person.mobile && null != person.mobile ? document.querySelector("#person_mobile").innerHTML = '<i class="fa fa-mobile"></i> Mobile: ' + person.mobile + " " : document.querySelector("#person_mobile").innerHTML = "";
-        
+
         if (person['home_address'] != null){
             let home_address = '';
             let myindex = 0;
@@ -825,7 +826,7 @@ function viewPersonDetail(id) {
                     myindex = 1;
                 }
                 if (person['home_address']['state'] != '' && person['home_address']['state'] != null){
-    
+
                     if(myindex === 0){
                         if(isoStates.hasOwnProperty(person['home_address']['state'])) {
                             home_address += isoStates[person['home_address']['state']]
@@ -849,7 +850,7 @@ function viewPersonDetail(id) {
                     home_address += (myindex == 0 ? person['home_address']['country_code'] : ', ' + isoCountries[person['home_address']['country_code']]);
                     myindex = 1;
                 }
-    
+
                 if (home_address != ''){
                     document.querySelector('#person_home_address').innerHTML = '<i class="fa fa-send"></i> Home address: ' + home_address;
                 }
@@ -871,7 +872,7 @@ function viewPersonDetail(id) {
                     myindex = 1;
                 }
                 if (person['state'] != '' && person['state'] != null){
-    
+
                     if(myindex === 0){
                         if(isoStates.hasOwnProperty(person['state'])) {
                             home_address += isoStates[person['state']]
@@ -895,7 +896,7 @@ function viewPersonDetail(id) {
                     home_address += (myindex == 0 ? person['country_code'] : ', ' + isoCountries[person['country_code']]);
                     myindex = 1;
                 }
-    
+
                 if (home_address != ''){
                     document.querySelector('#person_home_address').innerHTML = '<i class="fa fa-send"></i> Home address: ' + home_address;
                 }
@@ -905,7 +906,7 @@ function viewPersonDetail(id) {
             document.querySelector('#person_home_address').innerHTML =  '';
         }
 
-        if (person['work_address'] != '' && person['work_address'] != null){            
+        if (person['work_address'] != '' && person['work_address'] != null){
             let work_address = '';
             let myindex = 0;
             if (person['work_address']['address1'] != '' && person['work_address']['address1'] != null){
@@ -942,7 +943,7 @@ function viewPersonDetail(id) {
             }
         } else{
             document.querySelector('#person_work_address').innerHTML =  '';
-        }   
+        }
 
         if (canShow('assist_name') && person['assistant_name'] != '' && person['assistant_name'] != null){
             document.querySelector('#person_assist_name').innerHTML = '<i class="fa fa-user"></i> Assistant Name: ' + person['assistant_name']
@@ -992,7 +993,7 @@ function viewPersonDetail(id) {
             document.querySelector('#person_bio').innerHTML = bio;
             document.querySelector(".mybio").style.display = "block"
         }
-        document.querySelector("#personDetail").classList.remove("fade"), 
+        document.querySelector("#personDetail").classList.remove("fade"),
         document.querySelector("#personDetail").style.display = "block";
 
     }).catch(error => {
@@ -1038,7 +1039,7 @@ function exportToPDF(){
         var h = "N/A";
         null != d.work_phone && (h = d.work_phone), a.text(48, 134 + s, "Work Phone: " + h);
         var v = "N/A";
-        null != d.mobile && (v = d.mobile), a.text(48, 149 + s, "Mobile phone: " + v), s 
+        null != d.mobile && (v = d.mobile), a.text(48, 149 + s, "Mobile phone: " + v), s
         += 190
     }
     var y = (i = new Date).getMonth() + 1;
@@ -1061,4 +1062,9 @@ function canShow(field){
 
 function getKeyByValue(object, value) {
     return Object.keys(object).find(key => object[key] === value);
-  }
+}
+
+function capitalize(str1) {
+    str1 = str1.toLowerCase();
+    return str1.charAt(0).toUpperCase() + str1.slice(1);
+}
