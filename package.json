@@ -20,7 +20,7 @@
     "animate-sass": "^0.8.2",
     "apexcharts": "^3.6.7",
     "bootstrap": "^4.3.1",
-    "bootstrap-vue": "^2.0.0-rc.18",
+    "bootstrap-vue": "^2.0.0-rc.27",
     "chart.js": "^2.8.0",
     "countup.js": "^1.9.3",
     "es6-promise": "^4.2.6",
@@ -31,7 +31,7 @@
     "material-design-icons-iconfont": "^4.0.5",
     "mockjs": "^1.0.1-beta3",
     "moment": "^2.26.0",
-    "node-sass": "^4.11.0",
+    "node-sass": "^4.14.1",
     "pe7-icon": "^1.0.4",
     "perfect-scrollbar": "^1.4.0",
     "popper.js": "^1.15.0",
@@ -127,5 +127,14 @@
     "> 1%",
     "last 2 versions",
     "not ie <= 8"
-  ]
+  ],
+  "name": "package.json",
+  "description": "Nation Builder directory project built with Laravel and Vue.js",
+  "version": "1.0.0",
+  "main": "webpack.mix.js",
+  "directories": {
+    "test": "tests"
+  },
+  "author": "",
+  "license": "ISC"
 }

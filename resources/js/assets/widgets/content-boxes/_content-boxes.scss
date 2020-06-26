@@ -27,7 +27,6 @@ $widget-spacer: $spacer;
       opacity: .5;
     }
   }
-
   .widget-content-right {
     margin-left: auto;
   }
@@ -78,6 +77,24 @@ $widget-spacer: $spacer;
         visibility: visible;
         opacity: 1;
       }
+    }
+  }
+
+  /*added by john*/
+  @media (max-width: 991px) {
+    .app-header-left{
+      display: none;
+    }
+    .widget-subheading{
+      margin-left: 1rem;
+    }
+    .widget-content-left.header-user-info{
+      display: flex;
+      color: white;
+      flex: 1;
+    }
+    .widget-content-right.header-user-info.ml-3{
+      display: block;
     }
   }
 }

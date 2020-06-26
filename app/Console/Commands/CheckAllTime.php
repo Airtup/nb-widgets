@@ -59,6 +59,7 @@ class CheckAllTime extends Command
 
         foreach($nations as $nation){
             //$this->dao->deactivatePeople($nation->id, $nation->nation_details->tag);
+            People::where('nation_id',$nation->id)->where('nation_tag',$nation->nation_details->tag)->delete();
 
             $page = 1;
             $count = 0;

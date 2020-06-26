@@ -10,7 +10,6 @@
 </template>
 
 <script>
-const default_layout = "default";
 
 export default {
   created() {
@@ -28,7 +27,3 @@ export default {
   }
 };
 </script>
-
-<style lang="scss">
-@import "assets/base.scss";
-</style>

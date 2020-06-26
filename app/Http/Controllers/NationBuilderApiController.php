@@ -14,6 +14,7 @@ use Exception;
 use Auth;
 use Config;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Controllers\NationDetailsController;
 
 class NationBuilderApiController extends Controller
 {
@@ -335,6 +336,10 @@ class NationBuilderApiController extends Controller
         $next_url = $request->input('next_url');
         $nation_id = $request->input('nation_id');
         $result = $this->dao->first($nation_id);
+        $nation = $this->nation_details_dao->update($request->nation, $nation_id);
+        $nation = $this->nation_details_dao->get($nation_id)[0];
+        //Log::create(["user_id" => $request->user_id, "nation_id" => $nation->id, 'description' => 'Update Nation "' . $nation->name . '"']);
+        $this->logDao->create($request->user_id,$nation_id,'Update Nation "'.$nation->name.'"');
 
         $url = 'https://'.$result->slug.'.nationbuilder.com'.$next_url.'&access_token='.$result->access_token;
 
@@ -683,42 +688,45 @@ class NationBuilderApiController extends Controller
                 echo '';
             } else {
                 $data = json_decode($curlResponse);
-                if(isset($data->person->home_address->address1)){
-                    $result->home_address = $data->person->home_address;
-                }
-                if(isset($data->person->work_address->address1)){
-                    $result->work_address = $data->person->work_address;
-                }
-                if(isset($data->person->bio)){
-                    $result->bio = $data->person->bio;
-                }
-                if (isset($data->person->profile_content)){
-                    $result->profile_content = $data->person->profile_content;
-                } else{
-                    $result->profile_content = null;
-                }
-                if(isset($data->person->twitter_login)){
-                $result->twitter = $data->person->twitter_login;
-                }
-                if(isset($data->person->occupation)){
-                $result->occupation = $data->person->occupation;
-                }
-                if(isset($data->person->industry)){
-                $result->industry = $data->person->industry;
-                }
-                if(isset($data->person->assistant_name)){
-                $result->assistant_name = $data->person->assistant_name;
-                }
-                if(isset($data->person->assistant_phone_number)){
-                $result->assistant_phone_number = $data->person->assistant_phone_number;
-                }
-                if(isset($data->person->assistant_email)){
-                $result->assistant_email = $data->person->assistant_email;
-                }
-                if (!empty($data->person->facebook_username)){
-                    $result->facebook = $data->person->facebook_username;
-                } else{
-                    $result->facebook = $data->person->facebook_profile_url;
+
+                if(isset($data->person)){
+                    if(isset($data->person->home_address->address1)){
+                        $result->home_address = $data->person->home_address;
+                    }
+                    if(isset($data->person->work_address->address1)){
+                        $result->work_address = $data->person->work_address;
+                    }
+                    if(isset($data->person->bio)){
+                        $result->bio = $data->person->bio;
+                    }
+                    if (isset($data->person->profile_content)){
+                        $result->profile_content = $data->person->profile_content;
+                    } else{
+                        $result->profile_content = null;
+                    }
+                    if(isset($data->person->twitter_login)){
+                    $result->twitter = $data->person->twitter_login;
+                    }
+                    if(isset($data->person->occupation)){
+                    $result->occupation = $data->person->occupation;
+                    }
+                    if(isset($data->person->industry)){
+                    $result->industry = $data->person->industry;
+                    }
+                    if(isset($data->person->assistant_name)){
+                    $result->assistant_name = $data->person->assistant_name;
+                    }
+                    if(isset($data->person->assistant_phone_number)){
+                    $result->assistant_phone_number = $data->person->assistant_phone_number;
+                    }
+                    if(isset($data->person->assistant_email)){
+                    $result->assistant_email = $data->person->assistant_email;
+                    }
+                    if (!empty($data->person->facebook_username)){
+                        $result->facebook = $data->person->facebook_username;
+                    } else{
+                        $result->facebook = $data->person->facebook_profile_url;
+                    }
                 }
             }
             curl_close($curl);
@@ -759,9 +767,9 @@ class NationBuilderApiController extends Controller
     {
         if ($request->hasFile('logo')) {
             //Eliminar Anterior
-            Storage::delete('/images/logo.png');
+            Storage::delete('/storage/logo.png');
             //Guardar Imagen
-            $path = $request->file('logo')->storeAs('/images', 'logo.'.$request->file('logo')->getClientOriginalExtension());
+            $path = $request->file('logo')->storeAs('/storage', 'logo.'.$request->file('logo')->getClientOriginalExtension());
 
         } else {
             $path = '';

@@ -1,6 +1,8 @@
 <template>
     <div :class="headerbg" class="app-header header-shadow">
-        <div class="logo-src"/>
+        <div class="logo-src">
+            <img src="/storage/logo.png" alt="Logo NB Widgets" title="Logo" />
+        </div>
         <div class="app-header__content">
             <div class="app-header-left">
                 <!-- <SearchBox/> -->
