@@ -1,4 +1,5 @@
 import Vue from "vue";
+// https://stackoverflow.com/questions/57388315/unknown-custom-element-v-app-did-you-register-the-component-correctly-for
 import Vuetify from "vuetify";
 
 Vue.use(Vuetify, {

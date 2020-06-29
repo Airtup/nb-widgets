@@ -322,7 +322,8 @@ var jsonData, searchjsonData, exportPDF_canvas, img_logo_data, imgData, curPage 
         YE: "Yemen",
         ZM: "Zambia",
         ZW: "Zimbabwe"
-    };
+    },
+    pdfExportButton='<button id="exportPDF" class="btn btn-lg btn-orange tooltip-js" style="font-size: 12px;font-weight: bold; float: right;margin-top:10px;margin-right:5px; white-space: break-spaces;"><span class="tooltiptext">Please note: Only your most recent search query will be exported. If you have clicked the &quot;Back&quot; button, please redo your search again before exporting.</span>Export PDF</button>';
 
 function init() {
     var o = document.querySelector(divContainer);
@@ -465,7 +466,7 @@ function searchPerson() {
           content += '<p style="font-size:14px;"><i id="gotoFirstPage" class="fa fa-angle-double-left" style="color: ' + searchColorStart + ';cursor:pointer;"></i> <i id="gotoPrevPage" class="fa fa-angle-left gotoPrevPage" style="color: ' + searchColorStart + ';cursor:pointer;"></i> Page <span id="searchcurPage">' + searchcurPage + '</span> of ' + searchtotalPage + ' pages, displaying <span id="searchstartend">' + start + '-' + end + '</span> of ' + list.length + ' results <i id="gotoNextPage" class="fa fa-angle-right gotoNextPage" style="color: ' + searchColorEnd + ';cursor:pointer;"></i> <i id="gotoLastPage" class="fa fa-angle-double-right" style="color: ' + searchColorEnd + ';cursor:pointer;"></i></p>';
           content += '</div>';
           content += '<div class="col-md-4">';
-          content += '<button id="exportPDF" data-toggle="tooltip" title="Please note: Only your most recent search query will be exported. If you have clicked the &quot;Back&quot; button, please redo your search again before exporting." data-placement="top" class="btn btn-lg orange-tooltip btn-orange" style="font-size: 12px;font-weight: bold; float: right;margin-top:10px;margin-right:5px;">Export PDF</button>';
+          content += pdfExportButton;
           content += '<button id="backtomain" class="btn btn-lg btn-myblue" style="display:none;font-size: 11px;font-weight: bold; float: right;margin-right:5px;margin-top:10px;">Back to Main</button>';
           content += '</div>';
           content += '</div>';
@@ -538,7 +539,7 @@ function setCallPeopleUrl_New() {
         r += '<div class="row" style="margin-left: 5px;margin-right: 5px;padding: 10px;">',
             r += '<div class="col-md-8">', r += '<p style="font-size:15px;">Showing ' + totalCnt + " profiles</p>",
             r += '<p style="font-size:14px;"><i id="gotoFirstPage" class="fa fa-angle-double-left" style="color: ' + n + ';cursor:pointer;"></i> <i id="gotoPrevPage" class="fa fa-angle-left gotoPrevPage" style="color: ' + n + ';cursor:pointer;"></i> Page <span id="searchcurPage">' + curPage + "</span> of " + searchtotalPage + ' pages, displaying <span id="searchstartend">1-' + i + "</span> of " + totalCnt + ' results <i id="gotoNextPage" class="fa fa-angle-right gotoNextPage" style="color: ' + s + ';cursor:pointer;"></i> <i id="gotoLastPage" class="fa fa-angle-double-right" style="color: ' + s + ';cursor:pointer;"></i></p>', r += "</div>", r += '<div class="col-md-4">',
-            r += '<button id="exportPDF" class="btn btn-lg btn-orange tooltip-js" style="font-size: 12px;font-weight: bold; float: right;margin-top:10px;margin-right:5px; white-space: break-spaces;"><span class="tooltiptext">Please note: Only your most recent search query will be exported. If you have clicked the &quot;Back&quot; button, please redo your search again before exporting.</span>Export PDF</button>',
+            r += pdfExportButton,
             r += '<button id="backtomain" class="btn btn-lg btn-myblue" style="display:none;font-size: 11px;font-weight: bold; float: right;margin-right:5px;margin-top:10px;">Back to Main</button>',
             r += "</div>", r += "</div>", r += '<div class="clearfix"></div>', r += '<div id="personList">',
             r += "</div>", (document.querySelector("#peopleList").innerHTML = r), (document.querySelector("#backtomain").style.display = "none");
@@ -558,7 +559,7 @@ function setCallPeopleUrl_New() {
             n = "#DC772A";
         1 == curPage && (i = "#76838F"), curPage == totalPage && (n = "#76838F");
         var s = "";
-        //s += '<div class="row" style="margin-left: 5px;margin-right: 5px;padding: 10px;">', s += '<div class="col-md-8">', s += '<p style="font-size:15px;">Showing ' + totalCnt + " profiles</p>", s += '<p style="font-size:14px;"><i id="gotoFirstPage" class="fa fa-angle-double-left" style="color: ' + i + ';cursor:pointer;"></i> <i id="gotoPrevPage" class="fa fa-angle-left gotoPrevPage" style="color: ' + i + ';cursor:pointer;"></i> Page <span id="searchcurPage">' + curPage + "</span> of " + totalPage + ' pages, displaying <span id="searchstartend">' + e + "-" + t + "</span> of " + totalCnt + ' results <i id="gotoNextPage" class="fa fa-angle-right gotoNextPage" style="color: ' + n + ';cursor:pointer;"></i> <i id="gotoLastPage" class="fa fa-angle-double-right" style="color: ' + n + ';cursor:pointer;"></i></p>', s += "</div>", s += '<div class="col-md-4">', s += '<button id="exportPDF" data-toggle="tooltip" title="Please note: Only your most recent search query will be exported. If you have clicked the &quot;Back&quot; button, please redo your search again before exporting." data-placement="top" class="btn btn-lg orange-tooltip btn-orange" style="font-size: 12px;font-weight: bold; float: right;margin-top:10px;margin-right:5px;">Export PDF</button>', s += "</div>", s += "</div>", s += '<div class="clearfix"></div>', s += '<div id="personList">', s += "</div>", document.querySelector("#peopleList").innerHTML = s, document.querySelector("#backtomain").style.display = "block";
+        //s += '<div class="row" style="margin-left: 5px;margin-right: 5px;padding: 10px;">', s += '<div class="col-md-8">', s += '<p style="font-size:15px;">Showing ' + totalCnt + " profiles</p>", s += '<p style="font-size:14px;"><i id="gotoFirstPage" class="fa fa-angle-double-left" style="color: ' + i + ';cursor:pointer;"></i> <i id="gotoPrevPage" class="fa fa-angle-left gotoPrevPage" style="color: ' + i + ';cursor:pointer;"></i> Page <span id="searchcurPage">' + curPage + "</span> of " + totalPage + ' pages, displaying <span id="searchstartend">' + e + "-" + t + "</span> of " + totalCnt + ' results <i id="gotoNextPage" class="fa fa-angle-right gotoNextPage" style="color: ' + n + ';cursor:pointer;"></i> <i id="gotoLastPage" class="fa fa-angle-double-right" style="color: ' + n + ';cursor:pointer;"></i></p>', s += "</div>", s += '<div class="col-md-4">', s += pdfExportButton, s += "</div>", s += "</div>", s += '<div class="clearfix"></div>', s += '<div id="personList">', s += "</div>", document.querySelector("#peopleList").innerHTML = s, document.querySelector("#backtomain").style.display = "block";
         for (var r = 0; r < 50; r++) addSearchPersonContent(a[r], r)*/
     }).catch(error => {
         document.querySelector("#loaderModal").style.display = "none";
