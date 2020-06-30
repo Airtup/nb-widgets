@@ -55,7 +55,7 @@ class CheckManual extends Command
     {
         $today = date('Y-m-d H:i:s');
 
-        $senders = Sender::where('manual','=',1)->where('execute','=',0)->orderBy('created_at','DESC')->chunk(100, function ($sender) use ($today) {
+        $senders = Sender::where('execute','=',0)->orderBy('created_at','DESC')->chunk(100, function ($sender) use ($today) {
 
             foreach ($sender as $s) {
                 People::where('nation_id',$s->nation_id)->where('nation_tag',$s->tag)->delete();
@@ -177,10 +177,17 @@ class CheckManual extends Command
                     $this->dao->update(['people_count' => $count], $s->nation_id);
                     $details_dao = AbstractFactory::getFactory('DAO')->getDAO('NationDetailsDao');
 
+                    $description = '';
+                    if($s->manual === 0){
+                        $description = '[CRON] Cache Refreshed Nation "'.$s->slug.'"';
+                    } else{
+                        $description = 'Cache Refreshed Nation "'.$s->slug.'"';
+                    }
+
                     $dataLog = [
                         'user_id' => $s->user_id,
                         'nation_id' => $s->nation_id,
-                        'description' => 'Cache Refreshed Nation "'.$s->slug.'"'
+                        'description' => $description
                     ];
 
                     Log::create($dataLog);
